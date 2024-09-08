@@ -3,6 +3,7 @@ import { z } from 'zod'
 export const travelValidation = z.object({
     body: z.object({
         slNo: z.number().int(),
+        date: z.string(),
         particulars: z.string(),
         description: z.string(),
         remark: z.string().optional(),

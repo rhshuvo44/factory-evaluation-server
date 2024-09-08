@@ -1,23 +1,24 @@
-import AppError from '../../errors/AppError'
 import { TTravel } from './travel.interface'
 import { Travel } from './travel.model'
 
 const createTravelAllowance = async (travelData: TTravel) => {
-
-
     const TravelAllowance = await Travel.create(travelData)
-
-
     return TravelAllowance
 }
 const getTravelAllowance = async () => {
-    const user = await Travel.find().select('-password')
-    //! user check
-    if (!user) {
-        throw new AppError(400, 'User not found')
-    }
+    // Get the current date
+    const now = new Date();
+    // Calculate the first and last day of the current month
+    const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+    const endOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0, 23, 59, 59, 999);
 
-    return user
+    // Query the database for payments within the current month
+    const monthlyTravellingAllowance = await Travel.find({
+        date: { $gte: startOfMonth, $lte: endOfMonth }
+    });
+
+
+    return monthlyTravellingAllowance
 }
 
 export const TravelService = {

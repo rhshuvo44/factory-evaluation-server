@@ -3,11 +3,12 @@ import { TTravel } from "./travel.interface";
 
 const TravelSchema = new Schema<TTravel>({
     slNo: { type: Number, required: true },
+    date: { type: Date, required: true },
     particulars: { type: String, required: true },
     description: { type: String, required: true },
     remark: { type: String, },
     buyerId: { type: String, },
-    orderNo: { type: String,  },
+    orderNo: { type: String, },
     payTo: { type: String, required: true },
     paymentType: { type: String, enum: ['Monthly', 'Day', 'Once'], required: true },
     unit: { type: String, required: true },

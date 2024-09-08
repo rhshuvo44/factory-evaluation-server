@@ -1,5 +1,6 @@
 export type TTravel = {
     slNo: number;
+    date: Date;
     particulars: string;
     description: string;
     remark?: string;
