@@ -1,4 +1,4 @@
 export type TLogin = {
-    userName: string
-    password: string
+  userName: string
+  password: string
 }

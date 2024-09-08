@@ -8,21 +8,20 @@ import router from './app/route'
 const app: Application = express()
 
 //parsers
-app.use(express.json());
-app.use(cookieParser());
+app.use(express.json())
+app.use(cookieParser())
 
-app.use(cors({ origin: ['http://localhost:5173'], credentials: true }));
+app.use(cors({ origin: ['http://localhost:5173'], credentials: true }))
 
 // application routes
 app.use('/api', router)
 
 // root route
 app.get('/', (req: Request, res: Response) => {
-    res.send('Factory Evaluation')
+  res.send('Factory Evaluation')
 })
 //Not Found
 app.use(notFound)
 
-
-app.use(globalErrorHandler);
+app.use(globalErrorHandler)
 export default app
