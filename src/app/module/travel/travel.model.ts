@@ -14,7 +14,9 @@ const TravelSchema = new Schema<TTravel>({
     unit: { type: String, required: true },
     unitPrice: { type: Number, required: true },
     totalPrice: { type: Number, required: true }
-});
+}, {
+    timestamps: true,
+},);
 
 
 export const Travel = model<TTravel>('Travel', TravelSchema);

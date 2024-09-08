@@ -1,3 +1,4 @@
+import { format } from 'date-fns'
 import { TTravel } from './travel.interface'
 import { Travel } from './travel.model'
 
@@ -11,14 +12,16 @@ const getTravelAllowance = async () => {
     // Calculate the first and last day of the current month
     const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
     const endOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0, 23, 59, 59, 999);
-
     // Query the database for payments within the current month
     const monthlyTravellingAllowance = await Travel.find({
         date: { $gte: startOfMonth, $lte: endOfMonth }
     });
-
-
-    return monthlyTravellingAllowance
+    // Format the dates in the response
+    const monthlyTravellingAllowanceWithDateFormart = monthlyTravellingAllowance.map(travel => ({
+        ...travel.toObject(),
+        date: format(travel.date, 'dd-MM-yyyy') // Format date as 'YYYY-MM-DD'
+    }));
+    return monthlyTravellingAllowanceWithDateFormart
 }
 
 export const TravelService = {
