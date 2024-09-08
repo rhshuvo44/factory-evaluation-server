@@ -25,19 +25,19 @@ const loginUser = catchAsync(async (req: Request, res: Response) => {
     });
 });
 
-// const refreshToken = catchAsync(async (req, res) => {
-//     const { refreshToken } = req.cookies;
-//     const result = await AuthServices.refreshToken(refreshToken);
+const refreshToken = catchAsync(async (req, res) => {
+    const { refreshToken } = req.cookies;
+    const result = await AuthServices.refreshToken(refreshToken);
 
-//     sendResponse(res, {
-//         statusCode: httpStatus.OK,
-//         success: true,
-//         message: 'Access token is retrieved succesfully!',
-//         data: result,
-//     });
-// });
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'Access token is retrieved succesfully!',
+        data: result,
+    });
+});
 
 export const AuthControllers = {
     loginUser,
-    // refreshToken,
+    refreshToken,
 };

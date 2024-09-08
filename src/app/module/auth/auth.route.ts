@@ -10,6 +10,11 @@ router.post(
     validateRequest(AuthValidation.loginValidationSchema),
     AuthControllers.loginUser,
 );
+router.post(
+    '/refresh-token',
+    validateRequest(AuthValidation.refreshTokenValidationSchema),
+    AuthControllers.refreshToken,
+);
 
 
 
