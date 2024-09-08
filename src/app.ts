@@ -1,10 +1,9 @@
 import cors from 'cors'
 import express, { Application, Request, Response } from 'express'
-// import router from './app/route'
+
 import cookieParser from 'cookie-parser'
 import notFound from './app/middlewares/notFound'
 import router from './app/route'
-// import notFound from './app/middlewares/notFound'
 const app: Application = express()
 
 app.use(express.json())
