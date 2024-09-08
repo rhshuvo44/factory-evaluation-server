@@ -12,5 +12,6 @@ router.post(
   userController.signup,
 )
 router.get('/', auth(USER_ROLE.admin), userController.allUser)
+router.post('/logout', userController.logout)
 
 export const userRouter = router

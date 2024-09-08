@@ -24,7 +24,17 @@ const allUser = catchAsync(async (req: Request, res: Response) => {
     data: users,
   })
 })
+const logout = catchAsync(async (req: Request, res: Response) => {
+  res.clearCookie('refreshToken');
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'User logout successfully',
+    data: {}
+  })
+})
 export const userController = {
   signup,
   allUser,
+  logout
 }
