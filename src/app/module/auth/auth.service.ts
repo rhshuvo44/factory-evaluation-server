@@ -57,12 +57,7 @@ const loginUser = async (userData: TLogin) => {
     config.jwt_refresh_secret as string,
     config.jwt_refresh_expires_in as string,
   )
-  console.log(
-    { refreshToken },
-    {
-      accessToken,
-    },
-  )
+
   return {
     accessToken,
     refreshToken,
