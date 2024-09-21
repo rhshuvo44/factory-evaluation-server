@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const travelValidation = z.object({
+export const miscellaneousValidation = z.object({
     body: z.object({
       date: z.string(),
       particulars: z.string(),
