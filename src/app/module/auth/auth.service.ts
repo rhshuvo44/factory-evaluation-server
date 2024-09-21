@@ -69,7 +69,7 @@ const refreshToken = async (token: string) => {
   // checking if the given token is valid
   const decoded = verifyToken(token, config.jwt_refresh_secret as string)
 
-  const { userId } = decoded
+  const { userId, iat } = decoded
 
   // checking if the user is exist
   const user = await User.findById(userId)
@@ -91,6 +91,12 @@ const refreshToken = async (token: string) => {
     throw new AppError(httpStatus.FORBIDDEN, 'This user is blocked ! !')
   }
 
+  if (
+    user.passwordChangedAt &&
+    User.isJWTIssuedBeforePasswordChanged(user.passwordChangedAt, iat as number)
+  ) {
+    throw new AppError(httpStatus.UNAUTHORIZED, 'You are not authorized !');
+  }
   const jwtPayload = {
     userId: user.id,
     role: user.role,
@@ -146,7 +152,7 @@ const changePassword = async (
     payload.newPassword,
     Number(config.bcrypt_salt_rounds),
   );
-  const userPas = await User.findOneAndUpdate(
+  await User.findOneAndUpdate(
     {
       _id: userData.userId,
       role: userData.role,
@@ -156,7 +162,7 @@ const changePassword = async (
       passwordChangedAt: new Date(),
     },
   );
-  return userPas;
+  return null;
 };
 export const AuthServices = {
   loginUser,

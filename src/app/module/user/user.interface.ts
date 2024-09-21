@@ -1,8 +1,9 @@
 
+import { Model } from 'mongoose'
 import { USER_ROLE } from './user.constant'
 
 // !name
-export type TUser = {
+export interface TUser {
   name: string
   userName: string
   email: string
@@ -24,6 +25,13 @@ export type TUserUpdate = {
   address?: string
   isDeleted?: boolean
   status?: 'blocked' | 'in-progress'
+}
+export interface UserModel extends Model<TUser> {
+
+  isJWTIssuedBeforePasswordChanged(
+    passwordChangedTimestamp: Date,
+    jwtIssuedTimestamp: number,
+  ): boolean;
 }
 
 export type TUserRole = keyof typeof USER_ROLE

@@ -1,8 +1,8 @@
 import bcrypt from 'bcrypt'
 import { model, Schema } from 'mongoose'
-import { TUser } from './user.interface'
+import { TUser, UserModel } from './user.interface'
 import { UserStatus } from './user.constant'
-const userSchema = new Schema<TUser>(
+const userSchema = new Schema<TUser, UserModel>(
   {
     name: {
       type: String,
@@ -69,4 +69,12 @@ userSchema.pre('save', async function (next) {
   this.password = await bcrypt.hash(this.password, salt)
   next()
 })
-export const User = model<TUser>('User', userSchema)
+userSchema.statics.isJWTIssuedBeforePasswordChanged = function (
+  passwordChangedTimestamp: Date,
+  jwtIssuedTimestamp: number,
+) {
+  const passwordChangedTime =
+    new Date(passwordChangedTimestamp).getTime() / 1000;
+  return passwordChangedTime > jwtIssuedTimestamp;
+};
+export const User = model<TUser, UserModel>('User', userSchema)
