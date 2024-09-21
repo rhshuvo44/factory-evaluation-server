@@ -46,7 +46,6 @@ const deleteUser = async (id: string) => {
   // Update  user data
   await User.findByIdAndUpdate(id, {
     isDeleted: true,
-    status: 'blocked',
   }, { new: true, runValidators: true })
   const userDelete = await User.findById(id).select('-password')
   return userDelete

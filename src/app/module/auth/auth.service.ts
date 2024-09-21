@@ -1,5 +1,6 @@
 import bcrypt from 'bcrypt'
 import httpStatus from 'http-status'
+import { JwtPayload } from 'jsonwebtoken'
 import config from '../../config'
 import AppError from '../../errors/AppError'
 import { User } from '../user/user.model'
@@ -68,7 +69,7 @@ const refreshToken = async (token: string) => {
   // checking if the given token is valid
   const decoded = verifyToken(token, config.jwt_refresh_secret as string)
 
-  const { userId, iat } = decoded
+  const { userId } = decoded
 
   // checking if the user is exist
   const user = await User.findById(userId)
@@ -105,8 +106,60 @@ const refreshToken = async (token: string) => {
     accessToken,
   }
 }
+const changePassword = async (
+  userData: JwtPayload,
+  payload: { oldPassword: string; newPassword: string },
+) => {
+  // checking if the user is exist
+  const user = await User.findById(userData.userId)
 
+  if (!user) {
+    throw new AppError(httpStatus.NOT_FOUND, 'This user is not found !');
+  }
+  // checking if the user is already deleted
+
+  const isDeleted = user?.isDeleted;
+
+  if (isDeleted) {
+    throw new AppError(httpStatus.FORBIDDEN, 'This user is deleted !');
+  }
+
+  // checking if the user is blocked
+
+  const userStatus = user?.status;
+
+  if (userStatus === 'blocked') {
+    throw new AppError(httpStatus.FORBIDDEN, 'This user is blocked ! !');
+  }
+
+  //checking if the password is correct
+
+
+  // Check the password
+  const isMatch = await bcrypt.compare(payload.oldPassword, user.password)
+  if (!isMatch) {
+    throw new AppError(httpStatus.FORBIDDEN, 'Password does not match')
+  }
+
+  //hash new password
+  const newHashedPassword = await bcrypt.hash(
+    payload.newPassword,
+    Number(config.bcrypt_salt_rounds),
+  );
+  const userPas = await User.findOneAndUpdate(
+    {
+      _id: userData.userId,
+      role: userData.role,
+    },
+    {
+      password: newHashedPassword,
+      passwordChangedAt: new Date(),
+    },
+  );
+  return userPas;
+};
 export const AuthServices = {
   loginUser,
   refreshToken,
+  changePassword
 }
