@@ -1,4 +1,3 @@
-
 import { Model } from 'mongoose'
 import { USER_ROLE } from './user.constant'
 
@@ -7,7 +6,13 @@ export interface TUser {
   name: string
   username: string
   email: string
-  role: 'user' | 'admin' | 'executiveDirector' | 'managingDirector' | 'generalManager' | 'coordinator'
+  role:
+    | 'user'
+    | 'admin'
+    | 'executiveDirector'
+    | 'managingDirector'
+    | 'generalManager'
+    | 'coordinator'
   password: string
   passwordChangedAt: Date
   phone: string
@@ -19,7 +24,13 @@ export type TUserUpdate = {
   name?: string
   username?: string
   email?: string
-  role?: 'user' | 'admin' | 'executiveDirector' | 'managingDirector' | 'generalManager' | 'coordinator'
+  role?:
+    | 'user'
+    | 'admin'
+    | 'executiveDirector'
+    | 'managingDirector'
+    | 'generalManager'
+    | 'coordinator'
   password?: string
   phone?: string
   address?: string
@@ -27,11 +38,10 @@ export type TUserUpdate = {
   status?: 'blocked' | 'in-progress'
 }
 export interface UserModel extends Model<TUser> {
-
   isJWTIssuedBeforePasswordChanged(
     passwordChangedTimestamp: Date,
     jwtIssuedTimestamp: number,
-  ): boolean;
+  ): boolean
 }
 
 export type TUserRole = keyof typeof USER_ROLE

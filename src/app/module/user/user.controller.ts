@@ -60,5 +60,5 @@ export const userController = {
   allUser,
   logout,
   userUpdate,
-  userDelete
+  userDelete,
 }

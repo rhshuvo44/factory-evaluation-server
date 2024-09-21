@@ -1,6 +1,7 @@
 import { Request, Response } from 'express'
 import httpStatus from 'http-status'
 import config from '../../config'
+import AppError from '../../errors/AppError'
 import catchAsync from '../../utils/catchAsync'
 import sendResponse from '../../utils/sendResponse'
 import { AuthServices } from './auth.service'
@@ -25,16 +26,16 @@ const loginUser = catchAsync(async (req: Request, res: Response) => {
   })
 })
 const changePassword = catchAsync(async (req, res) => {
-  const { ...passwordData } = req.body;
+  const { ...passwordData } = req.body
 
-  const result = await AuthServices.changePassword(req.user, passwordData);
+  const result = await AuthServices.changePassword(req.user, passwordData)
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
     message: 'Password is updated succesfully!',
     data: result,
-  });
-});
+  })
+})
 const refreshToken = catchAsync(async (req, res) => {
   const { refreshToken } = req.cookies
   const result = await AuthServices.refreshToken(refreshToken)
@@ -47,18 +48,42 @@ const refreshToken = catchAsync(async (req, res) => {
   })
 })
 const forgetPassword = catchAsync(async (req, res) => {
-  const { email } = req.body;
-  const result = await AuthServices.forgetPassword(email);
+  const { email } = req.body
+  const result = await AuthServices.forgetPassword(email)
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
     message: 'Reset link is generated succesfully!',
     data: result,
-  });
-});
+  })
+})
+const resetPassword = catchAsync(async (req, res) => {
+  // const token = req.headers.authorization
+  const authHeader = req.headers['authorization']
+  // const token = authorization.split(' ')[1]
+  let token
+  if (authHeader) {
+    // Split the Authorization header to get the token part
+    token = authHeader.split(' ')[1]
+  }
+
+  if (!token) {
+    throw new AppError(httpStatus.BAD_REQUEST, 'Something went wrong !')
+  }
+
+  const result = await AuthServices.resetPassword(req.body, token)
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Password reset succesfully!',
+    data: result,
+  })
+})
+
 export const AuthControllers = {
   loginUser,
   refreshToken,
   changePassword,
-  forgetPassword
+  forgetPassword,
+  resetPassword,
 }
