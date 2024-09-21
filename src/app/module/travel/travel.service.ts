@@ -61,8 +61,12 @@ const UpdateTravelAllowance = async (travelData: TTravelUpdate, id: string) => {
   )
   return updatedTravelAllowance
 }
+const deletedTravelAllowance = async (id: string) => {
+  await Travel.deleteOne({ _id: id })
+}
 export const TravelService = {
   createTravelAllowance,
   getTravelAllowance,
   UpdateTravelAllowance,
+  deletedTravelAllowance
 }

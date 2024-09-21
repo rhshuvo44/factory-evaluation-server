@@ -45,8 +45,22 @@ const updateTravellingAllowance = catchAsync(
     })
   },
 )
+const deleteTravellingAllowance = catchAsync(
+  async (req, res) => {
+    const id = req?.params.id
+    await TravelService.deletedTravelAllowance(id)
+
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: 'Deleted Travelling Allowance successfully',
+      data: null,
+    })
+  },
+)
 export const travelController = {
   createTravellingAllowance,
   getAllTravellingAllowance,
   updateTravellingAllowance,
+  deleteTravellingAllowance
 }
