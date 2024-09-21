@@ -7,10 +7,21 @@ import { travelValidation } from './travel.validation'
 const router = express.Router()
 
 router.post(
-    '/', auth(USER_ROLE.admin, USER_ROLE.executiveDirector),
-    validateRequest(travelValidation),
-    travelController.createTravellingAllowance,
+  '/',
+  auth(USER_ROLE.admin, USER_ROLE.executiveDirector),
+  validateRequest(travelValidation),
+  travelController.createTravellingAllowance,
 )
-router.get('/', auth(USER_ROLE.admin, USER_ROLE.executiveDirector, USER_ROLE.coordinator, USER_ROLE.generalManager, USER_ROLE.managingDirector), travelController.getAllTravellingAllowance)
+router.get(
+  '/',
+  auth(
+    USER_ROLE.admin,
+    USER_ROLE.executiveDirector,
+    USER_ROLE.coordinator,
+    USER_ROLE.generalManager,
+    USER_ROLE.managingDirector,
+  ),
+  travelController.getAllTravellingAllowance,
+)
 
 export const travelRouter = router
