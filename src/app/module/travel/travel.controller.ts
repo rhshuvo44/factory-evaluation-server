@@ -1,11 +1,11 @@
-import { Request, Response } from 'express'
+import { RequestHandler } from 'express'
 import httpStatus from 'http-status'
 import catchAsync from '../../utils/catchAsync'
 import sendResponse from '../../utils/sendResponse'
 import { TravelService } from './travel.service'
 
 const createTravellingAllowance = catchAsync(
-  async (req: Request, res: Response) => {
+  async (req, res) => {
     const TravellingAllowance = await TravelService.createTravelAllowance(
       req?.body,
     )
@@ -17,9 +17,9 @@ const createTravellingAllowance = catchAsync(
     })
   },
 )
-const getAllTravellingAllowance = catchAsync(
-  async (req: Request, res: Response) => {
-    const TravellingAllowances = await TravelService.getTravelAllowance()
+const getAllTravellingAllowance: RequestHandler = catchAsync(
+  async (req, res) => {
+    const TravellingAllowances = await TravelService.getTravelAllowance(req?.query)
 
     sendResponse(res, {
       statusCode: httpStatus.OK,
@@ -30,7 +30,7 @@ const getAllTravellingAllowance = catchAsync(
   },
 )
 const updateTravellingAllowance = catchAsync(
-  async (req: Request, res: Response) => {
+  async (req, res) => {
     const id: string = req?.params.id
     const TravellingAllowances = await TravelService.UpdateTravelAllowance(
       req?.body,
@@ -45,8 +45,22 @@ const updateTravellingAllowance = catchAsync(
     })
   },
 )
+const deleteTravellingAllowance = catchAsync(
+  async (req, res) => {
+    const id = req?.params.id
+    await TravelService.deletedTravelAllowance(id)
+
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: 'Deleted Travelling Allowance successfully',
+      data: null,
+    })
+  },
+)
 export const travelController = {
   createTravellingAllowance,
   getAllTravellingAllowance,
   updateTravellingAllowance,
+  deleteTravellingAllowance
 }

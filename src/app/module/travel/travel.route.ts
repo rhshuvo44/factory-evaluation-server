@@ -29,5 +29,10 @@ router.patch(
   validateRequest(travelUpdateValidation),
   travelController.updateTravellingAllowance,
 )
+router.delete(
+  '/:id',
+  auth(USER_ROLE.admin),
+  travelController.deleteTravellingAllowance,
+)
 
 export const travelRouter = router

@@ -1,4 +1,5 @@
 import { format } from 'date-fns'
+import QueryBuilder from '../../builder/QueryBuilder'
 import { TTravel, TTravelUpdate } from './travel.interface'
 import { Travel } from './travel.model'
 
@@ -6,12 +7,13 @@ const createTravelAllowance = async (travelData: TTravel) => {
   const TravelAllowance = await Travel.create(travelData)
   return TravelAllowance
 }
-const getTravelAllowance = async () => {
+const getTravelAllowance = async (query: Record<string, unknown>) => {
   // Get the current date
   const now = new Date()
   // Calculate the first and last day of the current month
-  const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1)
-  const endOfMonth = new Date(
+  const startOfMonth = format(new Date(now.getFullYear(), now.getMonth(), 1), 'dd-MM-yyyy')
+
+  const endOfMonth = format(new Date(
     now.getFullYear(),
     now.getMonth() + 1,
     0,
@@ -19,25 +21,31 @@ const getTravelAllowance = async () => {
     59,
     59,
     999,
-  )
-  // Query the database for payments within the current month
-  const monthlyTravellingAllowance = await Travel.find({
-    date: { $gte: startOfMonth, $lte: endOfMonth },
-  })
+  ), 'dd-MM-yyyy')
+  const travelQuery = new QueryBuilder(
+    Travel.find({ date: { $gte: startOfMonth, $lte: endOfMonth } }),
+    query
+
+  ).filter()
+    .sort()
+    .paginate()
+    .fields();
+
+  const meta = await travelQuery.countTotal();
+  const result = await travelQuery.modelQuery;
+
+
   // Format the dates in the response
-  const monthlyTravellingAllowanceWithDateFormart =
-    monthlyTravellingAllowance.map(travel => ({
-      ...travel.toObject(),
-      date: format(travel.date, 'dd-MM-yyyy'), // Format date as 'YYYY-MM-DD'
-    }))
-  // Calculate the total price
-  const totalPrice = monthlyTravellingAllowance.reduce(
+
+  // // Calculate the total price
+  const totalPrice = result.reduce(
     (sum, travel) => sum + travel.totalPrice,
     0,
   )
 
   return {
-    travellingAllowance: monthlyTravellingAllowanceWithDateFormart,
+    meta,
+    result,
     totalPrice,
   }
 }
@@ -53,8 +61,12 @@ const UpdateTravelAllowance = async (travelData: TTravelUpdate, id: string) => {
   )
   return updatedTravelAllowance
 }
+const deletedTravelAllowance = async (id: string) => {
+  await Travel.deleteOne({ _id: id })
+}
 export const TravelService = {
   createTravelAllowance,
   getTravelAllowance,
   UpdateTravelAllowance,
+  deletedTravelAllowance
 }

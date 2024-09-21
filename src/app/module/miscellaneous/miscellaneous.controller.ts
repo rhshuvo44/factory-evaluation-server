@@ -1,4 +1,4 @@
-import { Request, Response } from 'express'
+import { Request, RequestHandler, Response } from 'express'
 import httpStatus from 'http-status'
 import catchAsync from '../../utils/catchAsync'
 import sendResponse from '../../utils/sendResponse'
@@ -17,7 +17,19 @@ const createMiscellaneous = catchAsync(
         })
     },
 )
+const getAllMiscellaneous: RequestHandler = catchAsync(
+    async (req, res) => {
+        const miscellaneous = await miscellaneousService.getMiscellaneous(req?.query)
+
+        sendResponse(res, {
+            statusCode: httpStatus.OK,
+            success: true,
+            message: 'Get All Miscellaneous successfully',
+            data: miscellaneous,
+        })
+    },
+)
 
 export const miscellaneousController = {
-    createMiscellaneous,
+    createMiscellaneous, getAllMiscellaneous
 }
