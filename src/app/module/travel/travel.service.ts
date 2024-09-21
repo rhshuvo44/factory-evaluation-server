@@ -11,8 +11,9 @@ const getTravelAllowance = async (query: Record<string, unknown>) => {
   // Get the current date
   const now = new Date()
   // Calculate the first and last day of the current month
-  const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1)
-  const endOfMonth = new Date(
+  const startOfMonth = format(new Date(now.getFullYear(), now.getMonth(), 1), 'dd-MM-yyyy')
+
+  const endOfMonth = format(new Date(
     now.getFullYear(),
     now.getMonth() + 1,
     0,
@@ -20,8 +21,7 @@ const getTravelAllowance = async (query: Record<string, unknown>) => {
     59,
     59,
     999,
-  )
-  // console.log(startOfMonth, endOfMonth);
+  ), 'dd-MM-yyyy')
   const travelQuery = new QueryBuilder(
     Travel.find({ date: { $gte: startOfMonth, $lte: endOfMonth } }),
     query
@@ -32,21 +32,11 @@ const getTravelAllowance = async (query: Record<string, unknown>) => {
     .fields();
 
   const meta = await travelQuery.countTotal();
-  const monthlyTravellingAllowance = await travelQuery.modelQuery;
-  // return {
-  //   meta,
-  //   result,
-  // }
-  // Query the database for payments within the current month
-  // const monthlyTravellingAllowance = await Travel.find({
-  //   date: { $gte: startOfMonth, $lte: endOfMonth },
-  // })
+  const result = await travelQuery.modelQuery;
+
 
   // Format the dates in the response
-  const result = monthlyTravellingAllowance.map(travel => ({
-    ...travel.toObject(),
-    date: format(travel.date, 'dd-MM-yyyy'), // Format date as 'YYYY-MM-DD'
-  }))
+
   // // Calculate the total price
   const totalPrice = result.reduce(
     (sum, travel) => sum + travel.totalPrice,

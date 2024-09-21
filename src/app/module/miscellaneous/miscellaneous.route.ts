@@ -12,6 +12,17 @@ router.post(
     validateRequest(miscellaneousValidation),
     miscellaneousController.createMiscellaneous,
 )
+router.get(
+    '/',
+    auth(
+        USER_ROLE.admin,
+        USER_ROLE.executiveDirector,
+        USER_ROLE.coordinator,
+        USER_ROLE.generalManager,
+        USER_ROLE.managingDirector,
+    ),
+    miscellaneousController.getAllMiscellaneous,
+)
 
 
 export const miscellaneousRouter = router

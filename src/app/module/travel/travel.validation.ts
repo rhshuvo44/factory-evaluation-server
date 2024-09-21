@@ -2,7 +2,7 @@ import { z } from 'zod'
 
 export const travelValidation = z.object({
   body: z.object({
-    date: z.date(),
+    date: z.string(),
     particulars: z.string(),
     description: z.string(),
     remark: z.string().optional(),
@@ -17,7 +17,7 @@ export const travelValidation = z.object({
 })
 export const travelUpdateValidation = z.object({
   body: z.object({
-    date: z.date().optional(),
+    date: z.string().optional(),
     particulars: z.string().optional(),
     description: z.string().optional(),
     remark: z.string().optional(),
