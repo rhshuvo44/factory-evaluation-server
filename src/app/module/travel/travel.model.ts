@@ -1,5 +1,5 @@
-import { model, Schema } from 'mongoose';
-import { TTravel } from './travel.interface';
+import { model, Schema } from 'mongoose'
+import { TTravel } from './travel.interface'
 
 const TravelSchema = new Schema<TTravel>(
   {
@@ -13,7 +13,7 @@ const TravelSchema = new Schema<TTravel>(
     payTo: { type: String, required: true },
     paymentType: {
       type: String,
-      enum: ['Monthly', 'Day', 'Once'],
+      enum: ['Monthly', 'Daily', 'Once'],
       required: true,
     },
     unit: { type: String, required: true },
@@ -26,11 +26,10 @@ const TravelSchema = new Schema<TTravel>(
 )
 // Pre-save hook to generate slNo
 TravelSchema.pre<TTravel>('save', async function (next) {
-
   if (this.date) {
-    const lastEntry = await Travel.findOne().sort({ slNo: -1 });
-    this.slNo = lastEntry ? lastEntry.slNo + 1 : 1;
+    const lastEntry = await Travel.findOne().sort({ slNo: -1 })
+    this.slNo = lastEntry ? lastEntry.slNo + 1 : 1
   }
-  next();
-});
+  next()
+})
 export const Travel = model<TTravel>('Travel', TravelSchema)

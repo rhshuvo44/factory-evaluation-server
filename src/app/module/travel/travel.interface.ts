@@ -7,7 +7,7 @@ export type TTravel = {
   buyerId?: string
   orderNo?: string
   payTo: string
-  paymentType: 'Monthly' | 'Day' | 'Once'
+  paymentType: 'Monthly' | 'Daily' | 'Once'
   unit?: string
   unitPrice: number
   totalPrice: number
@@ -21,7 +21,7 @@ export type TTravelUpdate = {
   buyerId?: string
   orderNo?: string
   payTo?: string
-  paymentType?: 'Monthly' | 'Day' | 'Once'
+  paymentType?: 'Monthly' | 'Daily' | 'Once'
   unit?: string
   unitPrice?: number
   totalPrice?: number

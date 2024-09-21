@@ -25,11 +25,8 @@ router.get(
 )
 router.patch(
   '/:id',
-  auth(
-    USER_ROLE.admin,
-    USER_ROLE.executiveDirector,
-
-  ), validateRequest(travelUpdateValidation),
+  auth(USER_ROLE.admin, USER_ROLE.executiveDirector),
+  validateRequest(travelUpdateValidation),
   travelController.updateTravellingAllowance,
 )
 

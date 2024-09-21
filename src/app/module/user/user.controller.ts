@@ -1,10 +1,9 @@
-import { Request, Response } from 'express'
 import httpStatus from 'http-status'
 import catchAsync from '../../utils/catchAsync'
 import sendResponse from '../../utils/sendResponse'
 import { userService } from './user.service'
 
-const signup = catchAsync(async (req: Request, res: Response) => {
+const signup = catchAsync(async (req, res) => {
   const newUser = await userService.createUser(req?.body)
 
   sendResponse(res, {
@@ -14,7 +13,7 @@ const signup = catchAsync(async (req: Request, res: Response) => {
     data: newUser,
   })
 })
-const allUser = catchAsync(async (req: Request, res: Response) => {
+const allUser = catchAsync(async (req, res) => {
   const users = await userService.allUsers()
 
   sendResponse(res, {
@@ -24,7 +23,7 @@ const allUser = catchAsync(async (req: Request, res: Response) => {
     data: users,
   })
 })
-const logout = catchAsync(async (req: Request, res: Response) => {
+const logout = catchAsync(async (req, res) => {
   res.clearCookie('refreshToken')
   sendResponse(res, {
     statusCode: httpStatus.OK,
@@ -33,8 +32,21 @@ const logout = catchAsync(async (req: Request, res: Response) => {
     data: {},
   })
 })
+const userUpdate = catchAsync(async (req, res) => {
+  const { id } = req.params
+  const { body } = req
+  const user = await userService.updateUser(body, id)
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: ' User Update successfully',
+    data: user,
+  })
+})
 export const userController = {
   signup,
   allUser,
   logout,
+  userUpdate,
 }
