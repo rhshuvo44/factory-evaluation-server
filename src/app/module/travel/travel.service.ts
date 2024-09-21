@@ -1,4 +1,5 @@
 import { format } from 'date-fns'
+import QueryBuilder from '../../builder/QueryBuilder'
 import { TTravel, TTravelUpdate } from './travel.interface'
 import { Travel } from './travel.model'
 
@@ -6,7 +7,7 @@ const createTravelAllowance = async (travelData: TTravel) => {
   const TravelAllowance = await Travel.create(travelData)
   return TravelAllowance
 }
-const getTravelAllowance = async () => {
+const getTravelAllowance = async (query: Record<string, unknown>) => {
   // Get the current date
   const now = new Date()
   // Calculate the first and last day of the current month
@@ -20,24 +21,41 @@ const getTravelAllowance = async () => {
     59,
     999,
   )
+  // console.log(startOfMonth, endOfMonth);
+  const travelQuery = new QueryBuilder(
+    Travel.find({ date: { $gte: startOfMonth, $lte: endOfMonth } }),
+    query
+
+  ).filter()
+    .sort()
+    .paginate()
+    .fields();
+
+  const meta = await travelQuery.countTotal();
+  const monthlyTravellingAllowance = await travelQuery.modelQuery;
+  // return {
+  //   meta,
+  //   result,
+  // }
   // Query the database for payments within the current month
-  const monthlyTravellingAllowance = await Travel.find({
-    date: { $gte: startOfMonth, $lte: endOfMonth },
-  })
+  // const monthlyTravellingAllowance = await Travel.find({
+  //   date: { $gte: startOfMonth, $lte: endOfMonth },
+  // })
+
   // Format the dates in the response
-  const monthlyTravellingAllowanceWithDateFormart =
-    monthlyTravellingAllowance.map(travel => ({
-      ...travel.toObject(),
-      date: format(travel.date, 'dd-MM-yyyy'), // Format date as 'YYYY-MM-DD'
-    }))
-  // Calculate the total price
-  const totalPrice = monthlyTravellingAllowance.reduce(
+  const result = monthlyTravellingAllowance.map(travel => ({
+    ...travel.toObject(),
+    date: format(travel.date, 'dd-MM-yyyy'), // Format date as 'YYYY-MM-DD'
+  }))
+  // // Calculate the total price
+  const totalPrice = result.reduce(
     (sum, travel) => sum + travel.totalPrice,
     0,
   )
 
   return {
-    travellingAllowance: monthlyTravellingAllowanceWithDateFormart,
+    meta,
+    result,
     totalPrice,
   }
 }

@@ -1,6 +1,6 @@
 export type TTravel = {
   slNo: number
-  date: string
+  date: Date
   particulars: string
   description: string
   remark?: string
@@ -14,7 +14,7 @@ export type TTravel = {
 }
 export type TTravelUpdate = {
   slNo?: number
-  date?: string
+  date?: Date
   particulars?: string
   description?: string
   remark?: string
