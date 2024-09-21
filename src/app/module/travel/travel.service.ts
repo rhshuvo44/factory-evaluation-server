@@ -1,5 +1,5 @@
 import { format } from 'date-fns'
-import { TTravel } from './travel.interface'
+import { TTravel, TTravelUpdate } from './travel.interface'
 import { Travel } from './travel.model'
 
 const createTravelAllowance = async (travelData: TTravel) => {
@@ -33,7 +33,14 @@ const getTravelAllowance = async () => {
   return monthlyTravellingAllowanceWithDateFormart
 }
 
+const UpdateTravelAllowance = async (travelData: TTravelUpdate, id: string) => {
+  const updatedTravelAllowance = await Travel.findByIdAndUpdate(id, travelData, {
+    new: true,
+  })
+  return updatedTravelAllowance
+}
 export const TravelService = {
   createTravelAllowance,
   getTravelAllowance,
+  UpdateTravelAllowance
 }

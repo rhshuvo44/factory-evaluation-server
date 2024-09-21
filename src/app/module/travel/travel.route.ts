@@ -3,7 +3,7 @@ import auth from '../../middlewares/auth'
 import validateRequest from '../../middlewares/validateRequest'
 import { USER_ROLE } from '../user/user.constant'
 import { travelController } from './travel.controller'
-import { travelValidation } from './travel.validation'
+import { travelUpdateValidation, travelValidation } from './travel.validation'
 const router = express.Router()
 
 router.post(
@@ -22,6 +22,15 @@ router.get(
     USER_ROLE.managingDirector,
   ),
   travelController.getAllTravellingAllowance,
+)
+router.patch(
+  '/:id',
+  auth(
+    USER_ROLE.admin,
+    USER_ROLE.executiveDirector,
+
+  ), validateRequest(travelUpdateValidation),
+  travelController.updateTravellingAllowance,
 )
 
 export const travelRouter = router

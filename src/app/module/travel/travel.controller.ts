@@ -9,7 +9,6 @@ const createTravellingAllowance = catchAsync(
     const TravellingAllowance = await TravelService.createTravelAllowance(
       req?.body,
     )
-
     sendResponse(res, {
       statusCode: httpStatus.OK,
       success: true,
@@ -30,7 +29,22 @@ const getAllTravellingAllowance = catchAsync(
     })
   },
 )
+const updateTravellingAllowance = catchAsync(
+  async (req: Request, res: Response) => {
+    const id: string = req?.params.id
+    const TravellingAllowances = await TravelService.UpdateTravelAllowance(
+      req?.body, id)
+
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: 'Update Travelling Allowance successfully',
+      data: TravellingAllowances,
+    })
+  },
+)
 export const travelController = {
   createTravellingAllowance,
   getAllTravellingAllowance,
+  updateTravellingAllowance
 }
