@@ -1,9 +1,9 @@
+import { Request, Response } from 'express'
 import httpStatus from 'http-status'
 import config from '../../config'
 import catchAsync from '../../utils/catchAsync'
 import sendResponse from '../../utils/sendResponse'
 import { AuthServices } from './auth.service'
-import { Request, Response } from 'express'
 
 const loginUser = catchAsync(async (req: Request, res: Response) => {
   const result = await AuthServices.loginUser(req.body)
@@ -46,9 +46,19 @@ const refreshToken = catchAsync(async (req, res) => {
     data: result,
   })
 })
-
+const forgetPassword = catchAsync(async (req, res) => {
+  const { email } = req.body;
+  const result = await AuthServices.forgetPassword(email);
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Reset link is generated succesfully!',
+    data: result,
+  });
+});
 export const AuthControllers = {
   loginUser,
   refreshToken,
-  changePassword
+  changePassword,
+  forgetPassword
 }
