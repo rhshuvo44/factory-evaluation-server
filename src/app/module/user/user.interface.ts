@@ -5,7 +5,7 @@ import { USER_ROLE } from './user.constant'
 // !name
 export interface TUser {
   name: string
-  userName: string
+  username: string
   email: string
   role: 'user' | 'admin' | 'executiveDirector' | 'managingDirector' | 'generalManager' | 'coordinator'
   password: string
@@ -17,7 +17,7 @@ export interface TUser {
 }
 export type TUserUpdate = {
   name?: string
-  userName?: string
+  username?: string
   email?: string
   role?: 'user' | 'admin' | 'executiveDirector' | 'managingDirector' | 'generalManager' | 'coordinator'
   password?: string
