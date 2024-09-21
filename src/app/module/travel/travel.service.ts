@@ -29,13 +29,22 @@ const getTravelAllowance = async () => {
     monthlyTravellingAllowance.map(travel => ({
       ...travel.toObject(),
       date: format(travel.date, 'dd-MM-yyyy'), // Format date as 'YYYY-MM-DD'
+
     }))
-  return monthlyTravellingAllowanceWithDateFormart
+  // Calculate the total price
+  const totalPrice = monthlyTravellingAllowance.reduce((sum, travel) => sum + travel.totalPrice, 0);
+
+
+  return {
+    travellingAllowance: monthlyTravellingAllowanceWithDateFormart,
+    totalPrice
+  }
 }
 
 const UpdateTravelAllowance = async (travelData: TTravelUpdate, id: string) => {
   const updatedTravelAllowance = await Travel.findByIdAndUpdate(id, travelData, {
     new: true,
+    runValidators: true,
   })
   return updatedTravelAllowance
 }
