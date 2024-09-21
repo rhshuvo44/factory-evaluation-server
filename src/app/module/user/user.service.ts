@@ -37,8 +37,23 @@ const updateUser = async (userData: TUserUpdate, id: string) => {
   const userUpdate = await User.findById(id).select('-password')
   return userUpdate
 }
+const deleteUser = async (id: string) => {
+  const user = await User.findById(id)
+  //! user check
+  if (!user) {
+    throw new AppError(400, 'User not found')
+  }
+  // Update  user data
+  await User.findByIdAndUpdate(id, {
+    isDeleted: true,
+    status: 'blocked',
+  }, { new: true, runValidators: true })
+  const userDelete = await User.findById(id).select('-password')
+  return userDelete
+}
 export const userService = {
   createUser,
   allUsers,
   updateUser,
+  deleteUser
 }

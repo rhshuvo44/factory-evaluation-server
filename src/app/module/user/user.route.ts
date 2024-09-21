@@ -12,7 +12,8 @@ router.post(
   userController.signup,
 )
 router.get('/', auth(USER_ROLE.admin), userController.allUser)
-router.patch('/user-update/:id', auth(USER_ROLE.admin), validateRequest(userUpdateValidationSchema), userController.userUpdate)
+router.patch('/:id', auth(USER_ROLE.admin), validateRequest(userUpdateValidationSchema), userController.userUpdate)
+router.delete('/:id', auth(USER_ROLE.admin), userController.userDelete)
 router.post('/logout', userController.logout)
 
 export const userRouter = router
