@@ -1,13 +1,15 @@
 import { format } from 'date-fns'
+import httpStatus from 'http-status'
 import QueryBuilder from '../../builder/QueryBuilder'
+import AppError from '../../errors/AppError'
 import { TMiscellaneous, TMiscellaneousUpdate } from './miscellaneous.interface'
 import { Miscellaneous } from './miscellaneous.model'
 
-const createMiscellaneous = async (miscellaneousData: TMiscellaneous) => {
-  const date = new Date(miscellaneousData.date)
+const createMiscellaneous = async (payload: TMiscellaneous) => {
+  const date = new Date(payload.date)
 
   const miscellaneous = await Miscellaneous.create({
-    ...miscellaneousData,
+    ...payload,
     date,
   })
   return miscellaneous
@@ -63,16 +65,21 @@ const getMiscellaneous = async (query: Record<string, unknown>) => {
   }
 }
 const UpdateMiscellaneous = async (
-  miscellaneousData: TMiscellaneousUpdate,
+  payload: TMiscellaneousUpdate,
   id: string,
 ) => {
   let date
-  if (miscellaneousData?.date) {
-    date = new Date(miscellaneousData?.date)
+  if (payload?.date) {
+    date = new Date(payload?.date)
+  }
+  const miscellaneous = await Miscellaneous.findById(id)
+
+  if (!miscellaneous) {
+    throw new AppError(httpStatus.NOT_FOUND, 'Miscellaneous not found')
   }
   const updatedMiscellaneous = await Miscellaneous.findByIdAndUpdate(
     id,
-    { ...miscellaneousData, date },
+    { ...payload, date },
     {
       new: true,
       runValidators: true,
@@ -81,6 +88,11 @@ const UpdateMiscellaneous = async (
   return updatedMiscellaneous
 }
 const deletedMiscellaneous = async (id: string) => {
+  const miscellaneous = await Miscellaneous.findById(id)
+
+  if (!miscellaneous) {
+    throw new AppError(httpStatus.NOT_FOUND, 'Miscellaneous not found')
+  }
   await Miscellaneous.deleteOne({ _id: id })
 }
 export const miscellaneousService = {

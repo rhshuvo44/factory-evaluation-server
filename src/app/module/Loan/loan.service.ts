@@ -1,5 +1,7 @@
 import { format } from 'date-fns'
+import httpStatus from 'http-status'
 import QueryBuilder from '../../builder/QueryBuilder'
+import AppError from '../../errors/AppError'
 import { TLoan, TLoanUpdate } from './loan.interface'
 import { Loan } from './loan.model'
 
@@ -60,6 +62,11 @@ const updateLoan = async (
     if (payload?.date) {
         date = new Date(payload?.date)
     }
+    const loan = await Loan.findById(id)
+
+    if (!loan) {
+        throw new AppError(httpStatus.NOT_FOUND, 'Loan not found')
+    }
     const result = await Loan.findByIdAndUpdate(
         id,
         { ...payload, date },
@@ -70,7 +77,15 @@ const updateLoan = async (
     )
     return result
 }
+const deletedLoan = async (id: string) => {
+    const loan = await Loan.findById(id)
+
+    if (!loan) {
+        throw new AppError(httpStatus.NOT_FOUND, 'Loan not found')
+    }
+    await Loan.deleteOne({ _id: id })
+}
 export const loanService = {
     createLoan,
-    getLoan, updateLoan
+    getLoan, updateLoan, deletedLoan
 }

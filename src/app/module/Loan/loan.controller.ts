@@ -37,7 +37,18 @@ const updateLoan = catchAsync(async (req, res) => {
         data: result,
     })
 })
+const deleteLoan = catchAsync(async (req, res) => {
+    const id = req?.params.id
+    await loanService.deletedLoan(id)
+
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'Deleted Loan successfully',
+        data: null,
+    })
+})
 export const loanController = {
     createLoan,
-    getAllLoan, updateLoan
+    getAllLoan, updateLoan, deleteLoan
 }
