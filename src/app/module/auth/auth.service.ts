@@ -9,10 +9,10 @@ import { TLogin } from './auth.interface'
 import { createToken, verifyToken } from './auth.utils'
 
 const loginUser = async (userData: TLogin) => {
-  const { userName, password } = userData
+  const { username, password } = userData
 
   // Check if the user exists
-  const user = await User.findOne({ userName })
+  const user = await User.findOne({ username })
 
   if (!user) {
     throw new AppError(httpStatus.NOT_FOUND, 'This user is not found !')
