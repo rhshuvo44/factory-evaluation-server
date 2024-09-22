@@ -8,9 +8,17 @@ const utilitiesSchema = z.object({
 export const utilitySchema = z.object({
   body: z.object({
     date: z.string(),
-    internet: z.array(utilitiesSchema),
-    water: z.array(utilitiesSchema),
-    electricity: z.array(utilitiesSchema),
+    internet: z.array(utilitiesSchema).optional(),
+    water: z.array(utilitiesSchema).optional(),
+    electricity: z.array(utilitiesSchema).optional(),
+    others: z.array(utilitiesSchema).optional(),
+  }),
+})
+export const utilityUpdateSchema = z.object({
+  body: z.object({
+    internet: z.array(utilitiesSchema).optional(),
+    water: z.array(utilitiesSchema).optional(),
+    electricity: z.array(utilitiesSchema).optional(),
     others: z.array(utilitiesSchema).optional(),
   }),
 })

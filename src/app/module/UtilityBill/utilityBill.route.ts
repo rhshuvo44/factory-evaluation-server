@@ -3,7 +3,7 @@ import auth from '../../middlewares/auth'
 import validateRequest from '../../middlewares/validateRequest'
 import { USER_ROLE } from '../user/user.constant'
 import { utilityController } from './utilityBill.controller'
-import { utilitySchema } from './utilityBill.validation'
+import { utilitySchema, utilityUpdateSchema } from './utilityBill.validation'
 const router = express.Router()
 
 router.post(
@@ -22,5 +22,11 @@ router.get(
     USER_ROLE.managingDirector,
   ),
   utilityController.getUtility,
+)
+router.patch(
+  '/:id',
+  auth(USER_ROLE.admin),
+  validateRequest(utilityUpdateSchema),
+  utilityController.updateUtility,
 )
 export const utilityRouter = router

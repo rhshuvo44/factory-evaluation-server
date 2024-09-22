@@ -1,11 +1,12 @@
 import { format } from 'date-fns'
+import httpStatus from 'http-status'
 import QueryBuilder from '../../builder/QueryBuilder'
-import { TUtility } from './utilityBill.interface'
+import AppError from '../../errors/AppError'
+import { TUtility, TUtilityUpdate } from './utilityBill.interface'
 import { Utility } from './utilityBill.model'
 
 const createUtility = async (payload: TUtility) => {
   const date = new Date(payload.date)
-
   const result = await Utility.create({ ...payload, date })
   return result
 }
@@ -47,7 +48,24 @@ const getUtility = async (query: Record<string, unknown>) => {
     result
   }
 }
+const updateUtility = async (payload: TUtilityUpdate, id: string) => {
+
+  const data = await Utility.findById(id)
+
+  if (!data) {
+    throw new AppError(httpStatus.NOT_FOUND, 'Data not found')
+  }
+  const result = await Utility.findByIdAndUpdate(
+    id,
+    payload,
+    {
+      new: true,
+      runValidators: true,
+    },
+  )
+  return result
+}
 export const utilityService = {
   createUtility,
-  getUtility
+  getUtility, updateUtility
 }

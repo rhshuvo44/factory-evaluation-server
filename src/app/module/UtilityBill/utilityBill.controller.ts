@@ -23,7 +23,18 @@ const getUtility: RequestHandler = catchAsync(async (req, res) => {
     data: result,
   })
 })
+const updateUtility = catchAsync(async (req, res) => {
+  const id = req?.params.id
+  const result = await utilityService.updateUtility(req?.body, id)
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Update Data successfully',
+    data: result,
+  })
+})
 export const utilityController = {
   createUtility,
-  getUtility
+  getUtility, updateUtility
 }
