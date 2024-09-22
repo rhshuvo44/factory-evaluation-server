@@ -9,6 +9,6 @@ export type TUtility = {
     internet: utilities[]
     water: utilities[]
     electricity: utilities[]
-    others: utilities[]
+    others?: utilities[]
 
 }

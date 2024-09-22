@@ -13,7 +13,7 @@ export const utilitySchema = z.object({
         internet: z.array(utilitiesSchema),
         water: z.array(utilitiesSchema),
         electricity: z.array(utilitiesSchema),
-        others: z.array(utilitiesSchema)
+        others: z.array(utilitiesSchema).optional()
     }),
 })
 

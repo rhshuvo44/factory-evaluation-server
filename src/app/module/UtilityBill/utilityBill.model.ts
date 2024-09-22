@@ -5,19 +5,16 @@ import { TUtility, utilities } from "./utilityBill.interface";
 const utilitiesSchema = new Schema<utilities>({
     unitPrice: {
         type: Number,
-        required: true
     },
     totalPrice: {
         type: Number,
-        required: true
     }
-}, { _id: false }); 
+}, { _id: false });
 
 const utilitySchema = new Schema<TUtility>({
     slNo: {
         type: Number,
-        required: true,
-        unique: true 
+        unique: true
     },
     date: {
         type: Date,

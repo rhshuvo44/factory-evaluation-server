@@ -5,6 +5,7 @@ import { loanRouter } from '../module/Loan/loan.route'
 import { miscellaneousRouter } from '../module/miscellaneous/miscellaneous.route'
 import { travelRouter } from '../module/travel/travel.route'
 import { userRouter } from '../module/user/user.route'
+import { utilityRouter } from '../module/UtilityBill/utilityBill.route'
 
 const router = Router()
 const moduleRoutes = [
@@ -31,6 +32,10 @@ const moduleRoutes = [
   {
     path: '/factory-development',
     route: factoryDevelopmentRouter,
+  },
+  {
+    path: '/utility',
+    route: utilityRouter,
   },
 ]
 
