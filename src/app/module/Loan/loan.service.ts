@@ -8,8 +8,8 @@ import { Loan } from './loan.model'
 const createLoan = async (payload: TLoan) => {
     const date = new Date(payload.date)
 
-    const loan = await Loan.create({ ...payload, date })
-    return loan
+    const result = await Loan.create({ ...payload, date })
+    return result
 }
 const getLoan = async (query: Record<string, unknown>) => {
     // Get the current date
@@ -26,7 +26,7 @@ const getLoan = async (query: Record<string, unknown>) => {
         59,
         999,
     )
-    const loanQuery = new QueryBuilder(
+    const dataQuery = new QueryBuilder(
         Loan.find({ date: { $gte: startOfMonth, $lte: endOfMonth } }),
         query,
     )
@@ -35,15 +35,15 @@ const getLoan = async (query: Record<string, unknown>) => {
         .paginate()
         .fields()
 
-    const meta = await loanQuery.countTotal()
-    const loan = await loanQuery.modelQuery
+    const meta = await dataQuery.countTotal()
+    const data = await dataQuery.modelQuery
 
-    const result = loan.map(item => ({
+    const result = data.map(item => ({
         ...item.toObject(),
         date: format(item.date, 'dd-MM-yyyy'), // Format date as 'YYYY-MM-DD'
     }))
     // // Calculate the total price
-    const totalPrice = loan.reduce(
+    const totalPrice = data.reduce(
         (sum, item) => sum + item.totalPrice,
         0,
     )
@@ -62,10 +62,10 @@ const updateLoan = async (
     if (payload?.date) {
         date = new Date(payload?.date)
     }
-    const loan = await Loan.findById(id)
+    const data = await Loan.findById(id)
 
-    if (!loan) {
-        throw new AppError(httpStatus.NOT_FOUND, 'Loan not found')
+    if (!data) {
+        throw new AppError(httpStatus.NOT_FOUND, 'Data not found')
     }
     const result = await Loan.findByIdAndUpdate(
         id,
@@ -78,10 +78,10 @@ const updateLoan = async (
     return result
 }
 const deletedLoan = async (id: string) => {
-    const loan = await Loan.findById(id)
+    const data = await Loan.findById(id)
 
-    if (!loan) {
-        throw new AppError(httpStatus.NOT_FOUND, 'Loan not found')
+    if (!data) {
+        throw new AppError(httpStatus.NOT_FOUND, 'Data not found')
     }
     await Loan.deleteOne({ _id: id })
 }
