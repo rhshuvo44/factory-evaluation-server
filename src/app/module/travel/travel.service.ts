@@ -1,12 +1,14 @@
 import { format } from 'date-fns'
+import httpStatus from 'http-status'
 import QueryBuilder from '../../builder/QueryBuilder'
+import AppError from '../../errors/AppError'
 import { TTravel, TTravelUpdate } from './travel.interface'
 import { Travel } from './travel.model'
 
-const createTravelAllowance = async (travelData: TTravel) => {
-  const date = new Date(travelData.date)
-  const TravelAllowance = await Travel.create({ ...travelData, date })
-  return TravelAllowance
+const createTravelAllowance = async (payload: TTravel) => {
+  const date = new Date(payload.date)
+  const result = await Travel.create({ ...payload, date })
+  return result
 }
 const getTravelAllowance = async (query: Record<string, unknown>) => {
   // Get the current date
@@ -58,14 +60,19 @@ const getTravelAllowance = async (query: Record<string, unknown>) => {
   }
 }
 
-const UpdateTravelAllowance = async (travelData: TTravelUpdate, id: string) => {
+const UpdateTravelAllowance = async (payload: TTravelUpdate, id: string) => {
   let date
-  if (travelData?.date) {
-    date = new Date(travelData?.date)
+  if (payload?.date) {
+    date = new Date(payload?.date)
+  }
+  const travel = await Travel.findById(id)
+
+  if (!travel) {
+    throw new AppError(httpStatus.NOT_FOUND, 'Travel not found')
   }
   const updatedTravelAllowance = await Travel.findByIdAndUpdate(
     id,
-    { ...travelData, date },
+    { ...payload, date },
     {
       new: true,
       runValidators: true,
@@ -74,6 +81,11 @@ const UpdateTravelAllowance = async (travelData: TTravelUpdate, id: string) => {
   return updatedTravelAllowance
 }
 const deletedTravelAllowance = async (id: string) => {
+  const travel = await Travel.findById(id)
+
+  if (!travel) {
+    throw new AppError(httpStatus.NOT_FOUND, 'Travel not found')
+  }
   await Travel.deleteOne({ _id: id })
 }
 export const TravelService = {

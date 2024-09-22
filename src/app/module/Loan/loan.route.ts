@@ -29,5 +29,10 @@ router.patch(
     validateRequest(loanUpdateValidation),
     loanController.updateLoan,
 )
+router.delete(
+    '/:id',
+    auth(USER_ROLE.admin),
+    loanController.deleteLoan,
+)
 
 export const loanRouter = router
