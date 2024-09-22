@@ -32,5 +32,9 @@ router.patch(
   validateRequest(factoryDevelopmentUpdateValidation),
   factoryDevelopmentController.updateFactoryDevelopment,
 )
-router.delete('/:id', auth(USER_ROLE.admin), factoryDevelopmentController.deleteFactoryDevelopment)
+router.delete(
+  '/:id',
+  auth(USER_ROLE.admin),
+  factoryDevelopmentController.deleteFactoryDevelopment,
+)
 export const factoryDevelopmentRouter = router
