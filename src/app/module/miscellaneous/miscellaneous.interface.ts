@@ -13,7 +13,6 @@ export type TMiscellaneous = {
   totalPrice: number
 }
 export type TMiscellaneousUpdate = {
-
   date?: Date
   particulars?: string
   description?: string
