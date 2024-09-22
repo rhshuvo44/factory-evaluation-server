@@ -22,7 +22,15 @@ const getTravelAllowance = async (query: Record<string, unknown>) => {
   //   'dd-MM-yyyy',
   // )
   const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1)
-  const endOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0, 23, 59, 59, 999)
+  const endOfMonth = new Date(
+    now.getFullYear(),
+    now.getMonth() + 1,
+    0,
+    23,
+    59,
+    59,
+    999,
+  )
   const travelQuery = new QueryBuilder(
     Travel.find({ date: { $gte: startOfMonth, $lte: endOfMonth } }),
     query,
@@ -38,8 +46,8 @@ const getTravelAllowance = async (query: Record<string, unknown>) => {
   // Format the dates in the response
   const result = travel.map(item => ({
     ...item.toObject(),
-    date: format(item.date, 'dd-MM-yyyy') // Format date as 'YYYY-MM-DD'
-  }));
+    date: format(item.date, 'dd-MM-yyyy'), // Format date as 'YYYY-MM-DD'
+  }))
   // // Calculate the total price
   const totalPrice = result.reduce((sum, travel) => sum + travel.totalPrice, 0)
 

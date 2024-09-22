@@ -12,8 +12,16 @@ router.post(
     validateRequest(loanValidation),
     loanController.createLoan,
 )
-
-
-
+router.get(
+    '/',
+    auth(
+        USER_ROLE.admin,
+        USER_ROLE.executiveDirector,
+        USER_ROLE.coordinator,
+        USER_ROLE.generalManager,
+        USER_ROLE.managingDirector,
+    ),
+    loanController.getAllLoan,
+)
 
 export const loanRouter = router
