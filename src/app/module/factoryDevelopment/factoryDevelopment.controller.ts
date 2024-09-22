@@ -59,5 +59,5 @@ export const factoryDevelopmentController = {
   createFactoryDevelopment,
   getAllFactoryDevelopment,
   updateFactoryDevelopment,
-  deleteFactoryDevelopment
+  deleteFactoryDevelopment,
 }
