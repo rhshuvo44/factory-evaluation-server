@@ -3,7 +3,7 @@ import auth from '../../middlewares/auth'
 import validateRequest from '../../middlewares/validateRequest'
 import { USER_ROLE } from '../user/user.constant'
 import { factoryDevelopmentController } from './factoryDevelopment.controller'
-import { factoryDevelopmentValidation } from './factoryDevelopment.validation'
+import { factoryDevelopmentUpdateValidation, factoryDevelopmentValidation } from './factoryDevelopment.validation'
 const router = express.Router()
 
 router.post(
@@ -23,5 +23,10 @@ router.get(
     ),
     factoryDevelopmentController.getAllFactoryDevelopment,
 )
-
+router.patch(
+    '/:id',
+    auth(USER_ROLE.admin, USER_ROLE.executiveDirector),
+    validateRequest(factoryDevelopmentUpdateValidation),
+    factoryDevelopmentController.updateFactoryDevelopment,
+)
 export const factoryDevelopmentRouter = router

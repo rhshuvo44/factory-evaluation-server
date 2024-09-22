@@ -1,8 +1,8 @@
+import { RequestHandler } from 'express'
 import httpStatus from 'http-status'
 import catchAsync from '../../utils/catchAsync'
 import sendResponse from '../../utils/sendResponse'
 import { factoryDevelopmentService } from './factoryDevelopment.service'
-import { RequestHandler } from 'express'
 
 const createFactoryDevelopment = catchAsync(async (req, res) => {
     const data = await factoryDevelopmentService.createFactoryDevelopment(req?.body)
@@ -24,8 +24,23 @@ const getAllFactoryDevelopment: RequestHandler = catchAsync(async (req, res) => 
         data: result,
     })
 })
+const updateFactoryDevelopment = catchAsync(async (req, res) => {
+    const id = req?.params.id
+    const result = await factoryDevelopmentService.updateFactoryDevelopment(
+        req?.body,
+        id,
+    )
+
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'Update Data successfully',
+        data: result,
+    })
+})
 export const factoryDevelopmentController = {
     createFactoryDevelopment,
-    getAllFactoryDevelopment
+    getAllFactoryDevelopment,
+    updateFactoryDevelopment
 
 }

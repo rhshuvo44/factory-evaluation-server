@@ -1,7 +1,9 @@
 import { format } from 'date-fns'
 import QueryBuilder from '../../builder/QueryBuilder'
-import { TFactoryDevelopment } from './factoryDevelopment.interface'
+import { TFactoryDevelopment, TFactoryDevelopmentUpdate } from './factoryDevelopment.interface'
 import { FactoryDevelopment } from './factoryDevelopment.model'
+import AppError from '../../errors/AppError'
+import httpStatus from 'http-status'
 
 const createFactoryDevelopment = async (payload: TFactoryDevelopment) => {
     const date = new Date(payload.date)
@@ -52,6 +54,30 @@ const getFactoryDevelopment = async (query: Record<string, unknown>) => {
         totalPrice,
     }
 }
+const updateFactoryDevelopment = async (
+    payload: TFactoryDevelopmentUpdate,
+    id: string,
+) => {
+    let date
+    if (payload?.date) {
+        date = new Date(payload?.date)
+    }
+    
+    const data = await FactoryDevelopment.findById(id)
+
+    if (!data) {
+        throw new AppError(httpStatus.NOT_FOUND, 'Data not found')
+    }
+    const result = await FactoryDevelopment.findByIdAndUpdate(
+        id,
+        { ...payload, date },
+        {
+            new: true,
+            runValidators: true,
+        },
+    )
+    return result
+}
 export const factoryDevelopmentService = {
-    createFactoryDevelopment, getFactoryDevelopment
+    createFactoryDevelopment, getFactoryDevelopment, updateFactoryDevelopment
 }

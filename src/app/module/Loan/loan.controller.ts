@@ -33,7 +33,7 @@ const updateLoan = catchAsync(async (req, res) => {
     sendResponse(res, {
         statusCode: httpStatus.OK,
         success: true,
-        message: 'Update Loan Allowance successfully',
+        message: 'Update Data successfully',
         data: result,
     })
 })
