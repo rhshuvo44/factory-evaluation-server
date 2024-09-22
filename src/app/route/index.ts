@@ -1,8 +1,9 @@
 import { Router } from 'express'
-import { userRouter } from '../module/user/user.route'
 import { AuthRoutes } from '../module/auth/auth.route'
-import { travelRouter } from '../module/travel/travel.route'
+import { loanRouter } from '../module/Loan/loan.route'
 import { miscellaneousRouter } from '../module/miscellaneous/miscellaneous.route'
+import { travelRouter } from '../module/travel/travel.route'
+import { userRouter } from '../module/user/user.route'
 
 const router = Router()
 const moduleRoutes = [
@@ -21,6 +22,10 @@ const moduleRoutes = [
   {
     path: '/miscellaneous',
     route: miscellaneousRouter,
+  },
+  {
+    path: '/loan-return',
+    route: loanRouter,
   },
 ]
 

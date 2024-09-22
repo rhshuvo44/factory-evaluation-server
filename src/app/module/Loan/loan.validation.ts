@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-export const miscellaneousValidation = z.object({
+export const loanValidation = z.object({
     body: z.object({
         date: z.string(),
         particulars: z.string(),
