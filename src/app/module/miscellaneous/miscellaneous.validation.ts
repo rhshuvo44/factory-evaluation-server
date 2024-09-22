@@ -2,7 +2,7 @@ import { z } from 'zod'
 
 export const miscellaneousValidation = z.object({
   body: z.object({
-    date: z.string(),
+    date: z.date(),
     particulars: z.string(),
     description: z.string(),
     remark: z.string().optional(),

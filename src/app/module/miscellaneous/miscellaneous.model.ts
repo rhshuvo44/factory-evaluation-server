@@ -4,7 +4,7 @@ import { TMiscellaneous } from './miscellaneous.interface'
 const miscellaneousSchema = new Schema<TMiscellaneous>(
   {
     slNo: { type: Number, unique: true },
-    date: { type: String, required: true },
+    date: { type: Date, required: true },
     particulars: { type: String, required: true },
     description: { type: String, required: true },
     remark: { type: String },
