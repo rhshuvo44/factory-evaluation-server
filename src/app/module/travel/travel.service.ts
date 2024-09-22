@@ -11,37 +11,31 @@ const getTravelAllowance = async (query: Record<string, unknown>) => {
   // Get the current date
   const now = new Date()
   // Calculate the first and last day of the current month
-  const startOfMonth = format(new Date(now.getFullYear(), now.getMonth(), 1), 'dd-MM-yyyy')
+  const startOfMonth = format(
+    new Date(now.getFullYear(), now.getMonth(), 1),
+    'dd-MM-yyyy',
+  )
 
-  const endOfMonth = format(new Date(
-    now.getFullYear(),
-    now.getMonth() + 1,
-    0,
-    23,
-    59,
-    59,
-    999,
-  ), 'dd-MM-yyyy')
+  const endOfMonth = format(
+    new Date(now.getFullYear(), now.getMonth() + 1, 0, 23, 59, 59, 999),
+    'dd-MM-yyyy',
+  )
   const travelQuery = new QueryBuilder(
     Travel.find({ date: { $gte: startOfMonth, $lte: endOfMonth } }),
-    query
-
-  ).filter()
+    query,
+  )
+    .filter()
     .sort()
     .paginate()
-    .fields();
+    .fields()
 
-  const meta = await travelQuery.countTotal();
-  const result = await travelQuery.modelQuery;
-
+  const meta = await travelQuery.countTotal()
+  const result = await travelQuery.modelQuery
 
   // Format the dates in the response
 
   // // Calculate the total price
-  const totalPrice = result.reduce(
-    (sum, travel) => sum + travel.totalPrice,
-    0,
-  )
+  const totalPrice = result.reduce((sum, travel) => sum + travel.totalPrice, 0)
 
   return {
     meta,
@@ -68,5 +62,5 @@ export const TravelService = {
   createTravelAllowance,
   getTravelAllowance,
   UpdateTravelAllowance,
-  deletedTravelAllowance
+  deletedTravelAllowance,
 }
