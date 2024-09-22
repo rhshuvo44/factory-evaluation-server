@@ -1,5 +1,6 @@
 import { Router } from 'express'
 import { AuthRoutes } from '../module/auth/auth.route'
+import { factoryDevelopmentRouter } from '../module/factoryDevelopment/factoryDevelopment.route'
 import { loanRouter } from '../module/Loan/loan.route'
 import { miscellaneousRouter } from '../module/miscellaneous/miscellaneous.route'
 import { travelRouter } from '../module/travel/travel.route'
@@ -26,6 +27,10 @@ const moduleRoutes = [
   {
     path: '/loan-return',
     route: loanRouter,
+  },
+  {
+    path: '/factory-development',
+    route: factoryDevelopmentRouter,
   },
 ]
 
