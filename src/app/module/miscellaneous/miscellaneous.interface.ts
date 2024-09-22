@@ -1,6 +1,6 @@
 export type TMiscellaneous = {
   slNo: number
-  date: string
+  date: Date
   particulars: string
   description: string
   remark?: string
@@ -14,7 +14,7 @@ export type TMiscellaneous = {
 }
 export type TMiscellaneousUpdate = {
 
-  date?: string
+  date?: Date
   particulars?: string
   description?: string
   remark?: string

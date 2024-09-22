@@ -33,4 +33,9 @@ router.patch(
   validateRequest(miscellaneousUpdateValidation),
   miscellaneousController.updateMiscellaneous,
 )
+router.delete(
+  '/:id',
+  auth(USER_ROLE.admin),
+  miscellaneousController.deleteMiscellaneous,
+)
 export const miscellaneousRouter = router
