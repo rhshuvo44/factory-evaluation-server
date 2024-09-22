@@ -12,7 +12,6 @@ export type TUtility = {
   others?: utilities[]
 }
 export type TUtilityUpdate = {
-
   internet?: utilities[]
   water?: utilities[]
   electricity?: utilities[]

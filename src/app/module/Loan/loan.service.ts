@@ -27,7 +27,9 @@ const getLoan = async (query: Record<string, unknown>) => {
     999,
   )
   const dataQuery = new QueryBuilder(
-    Loan.find({ date: { $gte: startOfMonth, $lte: endOfMonth } }).sort({ slNo: 1 }),
+    Loan.find({ date: { $gte: startOfMonth, $lte: endOfMonth } }).sort({
+      slNo: 1,
+    }),
     query,
   )
     .filter()
