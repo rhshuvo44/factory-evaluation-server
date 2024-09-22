@@ -30,7 +30,9 @@ const getFactoryDevelopment = async (query: Record<string, unknown>) => {
     999,
   )
   const dataQuery = new QueryBuilder(
-    FactoryDevelopment.find({ date: { $gte: startOfMonth, $lte: endOfMonth } }).sort({ slNo: 1 }),
+    FactoryDevelopment.find({
+      date: { $gte: startOfMonth, $lte: endOfMonth },
+    }).sort({ slNo: 1 }),
     query,
   )
     .filter()

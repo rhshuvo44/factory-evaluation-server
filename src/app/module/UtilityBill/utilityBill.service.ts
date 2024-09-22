@@ -26,7 +26,9 @@ const getUtility = async (query: Record<string, unknown>) => {
     999,
   )
   const dataQuery = new QueryBuilder(
-    Utility.find({ date: { $gte: startOfMonth, $lte: endOfMonth } }).sort({ slNo: 1 }),
+    Utility.find({ date: { $gte: startOfMonth, $lte: endOfMonth } }).sort({
+      slNo: 1,
+    }),
     query,
   )
     .filter()
@@ -42,27 +44,21 @@ const getUtility = async (query: Record<string, unknown>) => {
     date: format(item.date, 'dd-MM-yyyy'), // Format date as 'YYYY-MM-DD'
   }))
 
-
   return {
     meta,
-    result
+    result,
   }
 }
 const updateUtility = async (payload: TUtilityUpdate, id: string) => {
-
   const data = await Utility.findById(id)
 
   if (!data) {
     throw new AppError(httpStatus.NOT_FOUND, 'Data not found')
   }
-  const result = await Utility.findByIdAndUpdate(
-    id,
-    payload,
-    {
-      new: true,
-      runValidators: true,
-    },
-  )
+  const result = await Utility.findByIdAndUpdate(id, payload, {
+    new: true,
+    runValidators: true,
+  })
   return result
 }
 const deletedUtility = async (id: string) => {
@@ -75,5 +71,7 @@ const deletedUtility = async (id: string) => {
 }
 export const utilityService = {
   createUtility,
-  getUtility, updateUtility, deletedUtility
+  getUtility,
+  updateUtility,
+  deletedUtility,
 }

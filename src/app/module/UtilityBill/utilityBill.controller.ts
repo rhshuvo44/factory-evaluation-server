@@ -47,5 +47,7 @@ const deletedUtility = catchAsync(async (req, res) => {
 })
 export const utilityController = {
   createUtility,
-  getUtility, updateUtility, deletedUtility
+  getUtility,
+  updateUtility,
+  deletedUtility,
 }

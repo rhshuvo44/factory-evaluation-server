@@ -11,6 +11,7 @@ const router = express.Router()
 
 router.post(
   '/create-user',
+  auth(USER_ROLE.admin),
   validateRequest(userCreateValidationSchema),
   userController.signup,
 )

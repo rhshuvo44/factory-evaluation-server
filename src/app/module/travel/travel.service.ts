@@ -34,7 +34,9 @@ const getTravelAllowance = async (query: Record<string, unknown>) => {
     999,
   )
   const travelQuery = new QueryBuilder(
-    Travel.find({ date: { $gte: startOfMonth, $lte: endOfMonth } }).sort({ slNo: 1 }),
+    Travel.find({ date: { $gte: startOfMonth, $lte: endOfMonth } }).sort({
+      slNo: 1,
+    }),
     query,
   )
     .filter()
