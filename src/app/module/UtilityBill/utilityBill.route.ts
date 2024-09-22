@@ -29,4 +29,6 @@ router.patch(
   validateRequest(utilityUpdateSchema),
   utilityController.updateUtility,
 )
+router.delete('/:id', auth(USER_ROLE.admin), utilityController.deletedUtility)
+
 export const utilityRouter = router

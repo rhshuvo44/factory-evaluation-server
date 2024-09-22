@@ -65,7 +65,15 @@ const updateUtility = async (payload: TUtilityUpdate, id: string) => {
   )
   return result
 }
+const deletedUtility = async (id: string) => {
+  const data = await Utility.findById(id)
+
+  if (!data) {
+    throw new AppError(httpStatus.NOT_FOUND, 'Data not found')
+  }
+  await Utility.deleteOne({ _id: id })
+}
 export const utilityService = {
   createUtility,
-  getUtility, updateUtility
+  getUtility, updateUtility, deletedUtility
 }

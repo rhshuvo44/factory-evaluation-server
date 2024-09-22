@@ -1,8 +1,8 @@
+import { RequestHandler } from 'express'
 import httpStatus from 'http-status'
 import catchAsync from '../../utils/catchAsync'
 import sendResponse from '../../utils/sendResponse'
 import { utilityService } from './utilityBill.service'
-import { RequestHandler } from 'express'
 
 const createUtility = catchAsync(async (req, res) => {
   const data = await utilityService.createUtility(req?.body)
@@ -34,7 +34,18 @@ const updateUtility = catchAsync(async (req, res) => {
     data: result,
   })
 })
+const deletedUtility = catchAsync(async (req, res) => {
+  const id = req?.params.id
+  await utilityService.deletedUtility(id)
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Deleted Data successfully',
+    data: null,
+  })
+})
 export const utilityController = {
   createUtility,
-  getUtility, updateUtility
+  getUtility, updateUtility, deletedUtility
 }
