@@ -1,14 +1,28 @@
 export type TMiscellaneous = {
-    slNo: number
-    date: string
-    particulars: string
-    description: string
-    remark?: string
-    buyerId?: string
-    orderNo?: string
-    payTo: string
-    paymentType: 'Monthly' | 'Daily' | 'Once'
-    unit?: string
-    unitPrice: number
-    totalPrice: number
+  slNo: number
+  date: string
+  particulars: string
+  description: string
+  remark?: string
+  buyerId?: string
+  orderNo?: string
+  payTo: string
+  paymentType: 'Monthly' | 'Daily' | 'Once'
+  unit?: string
+  unitPrice: number
+  totalPrice: number
+}
+export type TMiscellaneousUpdate = {
+
+  date?: string
+  particulars?: string
+  description?: string
+  remark?: string
+  buyerId?: string
+  orderNo?: string
+  payTo?: string
+  paymentType?: 'Monthly' | 'Daily' | 'Once'
+  unit?: string
+  unitPrice?: number
+  totalPrice?: number
 }
