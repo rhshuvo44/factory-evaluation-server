@@ -4,22 +4,25 @@ import { TTravel, TTravelUpdate } from './travel.interface'
 import { Travel } from './travel.model'
 
 const createTravelAllowance = async (travelData: TTravel) => {
-  const TravelAllowance = await Travel.create(travelData)
+  const date = new Date(travelData.date)
+  const TravelAllowance = await Travel.create({ ...travelData, date })
   return TravelAllowance
 }
 const getTravelAllowance = async (query: Record<string, unknown>) => {
   // Get the current date
   const now = new Date()
   // Calculate the first and last day of the current month
-  const startOfMonth = format(
-    new Date(now.getFullYear(), now.getMonth(), 1),
-    'dd-MM-yyyy',
-  )
+  // const startOfMonth = format(
+  //   new Date(now.getFullYear(), now.getMonth(), 1),
+  //   'dd-MM-yyyy',
+  // )
 
-  const endOfMonth = format(
-    new Date(now.getFullYear(), now.getMonth() + 1, 0, 23, 59, 59, 999),
-    'dd-MM-yyyy',
-  )
+  // const endOfMonth = format(
+  //   new Date(now.getFullYear(), now.getMonth() + 1, 0, 23, 59, 59, 999),
+  //   'dd-MM-yyyy',
+  // )
+  const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1)
+  const endOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0, 23, 59, 59, 999)
   const travelQuery = new QueryBuilder(
     Travel.find({ date: { $gte: startOfMonth, $lte: endOfMonth } }),
     query,
@@ -30,10 +33,13 @@ const getTravelAllowance = async (query: Record<string, unknown>) => {
     .fields()
 
   const meta = await travelQuery.countTotal()
-  const result = await travelQuery.modelQuery
+  const travel = await travelQuery.modelQuery
 
   // Format the dates in the response
-
+  const result = travel.map(item => ({
+    ...item.toObject(),
+    date: format(item.date, 'dd-MM-yyyy') // Format date as 'YYYY-MM-DD'
+  }));
   // // Calculate the total price
   const totalPrice = result.reduce((sum, travel) => sum + travel.totalPrice, 0)
 
@@ -45,9 +51,13 @@ const getTravelAllowance = async (query: Record<string, unknown>) => {
 }
 
 const UpdateTravelAllowance = async (travelData: TTravelUpdate, id: string) => {
+  let date
+  if (travelData?.date) {
+    date = new Date(travelData?.date)
+  }
   const updatedTravelAllowance = await Travel.findByIdAndUpdate(
     id,
-    travelData,
+    { ...travelData, date },
     {
       new: true,
       runValidators: true,
