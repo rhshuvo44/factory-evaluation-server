@@ -3,7 +3,7 @@ import auth from '../../middlewares/auth'
 import validateRequest from '../../middlewares/validateRequest'
 import { USER_ROLE } from '../user/user.constant'
 import { loanController } from './loan.controller'
-import { loanValidation } from './loan.validation'
+import { loanUpdateValidation, loanValidation } from './loan.validation'
 const router = express.Router()
 
 router.post(
@@ -22,6 +22,12 @@ router.get(
         USER_ROLE.managingDirector,
     ),
     loanController.getAllLoan,
+)
+router.patch(
+    '/:id',
+    auth(USER_ROLE.admin, USER_ROLE.executiveDirector),
+    validateRequest(loanUpdateValidation),
+    loanController.updateLoan,
 )
 
 export const loanRouter = router

@@ -23,7 +23,21 @@ const getAllLoan: RequestHandler = catchAsync(async (req, res) => {
         data: loan,
     })
 })
+const updateLoan = catchAsync(async (req, res) => {
+    const id = req?.params.id
+    const result = await loanService.updateLoan(
+        req?.body,
+        id,
+    )
+
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'Update Loan Allowance successfully',
+        data: result,
+    })
+})
 export const loanController = {
     createLoan,
-    getAllLoan
+    getAllLoan, updateLoan
 }

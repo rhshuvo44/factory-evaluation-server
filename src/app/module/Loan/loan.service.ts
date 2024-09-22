@@ -1,6 +1,6 @@
 import { format } from 'date-fns'
 import QueryBuilder from '../../builder/QueryBuilder'
-import { TLoan } from './loan.interface'
+import { TLoan, TLoanUpdate } from './loan.interface'
 import { Loan } from './loan.model'
 
 const createLoan = async (payload: TLoan) => {
@@ -52,8 +52,25 @@ const getLoan = async (query: Record<string, unknown>) => {
         totalPrice,
     }
 }
-
+const updateLoan = async (
+    payload: TLoanUpdate,
+    id: string,
+) => {
+    let date
+    if (payload?.date) {
+        date = new Date(payload?.date)
+    }
+    const result = await Loan.findByIdAndUpdate(
+        id,
+        { ...payload, date },
+        {
+            new: true,
+            runValidators: true,
+        },
+    )
+    return result
+}
 export const loanService = {
     createLoan,
-    getLoan
+    getLoan, updateLoan
 }
