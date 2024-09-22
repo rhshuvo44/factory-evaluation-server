@@ -7,32 +7,28 @@ import { loanUpdateValidation, loanValidation } from './loan.validation'
 const router = express.Router()
 
 router.post(
-    '/',
-    auth(USER_ROLE.admin, USER_ROLE.executiveDirector),
-    validateRequest(loanValidation),
-    loanController.createLoan,
+  '/',
+  auth(USER_ROLE.admin, USER_ROLE.executiveDirector),
+  validateRequest(loanValidation),
+  loanController.createLoan,
 )
 router.get(
-    '/',
-    auth(
-        USER_ROLE.admin,
-        USER_ROLE.executiveDirector,
-        USER_ROLE.coordinator,
-        USER_ROLE.generalManager,
-        USER_ROLE.managingDirector,
-    ),
-    loanController.getAllLoan,
+  '/',
+  auth(
+    USER_ROLE.admin,
+    USER_ROLE.executiveDirector,
+    USER_ROLE.coordinator,
+    USER_ROLE.generalManager,
+    USER_ROLE.managingDirector,
+  ),
+  loanController.getAllLoan,
 )
 router.patch(
-    '/:id',
-    auth(USER_ROLE.admin, USER_ROLE.executiveDirector),
-    validateRequest(loanUpdateValidation),
-    loanController.updateLoan,
+  '/:id',
+  auth(USER_ROLE.admin, USER_ROLE.executiveDirector),
+  validateRequest(loanUpdateValidation),
+  loanController.updateLoan,
 )
-router.delete(
-    '/:id',
-    auth(USER_ROLE.admin),
-    loanController.deleteLoan,
-)
+router.delete('/:id', auth(USER_ROLE.admin), loanController.deleteLoan)
 
 export const loanRouter = router
