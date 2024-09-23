@@ -3,7 +3,7 @@ import { z } from 'zod'
 export const userCreateValidationSchema = z.object({
   body: z.object({
     name: z.string().min(1, 'Name is required'),
-    userName: z.string().min(1, 'UserName is required'),
+    username: z.string().min(1, 'UserName is required'),
     email: z.string().email('Invalid email address'),
     role: z
       .enum([
@@ -23,7 +23,7 @@ export const userCreateValidationSchema = z.object({
 export const userUpdateValidationSchema = z.object({
   body: z.object({
     name: z.string().optional(),
-    userName: z.string().optional(),
+    username: z.string().optional(),
     email: z.string().optional(),
     role: z
       .enum([
