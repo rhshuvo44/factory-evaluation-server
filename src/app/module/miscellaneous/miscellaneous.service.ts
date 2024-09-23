@@ -38,7 +38,11 @@ const getMiscellaneous = async (query: Record<string, unknown>) => {
     999,
   )
   const miscellaneousQuery = new QueryBuilder(
-    Miscellaneous.find({ date: { $gte: startOfMonth, $lte: endOfMonth } }),
+    Miscellaneous.find({ date: { $gte: startOfMonth, $lte: endOfMonth } }).sort(
+      {
+        slNo: 1,
+      },
+    ),
     query,
   )
     .filter()

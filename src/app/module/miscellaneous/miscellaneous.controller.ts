@@ -35,7 +35,7 @@ const updateMiscellaneous = catchAsync(async (req, res) => {
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'Update Miscellaneous Allowance successfully',
+    message: 'Update Miscellaneous successfully',
     data: miscellaneous,
   })
 })
