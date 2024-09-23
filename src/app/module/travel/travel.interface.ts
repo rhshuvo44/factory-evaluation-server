@@ -4,11 +4,12 @@ export type TTravel = {
   particulars: string
   description: string
   remark?: string
-  buyerId?: string
-  orderNo?: string
+  buyerId?: number
+  orderNo?: number
+  memoNo?: number
   payTo: string
   paymentType: 'Monthly' | 'Daily' | 'Once'
-  unit?: string
+  unit?: number
   unitPrice: number
   totalPrice: number
 }
@@ -18,11 +19,12 @@ export type TTravelUpdate = {
   particulars?: string
   description?: string
   remark?: string
-  buyerId?: string
-  orderNo?: string
+  buyerId?: number
+  orderNo?: number
+  memoNo?: number
   payTo?: string
   paymentType?: 'Monthly' | 'Daily' | 'Once'
-  unit?: string
+  unit?: number
   unitPrice?: number
   totalPrice?: number
 }
