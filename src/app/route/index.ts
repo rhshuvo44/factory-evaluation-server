@@ -1,6 +1,7 @@
 import { Router } from 'express'
 import { AuthRoutes } from '../module/auth/auth.route'
 import { buyerDevelopmentRouter } from '../module/buyerDevelopment/buyerDevelopment.route'
+import { collectionRouter } from '../module/Collection/collection.route'
 import { factoryDevelopmentRouter } from '../module/factoryDevelopment/factoryDevelopment.route'
 import { loanRouter } from '../module/Loan/loan.route'
 import { miscellaneousRouter } from '../module/miscellaneous/miscellaneous.route'
@@ -41,6 +42,10 @@ const moduleRoutes = [
   {
     path: '/utility',
     route: utilityRouter,
+  },
+  {
+    path: '/collection',
+    route: collectionRouter,
   },
 ]
 
