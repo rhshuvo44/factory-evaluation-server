@@ -1,5 +1,6 @@
 import { Router } from 'express'
 import { AuthRoutes } from '../module/auth/auth.route'
+import { buyerDevelopmentRouter } from '../module/buyerDevelopment/buyerDevelopment.route'
 import { factoryDevelopmentRouter } from '../module/factoryDevelopment/factoryDevelopment.route'
 import { loanRouter } from '../module/Loan/loan.route'
 import { miscellaneousRouter } from '../module/miscellaneous/miscellaneous.route'
@@ -32,6 +33,10 @@ const moduleRoutes = [
   {
     path: '/factory-development',
     route: factoryDevelopmentRouter,
+  },
+  {
+    path: '/buyer-development',
+    route: buyerDevelopmentRouter,
   },
   {
     path: '/utility',
