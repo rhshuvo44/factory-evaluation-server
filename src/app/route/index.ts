@@ -3,6 +3,7 @@ import { AuthRoutes } from '../module/auth/auth.route'
 import { buyerDevelopmentRouter } from '../module/buyerDevelopment/buyerDevelopment.route'
 import { collectionRouter } from '../module/Collection/collection.route'
 import { factoryDevelopmentRouter } from '../module/factoryDevelopment/factoryDevelopment.route'
+import { fixedCostRouter } from '../module/fixedCost/fixedCost.route'
 import { loanRouter } from '../module/Loan/loan.route'
 import { miscellaneousRouter } from '../module/miscellaneous/miscellaneous.route'
 import { travelRouter } from '../module/travel/travel.route'
@@ -46,6 +47,10 @@ const moduleRoutes = [
   {
     path: '/collection',
     route: collectionRouter,
+  },
+  {
+    path: '/fixed-cost',
+    route: fixedCostRouter,
   },
 ]
 
