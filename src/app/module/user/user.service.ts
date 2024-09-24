@@ -19,11 +19,7 @@ const createUser = async (userData: TUser) => {
   return newUser
 }
 const allUsers = async (query: Record<string, unknown>) => {
-
-  const dataQuery = new QueryBuilder(
-    User.find().select('-password'),
-    query,
-  )
+  const dataQuery = new QueryBuilder(User.find().select('-password'), query)
     .filter()
     .sort()
     .paginate()
@@ -41,10 +37,6 @@ const allUsers = async (query: Record<string, unknown>) => {
     meta,
     result,
   }
-
-
-
-
 }
 const updateUser = async (userData: TUserUpdate, id: string) => {
   const user = await User.findById(id)
