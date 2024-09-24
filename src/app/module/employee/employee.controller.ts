@@ -5,7 +5,7 @@ import sendResponse from '../../utils/sendResponse'
 import { employeeService } from './employee.service'
 
 const createEmployee = catchAsync(async (req, res) => {
-  const data = await employeeService.createEmployee(req?.body)
+  const data = await employeeService.createEmployee(req?.file, req?.body)
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,

@@ -1,10 +1,20 @@
 import httpStatus from 'http-status'
 import QueryBuilder from '../../builder/QueryBuilder'
 import AppError from '../../errors/AppError'
+import { sendImageToCloudinary } from '../../utils/sendImageToCloudinary'
 import { TEmployee, TEmployeeUpdate } from './employee.interface'
 import { Employee } from './employee.model'
 
-const createEmployee = async (payload: TEmployee) => {
+const createEmployee = async (file: any, payload: TEmployee) => {
+  if (file) {
+    const imageName = payload?.name
+    const path = file?.path
+
+    //send image to cloudinary
+    const { secure_url } = await sendImageToCloudinary(imageName, path)
+
+    payload.photo = secure_url as string
+  }
   const result = await Employee.create(payload)
   return result
 }
