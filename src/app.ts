@@ -18,7 +18,7 @@ app.use('/api', router)
 
 // root route
 app.get('/', (req: Request, res: Response) => {
-  res.send('Factory Evaluation')
+  res.send('Factory Evaluation Server')
 })
 //Not Found
 app.use(notFound)
