@@ -2,6 +2,7 @@ import httpStatus from 'http-status'
 import catchAsync from '../../utils/catchAsync'
 import sendResponse from '../../utils/sendResponse'
 import { userService } from './user.service'
+import { RequestHandler } from 'express'
 
 const signup = catchAsync(async (req, res) => {
   const newUser = await userService.createUser(req?.body)
@@ -13,8 +14,8 @@ const signup = catchAsync(async (req, res) => {
     data: newUser,
   })
 })
-const allUser = catchAsync(async (req, res) => {
-  const users = await userService.allUsers()
+const allUser: RequestHandler = catchAsync(async (req, res) => {
+  const users = await userService.allUsers(req?.query,)
 
   sendResponse(res, {
     statusCode: httpStatus.OK,

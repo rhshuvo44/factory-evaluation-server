@@ -1,3 +1,4 @@
+import QueryBuilder from '../../builder/QueryBuilder'
 import AppError from '../../errors/AppError'
 import { TUser, TUserUpdate } from './user.interface'
 import { User } from './user.model'
@@ -17,14 +18,33 @@ const createUser = async (userData: TUser) => {
   )
   return newUser
 }
-const allUsers = async () => {
-  const users = await User.find().select('-password')
+const allUsers = async (query: Record<string, unknown>) => {
+
+  const dataQuery = new QueryBuilder(
+    User.find().select('-password'),
+    query,
+  )
+    .filter()
+    .sort()
+    .paginate()
+    .fields()
+
+  const meta = await dataQuery.countTotal()
+  const result = await dataQuery.modelQuery
+
   //! user check
-  if (!users) {
+  if (!result) {
     throw new AppError(400, 'User not found')
   }
 
-  return users
+  return {
+    meta,
+    result,
+  }
+
+
+
+
 }
 const updateUser = async (userData: TUserUpdate, id: string) => {
   const user = await User.findById(id)
