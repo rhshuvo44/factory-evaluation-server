@@ -1,8 +1,8 @@
+import { RequestHandler } from 'express'
 import httpStatus from 'http-status'
 import catchAsync from '../../utils/catchAsync'
 import sendResponse from '../../utils/sendResponse'
 import { userService } from './user.service'
-import { RequestHandler } from 'express'
 
 const signup = catchAsync(async (req, res) => {
   const newUser = await userService.createUser(req?.body)
@@ -22,6 +22,17 @@ const allUser: RequestHandler = catchAsync(async (req, res) => {
     success: true,
     message: 'All Users fetch successfully',
     data: users,
+  })
+})
+const getMe = catchAsync(async (req, res) => {
+  const { userId } = req.user
+  const result = await userService.getMe(userId)
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'User is retrieved succesfully',
+    data: result,
   })
 })
 const logout = catchAsync(async (req, res) => {
@@ -62,4 +73,5 @@ export const userController = {
   logout,
   userUpdate,
   userDelete,
+  getMe,
 }

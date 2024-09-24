@@ -16,4 +16,4 @@ The **Factory Evaluation - SMD** project aims to develop a monolithic REST syste
 
 <!-- ## Backend Architecture -->
 
-- **Live Link**: [Click Me](https://factory-backend.vercel.app/)
+**Live Link**: [Click Me](https://factory-backend.vercel.app/)

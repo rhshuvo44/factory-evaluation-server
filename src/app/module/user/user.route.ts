@@ -24,5 +24,16 @@ router.patch(
 )
 router.delete('/:id', auth(USER_ROLE.admin), userController.userDelete)
 router.post('/logout', userController.logout)
+router.get(
+  '/me',
+  auth(
+    USER_ROLE.admin,
+    USER_ROLE.coordinator,
+    USER_ROLE.executiveDirector,
+    USER_ROLE.generalManager,
+    USER_ROLE.managingDirector,
+  ),
+  userController.getMe,
+)
 
 export const userRouter = router

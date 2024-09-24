@@ -38,6 +38,11 @@ const allUsers = async (query: Record<string, unknown>) => {
     result,
   }
 }
+const getMe = async (userId: string) => {
+  const result = await User.findOne({ _id: userId }).select('-password')
+
+  return result
+}
 const updateUser = async (userData: TUserUpdate, id: string) => {
   const user = await User.findById(id)
   //! user check
@@ -71,4 +76,5 @@ export const userService = {
   allUsers,
   updateUser,
   deleteUser,
+  getMe,
 }
