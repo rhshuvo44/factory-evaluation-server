@@ -61,15 +61,7 @@ const deleteUser = async (id: string) => {
     throw new AppError(400, 'User not found')
   }
   // Update  user data
-  await User.findByIdAndUpdate(
-    id,
-    {
-      isDeleted: true,
-    },
-    { new: true, runValidators: true },
-  )
-  const userDelete = await User.findById(id).select('-password')
-  return userDelete
+  await User.deleteOne({ _id: id })
 }
 export const userService = {
   createUser,
