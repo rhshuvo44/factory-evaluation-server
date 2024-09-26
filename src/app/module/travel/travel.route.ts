@@ -23,6 +23,14 @@ router.get(
   ),
   travelController.getAllTravellingAllowance,
 )
+router.get(
+  '/:id',
+  auth(
+    USER_ROLE.admin,
+    USER_ROLE.executiveDirector,
+  ),
+  travelController.getSingleTravellingAllowance,
+)
 router.patch(
   '/:id',
   auth(USER_ROLE.admin, USER_ROLE.executiveDirector),

@@ -61,6 +61,16 @@ const getTravelAllowance = async (query: Record<string, unknown>) => {
     totalPrice,
   }
 }
+const getSingleTravelAllowance = async (id: string) => {
+
+
+  const result = Travel.findById(id)
+  if (!result) {
+    throw new AppError(httpStatus.NOT_FOUND, 'Travel not found')
+  }
+
+  return result
+}
 
 const UpdateTravelAllowance = async (payload: TTravelUpdate, id: string) => {
   let date
@@ -95,4 +105,5 @@ export const TravelService = {
   getTravelAllowance,
   UpdateTravelAllowance,
   deletedTravelAllowance,
+  getSingleTravelAllowance
 }

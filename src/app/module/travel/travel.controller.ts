@@ -29,6 +29,21 @@ const getAllTravellingAllowance: RequestHandler = catchAsync(
     })
   },
 )
+const getSingleTravellingAllowance: RequestHandler = catchAsync(
+  async (req, res) => {
+    const id: string = req?.params.id
+    const TravellingAllowances = await TravelService.getSingleTravelAllowance(
+      id,
+    )
+
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: 'Get All Travelling Allowance successfully',
+      data: TravellingAllowances,
+    })
+  },
+)
 const updateTravellingAllowance = catchAsync(async (req, res) => {
   const id: string = req?.params.id
   const TravellingAllowances = await TravelService.UpdateTravelAllowance(
@@ -59,4 +74,5 @@ export const travelController = {
   getAllTravellingAllowance,
   updateTravellingAllowance,
   deleteTravellingAllowance,
+  getSingleTravellingAllowance
 }
