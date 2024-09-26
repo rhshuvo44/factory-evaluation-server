@@ -96,6 +96,6 @@ export const sendEmail = async (to: string, resetLink: string) => {
 </body>
 
 </html>
-    `// html body
+    `, // html body
   })
 }

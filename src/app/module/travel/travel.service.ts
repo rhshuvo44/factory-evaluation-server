@@ -62,8 +62,6 @@ const getTravelAllowance = async (query: Record<string, unknown>) => {
   }
 }
 const getSingleTravelAllowance = async (id: string) => {
-
-
   const result = Travel.findById(id)
   if (!result) {
     throw new AppError(httpStatus.NOT_FOUND, 'Travel not found')
@@ -105,5 +103,5 @@ export const TravelService = {
   getTravelAllowance,
   UpdateTravelAllowance,
   deletedTravelAllowance,
-  getSingleTravelAllowance
+  getSingleTravelAllowance,
 }

@@ -25,10 +25,7 @@ router.get(
 )
 router.get(
   '/:id',
-  auth(
-    USER_ROLE.admin,
-    USER_ROLE.executiveDirector,
-  ),
+  auth(USER_ROLE.admin, USER_ROLE.executiveDirector),
   travelController.getSingleTravellingAllowance,
 )
 router.patch(

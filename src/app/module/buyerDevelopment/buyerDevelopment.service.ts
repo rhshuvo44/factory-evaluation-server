@@ -56,6 +56,15 @@ const getBuyerDevelopment = async (query: Record<string, unknown>) => {
     totalPrice,
   }
 }
+const getSingleBuyerDevelopment = async (id: string) => {
+  const data = await BuyerDevelopment.findById(id)
+
+  if (!data) {
+    throw new AppError(httpStatus.NOT_FOUND, 'Data not found')
+  }
+
+  return data
+}
 const updateBuyerDevelopment = async (
   payload: TBuyerDevelopmentUpdate,
   id: string,
@@ -93,4 +102,5 @@ export const buyerDevelopmentService = {
   getBuyerDevelopment,
   updateBuyerDevelopment,
   deletedBuyerDevelopment,
+  getSingleBuyerDevelopment,
 }

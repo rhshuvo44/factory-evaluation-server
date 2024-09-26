@@ -38,6 +38,17 @@ const updateBuyerDevelopment = catchAsync(async (req, res) => {
     data: result,
   })
 })
+const getSingleBuyerDevelopment = catchAsync(async (req, res) => {
+  const id = req?.params.id
+  const result = await buyerDevelopmentService.getSingleBuyerDevelopment(id)
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'get Single Data successfully',
+    data: result,
+  })
+})
 const deleteBuyerDevelopment = catchAsync(async (req, res) => {
   const id = req?.params.id
   await buyerDevelopmentService.deletedBuyerDevelopment(id)
@@ -54,4 +65,5 @@ export const buyerDevelopmentController = {
   getAllBuyerDevelopment,
   updateBuyerDevelopment,
   deleteBuyerDevelopment,
+  getSingleBuyerDevelopment,
 }

@@ -11,7 +11,7 @@ const auth = (...requiredRoles: TUserRole[]) => {
   return catchAsync(async (req: Request, res: Response, next: NextFunction) => {
     // const authorization = req.headers.authorization
     const authHeader = req.headers['authorization']
-    
+
     // const token = authorization.split(' ')[1]
     let token
     if (authHeader) {

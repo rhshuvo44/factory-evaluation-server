@@ -27,6 +27,11 @@ router.get(
   ),
   buyerDevelopmentController.getAllBuyerDevelopment,
 )
+router.get(
+  '/:id',
+  auth(USER_ROLE.admin, USER_ROLE.executiveDirector),
+  buyerDevelopmentController.getSingleBuyerDevelopment,
+)
 router.patch(
   '/:id',
   auth(USER_ROLE.admin, USER_ROLE.executiveDirector),
