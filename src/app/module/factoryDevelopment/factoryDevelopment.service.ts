@@ -56,6 +56,15 @@ const getFactoryDevelopment = async (query: Record<string, unknown>) => {
     totalPrice,
   }
 }
+const getSingleFactoryDevelopment = async (id: string) => {
+  const data = await FactoryDevelopment.findById(id)
+
+  if (!data) {
+    throw new AppError(httpStatus.NOT_FOUND, 'Data not found')
+  }
+
+  return data
+}
 const updateFactoryDevelopment = async (
   payload: TFactoryDevelopmentUpdate,
   id: string,
@@ -93,4 +102,5 @@ export const factoryDevelopmentService = {
   getFactoryDevelopment,
   updateFactoryDevelopment,
   deletedFactoryDevelopment,
+  getSingleFactoryDevelopment,
 }

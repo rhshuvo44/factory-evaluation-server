@@ -26,6 +26,11 @@ router.get(
   ),
   factoryDevelopmentController.getAllFactoryDevelopment,
 )
+router.get(
+  '/:id',
+  auth(USER_ROLE.admin, USER_ROLE.executiveDirector),
+  factoryDevelopmentController.getSingleFactoryDevelopment,
+)
 router.patch(
   '/:id',
   auth(USER_ROLE.admin, USER_ROLE.executiveDirector),

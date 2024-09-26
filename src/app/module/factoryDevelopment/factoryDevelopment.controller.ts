@@ -12,7 +12,7 @@ const createFactoryDevelopment = catchAsync(async (req, res) => {
     statusCode: httpStatus.OK,
     success: true,
     message: 'Create data successfully',
-    data: data,
+    data,
   })
 })
 
@@ -30,9 +30,20 @@ const getAllFactoryDevelopment: RequestHandler = catchAsync(
     })
   },
 )
+const getSingleFactoryDevelopment = catchAsync(async (req, res) => {
+  const id = req?.params.id
+  const data = await factoryDevelopmentService.getSingleFactoryDevelopment(id)
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Get Single Data successfully',
+    data,
+  })
+})
 const updateFactoryDevelopment = catchAsync(async (req, res) => {
   const id = req?.params.id
-  const result = await factoryDevelopmentService.updateFactoryDevelopment(
+  const data = await factoryDevelopmentService.updateFactoryDevelopment(
     req?.body,
     id,
   )
@@ -41,7 +52,7 @@ const updateFactoryDevelopment = catchAsync(async (req, res) => {
     statusCode: httpStatus.OK,
     success: true,
     message: 'Update Data successfully',
-    data: result,
+    data,
   })
 })
 const deleteFactoryDevelopment = catchAsync(async (req, res) => {
@@ -60,4 +71,5 @@ export const factoryDevelopmentController = {
   getAllFactoryDevelopment,
   updateFactoryDevelopment,
   deleteFactoryDevelopment,
+  getSingleFactoryDevelopment,
 }
