@@ -10,18 +10,29 @@ const createCollection = catchAsync(async (req, res) => {
     statusCode: httpStatus.OK,
     success: true,
     message: 'Create data successfully',
-    data: data,
+    data,
   })
 })
 
 const getAllCollection: RequestHandler = catchAsync(async (req, res) => {
-  const result = await collectionService.getCollection(req?.query)
+  const data = await collectionService.getCollection(req?.query)
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
     message: 'Get All Data fetch successfully',
-    data: result,
+    data,
+  })
+})
+const getSingleCollection = catchAsync(async (req, res) => {
+  const id = req?.params.id
+  const data = await collectionService.getSingleCollection(id)
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Get Single Data successfully',
+    data,
   })
 })
 const updateCollection = catchAsync(async (req, res) => {
@@ -51,4 +62,5 @@ export const collectionController = {
   getAllCollection,
   updateCollection,
   deleteCollection,
+  getSingleCollection,
 }

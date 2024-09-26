@@ -53,14 +53,20 @@ const getCollection = async (query: Record<string, unknown>) => {
     totalPrice,
   }
 }
+const getSingleCollection = async (id: string) => {
+  const data = await Collection.findById(id)
+
+  if (!data) {
+    throw new AppError(httpStatus.NOT_FOUND, 'Data not found')
+  }
+  return data
+}
 const updateCollection = async (payload: TCollectionUpdate, id: string) => {
   let date
   if (payload?.date) {
     date = new Date(payload?.date)
   }
-
   const data = await Collection.findById(id)
-
   if (!data) {
     throw new AppError(httpStatus.NOT_FOUND, 'Data not found')
   }
@@ -87,4 +93,5 @@ export const collectionService = {
   getCollection,
   updateCollection,
   deletedCollection,
+  getSingleCollection,
 }

@@ -33,6 +33,11 @@ router.patch(
   validateRequest(collectionUpdateValidation),
   collectionController.updateCollection,
 )
+router.get(
+  '/:id',
+  auth(USER_ROLE.admin, USER_ROLE.executiveDirector),
+  collectionController.getSingleCollection,
+)
 router.delete(
   '/:id',
   auth(USER_ROLE.admin),
