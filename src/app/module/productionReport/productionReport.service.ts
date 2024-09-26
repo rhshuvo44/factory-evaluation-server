@@ -56,6 +56,15 @@ const getProductionReport = async (query: Record<string, unknown>) => {
     result,
   }
 }
+const getSingleProductionReport = async (id: string) => {
+  const data = await ProductionReport.findById(id)
+
+  if (!data) {
+    throw new AppError(httpStatus.NOT_FOUND, 'data not found')
+  }
+
+  return data
+}
 const UpdateProductionReport = async (
   payload: TProductionReportUpdate,
   id: string,
@@ -92,4 +101,5 @@ export const productionReportService = {
   getProductionReport,
   UpdateProductionReport,
   deletedProductionReport,
+  getSingleProductionReport,
 }

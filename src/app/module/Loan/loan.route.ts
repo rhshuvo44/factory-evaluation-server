@@ -23,6 +23,11 @@ router.get(
   ),
   loanController.getAllLoan,
 )
+router.get(
+  '/:id',
+  auth(USER_ROLE.admin, USER_ROLE.executiveDirector),
+  loanController.getSingleLoan,
+)
 router.patch(
   '/:id',
   auth(USER_ROLE.admin, USER_ROLE.executiveDirector),

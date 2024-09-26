@@ -23,6 +23,7 @@ router.get(
   ),
   utilityController.getUtility,
 )
+router.get('/:id', auth(USER_ROLE.admin), utilityController.getSingleUtility)
 router.patch(
   '/:id',
   auth(USER_ROLE.admin),

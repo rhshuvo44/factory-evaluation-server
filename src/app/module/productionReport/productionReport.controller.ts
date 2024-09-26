@@ -27,6 +27,17 @@ const getAllProductionReport: RequestHandler = catchAsync(async (req, res) => {
     data: ProductionReport,
   })
 })
+const getSingleProductionReport = catchAsync(async (req, res) => {
+  const id = req?.params.id
+  const data = await productionReportService.getSingleProductionReport(id)
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Get Single Production Report successfully',
+    data,
+  })
+})
 const updateProductionReport = catchAsync(async (req, res) => {
   const id = req?.params.id
   const ProductionReport = await productionReportService.UpdateProductionReport(
@@ -57,4 +68,5 @@ export const productionReportController = {
   getAllProductionReport,
   updateProductionReport,
   deleteProductionReport,
+  getSingleProductionReport,
 }

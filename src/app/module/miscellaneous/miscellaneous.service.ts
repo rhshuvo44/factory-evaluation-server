@@ -68,6 +68,15 @@ const getMiscellaneous = async (query: Record<string, unknown>) => {
     totalPrice,
   }
 }
+const getSingleMiscellaneous = async (id: string) => {
+  const miscellaneous = await Miscellaneous.findById(id)
+
+  if (!miscellaneous) {
+    throw new AppError(httpStatus.NOT_FOUND, 'Miscellaneous not found')
+  }
+
+  return miscellaneous
+}
 const UpdateMiscellaneous = async (
   payload: TMiscellaneousUpdate,
   id: string,
@@ -104,4 +113,5 @@ export const miscellaneousService = {
   getMiscellaneous,
   UpdateMiscellaneous,
   deletedMiscellaneous,
+  getSingleMiscellaneous,
 }

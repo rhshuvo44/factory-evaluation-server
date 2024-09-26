@@ -27,6 +27,12 @@ router.get(
   miscellaneousController.getAllMiscellaneous,
 )
 
+router.get(
+  '/:id',
+  auth(USER_ROLE.admin, USER_ROLE.executiveDirector),
+
+  miscellaneousController.getSingleMiscellaneous,
+)
 router.patch(
   '/:id',
   auth(USER_ROLE.admin, USER_ROLE.executiveDirector),

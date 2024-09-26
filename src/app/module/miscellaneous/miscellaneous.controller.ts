@@ -25,6 +25,17 @@ const getAllMiscellaneous: RequestHandler = catchAsync(async (req, res) => {
     data: miscellaneous,
   })
 })
+const getSingleMiscellaneous = catchAsync(async (req, res) => {
+  const id = req?.params.id
+  const data = await miscellaneousService.getSingleMiscellaneous(id)
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'get Single Miscellaneous successfully',
+    data,
+  })
+})
 const updateMiscellaneous = catchAsync(async (req, res) => {
   const id = req?.params.id
   const miscellaneous = await miscellaneousService.UpdateMiscellaneous(
@@ -55,4 +66,5 @@ export const miscellaneousController = {
   getAllMiscellaneous,
   updateMiscellaneous,
   deleteMiscellaneous,
+  getSingleMiscellaneous,
 }

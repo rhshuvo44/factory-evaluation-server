@@ -53,6 +53,15 @@ const getLoan = async (query: Record<string, unknown>) => {
     totalPrice,
   }
 }
+const getSingleLoan = async (id: string) => {
+  const data = await Loan.findById(id)
+
+  if (!data) {
+    throw new AppError(httpStatus.NOT_FOUND, 'Data not found')
+  }
+
+  return data
+}
 const updateLoan = async (payload: TLoanUpdate, id: string) => {
   let date
   if (payload?.date) {
@@ -86,4 +95,5 @@ export const loanService = {
   getLoan,
   updateLoan,
   deletedLoan,
+  getSingleLoan,
 }

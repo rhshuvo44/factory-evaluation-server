@@ -61,6 +61,15 @@ const updateFixedCost = async (payload: TFixedCostUpdate, id: string) => {
   })
   return result
 }
+const getSingleFixedCost = async (id: string) => {
+  const data = await FixedCost.findById(id)
+
+  if (!data) {
+    throw new AppError(httpStatus.NOT_FOUND, 'Data not found')
+  }
+
+  return data
+}
 const deletedFixedCost = async (id: string) => {
   const data = await FixedCost.findById(id)
 
@@ -74,4 +83,5 @@ export const fixedCostService = {
   getFixedCost,
   updateFixedCost,
   deletedFixedCost,
+  getSingleFixedCost,
 }

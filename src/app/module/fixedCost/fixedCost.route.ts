@@ -23,6 +23,11 @@ router.get(
   ),
   fixedCostController.getFixedCost,
 )
+router.get(
+  '/:id',
+  auth(USER_ROLE.admin),
+  fixedCostController.getSingleFixedCost,
+)
 router.patch(
   '/:id',
   auth(USER_ROLE.admin),

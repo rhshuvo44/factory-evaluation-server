@@ -49,6 +49,14 @@ const getUtility = async (query: Record<string, unknown>) => {
     result,
   }
 }
+const getSingleUtility = async (id: string) => {
+  const data = await Utility.findById(id)
+
+  if (!data) {
+    throw new AppError(httpStatus.NOT_FOUND, 'Data not found')
+  }
+  return data
+}
 const updateUtility = async (payload: TUtilityUpdate, id: string) => {
   const data = await Utility.findById(id)
 
@@ -74,4 +82,5 @@ export const utilityService = {
   getUtility,
   updateUtility,
   deletedUtility,
+  getSingleUtility,
 }

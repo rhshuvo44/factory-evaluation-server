@@ -23,6 +23,17 @@ const getAllLoan: RequestHandler = catchAsync(async (req, res) => {
     data: result,
   })
 })
+const getSingleLoan = catchAsync(async (req, res) => {
+  const id = req?.params.id
+  const data = await loanService.getSingleLoan(id)
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'get Single Data successfully',
+    data,
+  })
+})
 const updateLoan = catchAsync(async (req, res) => {
   const id = req?.params.id
   const result = await loanService.updateLoan(req?.body, id)
@@ -50,4 +61,5 @@ export const loanController = {
   getAllLoan,
   updateLoan,
   deleteLoan,
+  getSingleLoan,
 }

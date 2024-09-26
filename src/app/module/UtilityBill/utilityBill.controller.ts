@@ -10,28 +10,39 @@ const createUtility = catchAsync(async (req, res) => {
     statusCode: httpStatus.OK,
     success: true,
     message: 'Create data successfully',
-    data: data,
+    data,
   })
 })
 const getUtility: RequestHandler = catchAsync(async (req, res) => {
-  const result = await utilityService.getUtility(req?.query)
+  const data = await utilityService.getUtility(req?.query)
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
     message: 'Get All Data fetch successfully',
-    data: result,
+    data,
+  })
+})
+const getSingleUtility = catchAsync(async (req, res) => {
+  const id = req?.params.id
+  const data = await utilityService.getSingleUtility(id)
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Get Single Data successfully',
+    data,
   })
 })
 const updateUtility = catchAsync(async (req, res) => {
   const id = req?.params.id
-  const result = await utilityService.updateUtility(req?.body, id)
+  const data = await utilityService.updateUtility(req?.body, id)
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
     message: 'Update Data successfully',
-    data: result,
+    data,
   })
 })
 const deletedUtility = catchAsync(async (req, res) => {
@@ -50,4 +61,5 @@ export const utilityController = {
   getUtility,
   updateUtility,
   deletedUtility,
+  getSingleUtility,
 }
