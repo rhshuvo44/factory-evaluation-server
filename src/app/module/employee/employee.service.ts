@@ -40,6 +40,15 @@ const getEmployee = async (query: Record<string, unknown>) => {
     totalPrice,
   }
 }
+const getSingleEmployee = async (id: string) => {
+  const data = await Employee.findById(id)
+
+  if (!data) {
+    throw new AppError(httpStatus.NOT_FOUND, 'Data not found')
+  }
+
+  return data
+}
 const updateEmployee = async (payload: TEmployeeUpdate, id: string) => {
   const data = await Employee.findById(id)
 
@@ -65,4 +74,5 @@ export const employeeService = {
   getEmployee,
   updateEmployee,
   deletedEmployee,
+  getSingleEmployee,
 }

@@ -24,6 +24,17 @@ const getAllEmployee: RequestHandler = catchAsync(async (req, res) => {
     data: result,
   })
 })
+const getSingleEmployee = catchAsync(async (req, res) => {
+  const id = req?.params.id
+  const result = await employeeService.getSingleEmployee(id)
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Get Single Data successfully',
+    data: result,
+  })
+})
 const updateEmployee = catchAsync(async (req, res) => {
   const id = req?.params.id
   const result = await employeeService.updateEmployee(req?.body, id)
@@ -51,4 +62,5 @@ export const employeeController = {
   getAllEmployee,
   updateEmployee,
   deleteEmployee,
+  getSingleEmployee,
 }

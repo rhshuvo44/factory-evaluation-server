@@ -33,6 +33,12 @@ router.get(
   ),
   employeeController.getAllEmployee,
 )
+router.get(
+  '/:id',
+  auth(USER_ROLE.admin, USER_ROLE.executiveDirector),
+
+  employeeController.getSingleEmployee,
+)
 router.patch(
   '/:id',
   auth(USER_ROLE.admin, USER_ROLE.executiveDirector),
