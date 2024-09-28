@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt'
 import { model, Schema } from 'mongoose'
-import { TUser, UserModel } from './user.interface'
 import { UserStatus } from './user.constant'
+import { TUser, UserModel } from './user.interface'
 const userSchema = new Schema<TUser, UserModel>(
   {
     name: {
@@ -34,9 +34,9 @@ const userSchema = new Schema<TUser, UserModel>(
       type: String,
       enum: [
         'admin',
-        'executiveDirector',
-        'managingDirector',
-        'generalManager',
+        'executive-director',
+        'managing-director',
+        'general-director',
         'coordinator',
       ],
     },

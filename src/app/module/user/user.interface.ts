@@ -26,9 +26,9 @@ export type TUserUpdate = {
   email?: string
   role?:
     | 'admin'
-    | 'executiveDirector'
-    | 'managingDirector'
-    | 'generalManager'
+    | 'executive-director'
+    | 'managing-director'
+    | 'general-director'
     | 'coordinator'
   password?: string
   phone?: string

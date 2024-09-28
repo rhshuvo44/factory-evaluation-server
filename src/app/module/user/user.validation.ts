@@ -25,11 +25,10 @@ export const userUpdateValidationSchema = z.object({
     email: z.string().optional(),
     role: z
       .enum([
-        'user',
         'admin',
-        'executiveDirector',
-        'managingDirector',
-        'generalManager',
+        'executive-director',
+        'managing-director',
+        'general-director',
         'coordinator',
       ])
       .optional(),
