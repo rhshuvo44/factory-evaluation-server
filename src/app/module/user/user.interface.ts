@@ -7,11 +7,10 @@ export interface TUser {
   username: string
   email: string
   role:
-    | 'user'
     | 'admin'
-    | 'executiveDirector'
-    | 'managingDirector'
-    | 'generalManager'
+    | 'executive-director'
+    | 'managing-director'
+    | 'general-director'
     | 'coordinator'
   password: string
   passwordChangedAt: Date
