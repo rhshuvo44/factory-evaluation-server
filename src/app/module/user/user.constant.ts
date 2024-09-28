@@ -1,7 +1,7 @@
 export const USER_ROLE = {
   executiveDirector: 'executiveDirector',
   managingDirector: 'managingDirector',
-  generalManager: 'generalManager',
+  generalDirector: 'generalDirector',
   coordinator: 'coordinator',
   admin: 'admin',
 } as const

@@ -34,9 +34,9 @@ const userSchema = new Schema<TUser, UserModel>(
       type: String,
       enum: [
         'admin',
-        'executive-director',
-        'managing-director',
-        'general-director',
+        'executiveDirector',
+        'managingDirector',
+        'generalDirector',
         'coordinator',
       ],
     },

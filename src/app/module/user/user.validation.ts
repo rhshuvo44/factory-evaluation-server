@@ -7,9 +7,9 @@ export const userCreateValidationSchema = z.object({
     email: z.string().email('Invalid email address'),
     role: z.enum([
       'admin',
-      'executive-director',
-      'managing-director',
-      'general-director',
+      'executiveDirector',
+      'managingDirector',
+      'generalDirector',
       'coordinator',
     ]),
     password: z.string().min(8, 'Password must be at least 8 characters long'),
@@ -25,9 +25,9 @@ export const userUpdateValidationSchema = z.object({
     role: z
       .enum([
         'admin',
-        'executive-director',
-        'managing-director',
-        'general-director',
+        'executiveDirector',
+        'managingDirector',
+        'generalDirector',
         'coordinator',
       ])
       .optional(),

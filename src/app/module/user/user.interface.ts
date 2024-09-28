@@ -8,9 +8,9 @@ export interface TUser {
   email: string
   role:
     | 'admin'
-    | 'executive-director'
-    | 'managing-director'
-    | 'general-director'
+    | 'executiveDirector'
+    | 'managingDirector'
+    | 'generalDirector'
     | 'coordinator'
   password: string
   passwordChangedAt: Date
@@ -25,9 +25,9 @@ export type TUserUpdate = {
   email?: string
   role?:
     | 'admin'
-    | 'executive-director'
-    | 'managing-director'
-    | 'general-director'
+    | 'executiveDirector'
+    | 'managingDirector'
+    | 'generalDirector'
     | 'coordinator'
   password?: string
   phone?: string
