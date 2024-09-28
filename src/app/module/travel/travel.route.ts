@@ -18,7 +18,7 @@ router.get(
     USER_ROLE.admin,
     USER_ROLE.executiveDirector,
     USER_ROLE.coordinator,
-    USER_ROLE.generalManager,
+    USER_ROLE.generalDirector,
     USER_ROLE.managingDirector,
   ),
   travelController.getAllTravellingAllowance,
