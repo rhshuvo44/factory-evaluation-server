@@ -5,16 +5,14 @@ export const userCreateValidationSchema = z.object({
     name: z.string().min(1, 'Name is required'),
     username: z.string().min(1, 'UserName is required'),
     email: z.string().email('Invalid email address'),
-    role: z
-      .enum([
-        'user',
-        'admin',
-        'executiveDirector',
-        'managingDirector',
-        'generalManager',
-        'coordinator',
-      ])
-      .default('user'),
+    role: z.enum([
+      'user',
+      'admin',
+      'executiveDirector',
+      'managingDirector',
+      'generalManager',
+      'coordinator',
+    ]),
     password: z.string().min(8, 'Password must be at least 8 characters long'),
     phone: z.string().min(11).max(11),
     address: z.string().min(1, 'Address is required'),

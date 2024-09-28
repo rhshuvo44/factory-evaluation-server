@@ -25,7 +25,6 @@ export type TUserUpdate = {
   username?: string
   email?: string
   role?:
-    | 'user'
     | 'admin'
     | 'executiveDirector'
     | 'managingDirector'

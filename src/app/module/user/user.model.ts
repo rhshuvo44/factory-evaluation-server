@@ -33,14 +33,12 @@ const userSchema = new Schema<TUser, UserModel>(
     role: {
       type: String,
       enum: [
-        'user',
         'admin',
         'executiveDirector',
         'managingDirector',
         'generalManager',
         'coordinator',
       ],
-      default: 'user',
     },
     address: {
       type: String,
