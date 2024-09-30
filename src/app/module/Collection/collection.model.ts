@@ -39,7 +39,7 @@ const collectionSchema = new Schema<TCollection>(
 
     lineNo: {
       type: String,
-      enum: ['line 1 / 3rd floor', 'line 2 / 4rd floor', 'line 3 / 4rd floor'],
+      enum: ['line 1 / 3rd floor', 'line 2 / 4th floor', 'line 3 / 4th floor'],
       required: true,
     },
     ratePer: { type: Number, required: true },

@@ -15,7 +15,7 @@ export type TCollection = {
     | 'Long Sleeve T-shirt'
   total: number
   workOrderNo: number
-  lineNo: 'line 1 / 3rd floor' | 'line 2 / 4rd floor' | 'line 3 / 4rd floor'
+  lineNo: 'line 1 / 3rd floor' | 'line 2 / 4th floor' | 'line 3 / 4th floor'
   challanNo: number
   ratePer: number
   amount: number
@@ -37,7 +37,7 @@ export type TCollectionUpdate = {
     | 'Long Sleeve T-shirt'
   total?: number
   workOrderNo?: number
-  lineNo?: 'line 1 / 3rd floor' | 'line 2 / 4rd floor' | 'line 3 / 4rd floor'
+  lineNo?: 'line 1 / 3rd floor' | 'line 2 / 4th floor' | 'line 3 / 4th floor'
   challanNo?: number
   ratePer?: number
   amount?: number
