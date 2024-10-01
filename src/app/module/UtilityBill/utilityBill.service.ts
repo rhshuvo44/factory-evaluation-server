@@ -2,6 +2,7 @@ import { format } from 'date-fns'
 import httpStatus from 'http-status'
 import QueryBuilder from '../../builder/QueryBuilder'
 import AppError from '../../errors/AppError'
+import { calculateTotalPrices } from '../../utils/calculateTotalPrice'
 import { TUtility, TUtilityUpdate } from './utilityBill.interface'
 import { Utility } from './utilityBill.model'
 
@@ -44,9 +45,12 @@ const getUtility = async (query: Record<string, unknown>) => {
     date: format(item.date, 'dd-MM-yyyy'), // Format date as 'YYYY-MM-DD'
   }))
 
+  const { electricity, internet, water, others } = calculateTotalPrices(data)
+  const totalPrice = electricity + internet + water + others
   return {
     meta,
     result,
+    totalPrice,
   }
 }
 const getSingleUtility = async (id: string) => {

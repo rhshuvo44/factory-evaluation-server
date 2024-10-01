@@ -2,6 +2,7 @@ import { format } from 'date-fns'
 import httpStatus from 'http-status'
 import QueryBuilder from '../../builder/QueryBuilder'
 import AppError from '../../errors/AppError'
+import { calculateFixedTotalPrices } from '../../utils/calculateFixedTotalPrice'
 import { TFixedCost, TFixedCostUpdate } from './fixedCost.interface'
 import { FixedCost } from './fixedCost.model'
 
@@ -44,9 +45,13 @@ const getFixedCost = async (query: Record<string, unknown>) => {
     date: format(item.date, 'dd-MM-yyyy'), // Format date as 'YYYY-MM-DD'
   }))
 
+  const { factoryRent, honorary, factoryRevenue } =
+    calculateFixedTotalPrices(data)
+  const totalPrice = factoryRent + honorary + factoryRevenue
   return {
     meta,
     result,
+    totalPrice,
   }
 }
 const updateFixedCost = async (payload: TFixedCostUpdate, id: string) => {
