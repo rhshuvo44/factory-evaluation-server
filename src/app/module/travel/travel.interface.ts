@@ -3,10 +3,10 @@ export type TTravel = {
   date: Date
   particulars: string
   description: string
-  remark?: string
-  buyerId?: number
-  orderNo?: number
-  memoNo?: number
+  remark: string
+  buyerId: number
+  orderNo: number
+  memoNo: number
   payTo: string
   paymentType: 'Monthly' | 'Daily' | 'Once'
   unit?: number

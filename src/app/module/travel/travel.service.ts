@@ -12,11 +12,13 @@ const createTravelAllowance = async (payload: TTravel) => {
   const startOfRange = new Date(now)
   startOfRange.setDate(now.getDate() - 45)
   if (startOfRange <= date && date <= now) {
-
     const result = await Travel.create({ ...payload, date })
     return result
   } else {
-    throw new AppError(httpStatus.FORBIDDEN, 'Travel allowance creation is only allowed for the last 45 days')
+    throw new AppError(
+      httpStatus.FORBIDDEN,
+      'Travel allowance creation is only allowed for the last 45 days',
+    )
   }
 }
 const getTravelAllowance = async (query: Record<string, unknown>) => {
