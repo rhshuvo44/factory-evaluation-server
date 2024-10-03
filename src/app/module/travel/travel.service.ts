@@ -6,9 +6,26 @@ import { TTravel, TTravelUpdate } from './travel.interface'
 import { Travel } from './travel.model'
 
 const createTravelAllowance = async (payload: TTravel) => {
+
+
+
+
+  const now = new Date()
   const date = new Date(payload.date)
-  const result = await Travel.create({ ...payload, date })
-  return result
+
+  const startOfRange = new Date(now)
+  startOfRange.setDate(now.getDate() - 45)
+  if (startOfRange <= date && date <= now) {
+
+    const result = await Travel.create({ ...payload, date })
+    return result
+  } else {
+    throw new AppError(httpStatus.FORBIDDEN, 'Travel allowance creation is only allowed for the last 45 days')
+  }
+
+
+
+
 }
 const getTravelAllowance = async (query: Record<string, unknown>) => {
   // Get the current date
@@ -32,7 +49,7 @@ const getTravelAllowance = async (query: Record<string, unknown>) => {
 
   const travelQuery = new QueryBuilder(
     Travel.find({ date: { $gte: startOfRange, $lte: endOfRange } }).sort({
-      slNo: 1,
+      slNo: -1,
     }),
     query,
   )
