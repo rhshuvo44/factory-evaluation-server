@@ -31,7 +31,6 @@ const getMiscellaneous = async (query: Record<string, unknown>) => {
   const now = new Date()
   // Calculate the first and last day of the current month
 
-
   const startOfRange = new Date(now)
   startOfRange.setDate(now.getDate() - 45)
 
@@ -132,5 +131,6 @@ export const miscellaneousService = {
   getMiscellaneous,
   UpdateMiscellaneous,
   deletedMiscellaneous,
-  getSingleMiscellaneous, getToday
+  getSingleMiscellaneous,
+  getToday,
 }

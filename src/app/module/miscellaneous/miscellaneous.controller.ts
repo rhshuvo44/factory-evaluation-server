@@ -76,5 +76,6 @@ export const miscellaneousController = {
   getAllMiscellaneous,
   updateMiscellaneous,
   deleteMiscellaneous,
-  getSingleMiscellaneous, getToday
+  getSingleMiscellaneous,
+  getToday,
 }
