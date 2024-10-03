@@ -30,6 +30,16 @@ const getAllFactoryDevelopment: RequestHandler = catchAsync(
     })
   },
 )
+const getToday: RequestHandler = catchAsync(async (req, res) => {
+  const data = await factoryDevelopmentService.getToday()
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Get Today successfully',
+    data,
+  })
+})
 const getSingleFactoryDevelopment = catchAsync(async (req, res) => {
   const id = req?.params.id
   const data = await factoryDevelopmentService.getSingleFactoryDevelopment(id)
@@ -72,4 +82,5 @@ export const factoryDevelopmentController = {
   updateFactoryDevelopment,
   deleteFactoryDevelopment,
   getSingleFactoryDevelopment,
+  getToday,
 }

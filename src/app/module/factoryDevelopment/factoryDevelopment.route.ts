@@ -27,6 +27,17 @@ router.get(
   factoryDevelopmentController.getAllFactoryDevelopment,
 )
 router.get(
+  '/today',
+  auth(
+    USER_ROLE.admin,
+    USER_ROLE.coordinator,
+    USER_ROLE.executiveDirector,
+    USER_ROLE.generalDirector,
+    USER_ROLE.managingDirector,
+  ),
+  factoryDevelopmentController.getToday,
+)
+router.get(
   '/:id',
   auth(USER_ROLE.admin, USER_ROLE.executiveDirector),
   factoryDevelopmentController.getSingleFactoryDevelopment,
