@@ -24,6 +24,17 @@ router.get(
   loanController.getAllLoan,
 )
 router.get(
+  '/today',
+  auth(
+    USER_ROLE.admin,
+    USER_ROLE.coordinator,
+    USER_ROLE.executiveDirector,
+    USER_ROLE.generalDirector,
+    USER_ROLE.managingDirector,
+  ),
+  loanController.getToday,
+)
+router.get(
   '/:id',
   auth(USER_ROLE.admin, USER_ROLE.executiveDirector),
   loanController.getSingleLoan,
