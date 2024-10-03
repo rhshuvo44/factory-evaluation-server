@@ -23,18 +23,15 @@ const getTravelAllowance = async (query: Record<string, unknown>) => {
   //   new Date(now.getFullYear(), now.getMonth() + 1, 0, 23, 59, 59, 999),
   //   'dd-MM-yyyy',
   // )
-  const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1)
-  const endOfMonth = new Date(
-    now.getFullYear(),
-    now.getMonth() + 1,
-    0,
-    23,
-    59,
-    59,
-    999,
-  )
+  // Calculate the date 45 days ago
+  const startOfRange = new Date(now)
+  startOfRange.setDate(now.getDate() - 45)
+
+  // End date is the current date
+  const endOfRange = new Date(now)
+
   const travelQuery = new QueryBuilder(
-    Travel.find({ date: { $gte: startOfMonth, $lte: endOfMonth } }).sort({
+    Travel.find({ date: { $gte: startOfRange, $lte: endOfRange } }).sort({
       slNo: 1,
     }),
     query,
@@ -43,7 +40,7 @@ const getTravelAllowance = async (query: Record<string, unknown>) => {
     .sort()
     .paginate()
     .fields()
-
+  await Travel.deleteMany({ date: { $lt: startOfRange } })
   const meta = await travelQuery.countTotal()
   const travel = await travelQuery.modelQuery
 
@@ -60,6 +57,23 @@ const getTravelAllowance = async (query: Record<string, unknown>) => {
     result,
     totalPrice,
   }
+}
+const getTodayTravellingAllowance = async () => {
+  const now = new Date()
+
+  // Set the start of the current day
+  const startOfDay = new Date(now.setHours(0, 0, 0, 0))
+
+  // Set the end of the current day
+  const endOfDay = new Date(now.setHours(23, 59, 59, 999))
+
+  const result = await Travel.findOne({
+    date: { $gte: startOfDay, $lte: endOfDay },
+  })
+  if (!result) {
+    throw new AppError(httpStatus.NOT_FOUND, 'Travel not found')
+  }
+  return result
 }
 const getSingleTravelAllowance = async (id: string) => {
   const result = Travel.findById(id)
@@ -104,4 +118,5 @@ export const TravelService = {
   UpdateTravelAllowance,
   deletedTravelAllowance,
   getSingleTravelAllowance,
+  getTodayTravellingAllowance,
 }
