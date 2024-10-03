@@ -9,7 +9,7 @@ export type TTravel = {
   memoNo: number
   payTo: string
   paymentType: 'Monthly' | 'Daily' | 'Once'
-  unit?: number
+  unit: number
   unitPrice: number
   totalPrice: number
 }

@@ -56,6 +56,23 @@ const getBuyerDevelopment = async (query: Record<string, unknown>) => {
     totalPrice,
   }
 }
+const getToday = async () => {
+  const now = new Date()
+
+  // Set the start of the current day
+  const startOfDay = new Date(now.setHours(0, 0, 0, 0))
+
+  // Set the end of the current day
+  const endOfDay = new Date(now.setHours(23, 59, 59, 999))
+
+  const result = await BuyerDevelopment.findOne({
+    date: { $gte: startOfDay, $lte: endOfDay },
+  })
+  if (!result) {
+    throw new AppError(httpStatus.NOT_FOUND, 'Data not found')
+  }
+  return result
+}
 const getSingleBuyerDevelopment = async (id: string) => {
   const data = await BuyerDevelopment.findById(id)
 
@@ -102,5 +119,5 @@ export const buyerDevelopmentService = {
   getBuyerDevelopment,
   updateBuyerDevelopment,
   deletedBuyerDevelopment,
-  getSingleBuyerDevelopment,
+  getSingleBuyerDevelopment, getToday
 }

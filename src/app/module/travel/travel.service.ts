@@ -6,6 +6,13 @@ import { TTravel, TTravelUpdate } from './travel.interface'
 import { Travel } from './travel.model'
 
 const createTravelAllowance = async (payload: TTravel) => {
+
+
+  /*
+ //! TODO: must be imput everyday 
+ input date and compare database input date if not insert previously date must be input previous date
+ if insert previous date can insert currrent date 
+  */
   const now = new Date()
   const date = new Date(payload.date)
 
