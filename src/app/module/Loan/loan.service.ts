@@ -7,9 +7,9 @@ import { Loan } from './loan.model'
 
 const createLoan = async (payload: TLoan) => {
   /*
-  //! TODO: must be imput everyday 
+  //! TODO: must be input everyday 
   input date and compare database input date if not insert previously date must be input previous date
-  if insert previous date can insert currrent date 
+  if insert previous date can insert current date 
    */
   const now = new Date()
   const date = new Date(payload.date)

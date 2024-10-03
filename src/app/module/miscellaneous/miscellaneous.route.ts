@@ -26,6 +26,17 @@ router.get(
   ),
   miscellaneousController.getAllMiscellaneous,
 )
+router.get(
+  '/today',
+  auth(
+    USER_ROLE.admin,
+    USER_ROLE.coordinator,
+    USER_ROLE.executiveDirector,
+    USER_ROLE.generalDirector,
+    USER_ROLE.managingDirector,
+  ),
+  miscellaneousController.getToday,
+)
 
 router.get(
   '/:id',
