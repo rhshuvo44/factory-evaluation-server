@@ -6,10 +6,6 @@ import { TTravel, TTravelUpdate } from './travel.interface'
 import { Travel } from './travel.model'
 
 const createTravelAllowance = async (payload: TTravel) => {
-
-
-
-
   const now = new Date()
   const date = new Date(payload.date)
 
@@ -22,10 +18,6 @@ const createTravelAllowance = async (payload: TTravel) => {
   } else {
     throw new AppError(httpStatus.FORBIDDEN, 'Travel allowance creation is only allowed for the last 45 days')
   }
-
-
-
-
 }
 const getTravelAllowance = async (query: Record<string, unknown>) => {
   // Get the current date
