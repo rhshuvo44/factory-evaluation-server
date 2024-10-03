@@ -9,12 +9,6 @@ import {
 import { BuyerDevelopment } from './buyerDevelopment.model'
 
 const createBuyerDevelopment = async (payload: TBuyerDevelopment) => {
-
-
-
-
-
-
   /*
   //! TODO: must be imput everyday 
   input date and compare database input date if not insert previously date must be input previous date
@@ -34,7 +28,6 @@ const createBuyerDevelopment = async (payload: TBuyerDevelopment) => {
       'Data creation is only allowed for the last 45 days',
     )
   }
-
 }
 const getBuyerDevelopment = async (query: Record<string, unknown>) => {
   // Get the current date
@@ -48,7 +41,9 @@ const getBuyerDevelopment = async (query: Record<string, unknown>) => {
   const endOfRange = new Date(now)
 
   const dataQuery = new QueryBuilder(
-    BuyerDevelopment.find({ date: { $gte: startOfRange, $lte: endOfRange } }).sort({
+    BuyerDevelopment.find({
+      date: { $gte: startOfRange, $lte: endOfRange },
+    }).sort({
       slNo: -1,
     }),
     query,
@@ -138,5 +133,6 @@ export const buyerDevelopmentService = {
   getBuyerDevelopment,
   updateBuyerDevelopment,
   deletedBuyerDevelopment,
-  getSingleBuyerDevelopment, getToday
+  getSingleBuyerDevelopment,
+  getToday,
 }

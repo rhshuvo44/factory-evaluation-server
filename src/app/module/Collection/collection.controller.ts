@@ -24,6 +24,16 @@ const getAllCollection: RequestHandler = catchAsync(async (req, res) => {
     data,
   })
 })
+const getToday: RequestHandler = catchAsync(async (req, res) => {
+  const data = await collectionService.getToday()
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Get Today successfully',
+    data,
+  })
+})
 const getSingleCollection = catchAsync(async (req, res) => {
   const id = req?.params.id
   const data = await collectionService.getSingleCollection(id)
@@ -63,4 +73,5 @@ export const collectionController = {
   updateCollection,
   deleteCollection,
   getSingleCollection,
+  getToday,
 }

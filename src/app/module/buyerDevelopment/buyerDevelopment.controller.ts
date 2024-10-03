@@ -24,18 +24,16 @@ const getAllBuyerDevelopment: RequestHandler = catchAsync(async (req, res) => {
     data: result,
   })
 })
-const getToday: RequestHandler = catchAsync(
-  async (req, res) => {
-    const data = await buyerDevelopmentService.getToday()
+const getToday: RequestHandler = catchAsync(async (req, res) => {
+  const data = await buyerDevelopmentService.getToday()
 
-    sendResponse(res, {
-      statusCode: httpStatus.OK,
-      success: true,
-      message: 'Get Today successfully',
-      data,
-    })
-  },
-)
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Get Today successfully',
+    data,
+  })
+})
 const updateBuyerDevelopment = catchAsync(async (req, res) => {
   const id = req?.params.id
   const result = await buyerDevelopmentService.updateBuyerDevelopment(
@@ -78,5 +76,5 @@ export const buyerDevelopmentController = {
   updateBuyerDevelopment,
   deleteBuyerDevelopment,
   getSingleBuyerDevelopment,
-  getToday
+  getToday,
 }
