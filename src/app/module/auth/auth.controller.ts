@@ -28,33 +28,33 @@ const loginUser = catchAsync(async (req: Request, res: Response) => {
 const changePassword = catchAsync(async (req, res) => {
   const { ...passwordData } = req.body
 
-  const result = await AuthServices.changePassword(req.user, passwordData)
+  const data = await AuthServices.changePassword(req.user, passwordData)
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'Password is updated succesfully!',
-    data: result,
+    message: 'Password is updated successfully!',
+    data,
   })
 })
 const refreshToken = catchAsync(async (req, res) => {
   const { refreshToken } = req.cookies
-  const result = await AuthServices.refreshToken(refreshToken)
+  const data = await AuthServices.refreshToken(refreshToken)
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
     message: 'Access token is retrieved successfully!',
-    data: result,
+    data,
   })
 })
 const forgetPassword = catchAsync(async (req, res) => {
   const { email } = req.body
-  const result = await AuthServices.forgetPassword(email)
+  const data = await AuthServices.forgetPassword(email)
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
     message: 'Reset link is generated succesfully!',
-    data: result,
+    data,
   })
 })
 const resetPassword = catchAsync(async (req, res) => {
@@ -75,7 +75,7 @@ const resetPassword = catchAsync(async (req, res) => {
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'Password reset succesfully!',
+    message: 'Password reset successfully!',
     data: result,
   })
 })
