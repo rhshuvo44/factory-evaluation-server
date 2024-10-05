@@ -78,13 +78,35 @@ const getToday = async () => {
   // Set the end of the current day
   const endOfDay = new Date(now.setHours(23, 59, 59, 999))
 
-  const result = await Miscellaneous.findOne({
+  const result = await Miscellaneous.find({
     date: { $gte: startOfDay, $lte: endOfDay },
   })
-  if (!result) {
-    throw new AppError(httpStatus.NOT_FOUND, 'Data not found')
+  let data
+  if (result.length > 0) {
+    // If records are found, map the results to the desired format
+    data = result.map(item => ({
+      ...item.toObject(),
+      date: format(item.date, 'dd-MM-yyyy'), // Format date as 'DD-MM-YYYY'
+    }))
+  } else {
+    // If no records are found, set default data structure
+    data = [{
+      slNo: 1,
+      date: format(startOfDay, 'dd-MM-yyyy'),
+      particulars: '',
+      description: '',
+      remark: '',
+      buyerId: 0,
+      orderNo: 0,
+      memoNo: 0,
+      payTo: '',
+      paymentType: 'Once',
+      unit: 0,
+      unitPrice: 0,
+      totalPrice: 0,
+    }]
   }
-  return result
+  return data
 }
 const getSingleMiscellaneous = async (id: string) => {
   const miscellaneous = await Miscellaneous.findById(id)
