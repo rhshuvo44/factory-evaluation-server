@@ -98,6 +98,7 @@ const getToday = async () => {
         particulars: '',
         description: '',
         remark: '',
+        quantity: 0,
         buyerId: 0,
         orderNo: 0,
         memoNo: 0,
