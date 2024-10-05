@@ -90,21 +90,23 @@ const getToday = async () => {
     }))
   } else {
     // If no records are found, set default data structure
-    data = [{
-      slNo: 1,
-      date: format(startOfDay, 'dd-MM-yyyy'),
-      particulars: '',
-      description: '',
-      remark: '',
-      buyerId: 0,
-      orderNo: 0,
-      memoNo: 0,
-      payTo: '',
-      paymentType: 'Once',
-      unit: 0,
-      unitPrice: 0,
-      totalPrice: 0,
-    }]
+    data = [
+      {
+        slNo: 1,
+        date: format(startOfDay, 'dd-MM-yyyy'),
+        particulars: '',
+        description: '',
+        remark: '',
+        buyerId: 0,
+        orderNo: 0,
+        memoNo: 0,
+        payTo: '',
+        paymentType: 'Once',
+        unit: 0,
+        unitPrice: 0,
+        totalPrice: 0,
+      },
+    ]
   }
   return data
 }
