@@ -30,7 +30,7 @@ const getEmployee = async (query: Record<string, unknown>) => {
 
   // // Calculate the total price
   const totalPrice = result.reduce(
-    (sum, item) => sum + item.GrossPerDaySalary,
+    (sum, item) => sum + item.grossPerDaySalary,
     0,
   )
 

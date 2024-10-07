@@ -1,7 +1,7 @@
-import express, { NextFunction, Request, Response } from 'express'
+import express from 'express'
 import auth from '../../middlewares/auth'
 import validateRequest from '../../middlewares/validateRequest'
-import { upload } from '../../utils/sendImageToCloudinary'
+// import { upload } from '../../utils/sendImageToCloudinary'
 import { USER_ROLE } from '../user/user.constant'
 import { employeeController } from './employee.controller'
 import {
@@ -14,11 +14,11 @@ const router = express.Router()
 router.post(
   '/',
   auth(USER_ROLE.admin, USER_ROLE.executiveDirector),
-  upload.single('file'),
-  (req: Request, res: Response, next: NextFunction) => {
-    req.body = JSON.parse(req.body.data)
-    next()
-  },
+  // upload.single('file'),
+  // (req: Request, res: Response, next: NextFunction) => {
+  //   req.body = JSON.parse(req.body.data)
+  //   next()
+  // },
   validateRequest(employeeValidation),
   employeeController.createEmployee,
 )

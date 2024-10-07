@@ -28,7 +28,7 @@ export const employeeValidation = z.object({
     overTime: z.number().positive(),
     overTimeRate: z.number().positive(),
     perDaySalary: z.number().positive(),
-    GrossPerDaySalary: z.number().positive(),
+    grossPerDaySalary: z.number().positive(),
   }),
 })
 export const employeeUpdateValidation = z.object({
@@ -61,6 +61,6 @@ export const employeeUpdateValidation = z.object({
     overTime: z.number().positive().optional(),
     overTimeRate: z.number().positive().optional(),
     perDaySalary: z.number().positive().optional(),
-    GrossPerDaySalary: z.number().positive().optional(),
+    grossPerDaySalary: z.number().positive().optional(),
   }),
 })

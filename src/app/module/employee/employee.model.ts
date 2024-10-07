@@ -41,7 +41,7 @@ const employeeSchema = new Schema<TEmployee>(
     workingDays: { type: Number, required: true },
     overTimeRate: { type: Number, required: true },
     perDaySalary: { type: Number, required: true },
-    GrossPerDaySalary: { type: Number, required: true },
+    grossPerDaySalary: { type: Number, required: true },
   },
   {
     timestamps: true,
