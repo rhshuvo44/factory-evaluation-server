@@ -23,6 +23,17 @@ router.get(
   ),
   utilityController.getUtility,
 )
+router.get(
+  '/today',
+  auth(
+    USER_ROLE.admin,
+    USER_ROLE.coordinator,
+    USER_ROLE.executiveDirector,
+    USER_ROLE.generalDirector,
+    USER_ROLE.managingDirector,
+  ),
+  utilityController.getToday,
+)
 router.get('/:id', auth(USER_ROLE.admin), utilityController.getSingleUtility)
 router.patch(
   '/:id',

@@ -23,6 +23,16 @@ const getFixedCost: RequestHandler = catchAsync(async (req, res) => {
     data,
   })
 })
+const getToday: RequestHandler = catchAsync(async (req, res) => {
+  const data = await fixedCostService.getToday()
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Get Today Data fetch successfully',
+    data,
+  })
+})
 const getSingleFixedCost = catchAsync(async (req, res) => {
   const id = req?.params.id
   const data = await fixedCostService.getSingleFixedCost(id)
@@ -62,4 +72,5 @@ export const fixedCostController = {
   updateFixedCost,
   deletedFixedCost,
   getSingleFixedCost,
+  getToday,
 }

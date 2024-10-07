@@ -16,19 +16,17 @@ const getUtility = async (query: Record<string, unknown>) => {
   const now = new Date()
   // Calculate the first and last day of the current month
 
-  const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1)
-  const endOfMonth = new Date(
-    now.getFullYear(),
-    now.getMonth() + 1,
-    0,
-    23,
-    59,
-    59,
-    999,
-  )
+  const startOfRange = new Date(now)
+  startOfRange.setDate(now.getDate() - 45)
+
+  // End date is the current date
+  const endOfRange = new Date(now)
+
   const dataQuery = new QueryBuilder(
-    Utility.find({ date: { $gte: startOfMonth, $lte: endOfMonth } }).sort({
-      slNo: 1,
+    Utility.find({
+      date: { $gte: startOfRange, $lte: endOfRange },
+    }).sort({
+      slNo: -1,
     }),
     query,
   )
@@ -36,6 +34,7 @@ const getUtility = async (query: Record<string, unknown>) => {
     .sort()
     .paginate()
     .fields()
+  await Utility.deleteMany({ date: { $lt: startOfRange } })
 
   const meta = await dataQuery.countTotal()
   const data = await dataQuery.modelQuery
@@ -52,6 +51,53 @@ const getUtility = async (query: Record<string, unknown>) => {
     result,
     totalPrice,
   }
+}
+const getToday = async () => {
+  const now = new Date()
+
+  // Set the start of the current day
+  const startOfDay = new Date(now.setHours(0, 0, 0, 0))
+
+  // Set the end of the current day
+  const endOfDay = new Date(now.setHours(23, 59, 59, 999))
+
+  const result = await Utility.find({
+    date: { $gte: startOfDay, $lte: endOfDay },
+  })
+  let data
+  if (result.length > 0) {
+    // If records are found, map the results to the desired format
+    data = result.map(item => ({
+      ...item.toObject(),
+      date: format(item.date, 'dd-MM-yyyy'), // Format date as 'DD-MM-YYYY'
+    }))
+  } else {
+    // If no records are found, set default data structure
+
+    data = [
+      {
+        slNo: 1,
+        date: format(startOfDay, 'dd-MM-yyyy'),
+        internet: {
+          unitPrice: 0,
+          totalPrice: 0,
+        },
+        water: {
+          unitPrice: 0,
+          totalPrice: 0,
+        },
+        electricity: {
+          unitPrice: 0,
+          totalPrice: 0,
+        },
+        others: {
+          unitPrice: 0,
+          totalPrice: 0,
+        },
+      },
+    ]
+  }
+  return data
 }
 const getSingleUtility = async (id: string) => {
   const data = await Utility.findById(id)
@@ -87,4 +133,5 @@ export const utilityService = {
   updateUtility,
   deletedUtility,
   getSingleUtility,
+  getToday,
 }

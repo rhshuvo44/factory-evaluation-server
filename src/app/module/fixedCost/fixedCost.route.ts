@@ -2,8 +2,8 @@ import express from 'express'
 import auth from '../../middlewares/auth'
 import validateRequest from '../../middlewares/validateRequest'
 import { USER_ROLE } from '../user/user.constant'
-import { fixedCostSchema, fixedCostUpdateSchema } from './fixedCost.validation'
 import { fixedCostController } from './fixedCost.controller'
+import { fixedCostSchema, fixedCostUpdateSchema } from './fixedCost.validation'
 const router = express.Router()
 
 router.post(
@@ -22,6 +22,17 @@ router.get(
     USER_ROLE.managingDirector,
   ),
   fixedCostController.getFixedCost,
+)
+router.get(
+  '/today',
+  auth(
+    USER_ROLE.admin,
+    USER_ROLE.coordinator,
+    USER_ROLE.executiveDirector,
+    USER_ROLE.generalDirector,
+    USER_ROLE.managingDirector,
+  ),
+  fixedCostController.getToday,
 )
 router.get(
   '/:id',

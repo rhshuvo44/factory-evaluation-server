@@ -23,6 +23,16 @@ const getUtility: RequestHandler = catchAsync(async (req, res) => {
     data,
   })
 })
+const getToday: RequestHandler = catchAsync(async (req, res) => {
+  const data = await utilityService.getToday()
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Get Today All Data fetch successfully',
+    data,
+  })
+})
 const getSingleUtility = catchAsync(async (req, res) => {
   const id = req?.params.id
   const data = await utilityService.getSingleUtility(id)
@@ -62,4 +72,5 @@ export const utilityController = {
   updateUtility,
   deletedUtility,
   getSingleUtility,
+  getToday,
 }
