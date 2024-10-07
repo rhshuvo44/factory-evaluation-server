@@ -55,22 +55,32 @@ const getFixedCost = async (query: Record<string, unknown>) => {
 }
 const getToday = async () => {
   const now = new Date()
+  const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1)
+  const endOfMonth = new Date(
+    now.getFullYear(),
+    now.getMonth() + 1,
+    0,
+    23,
+    59,
+    59,
+    999,
+  )
 
   // Set the start of the current day
   const startOfDay = new Date(now.setHours(0, 0, 0, 0))
 
   // Set the end of the current day
-  const endOfDay = new Date(now.setHours(23, 59, 59, 999))
+  // const endOfDay = new Date(now.setHours(23, 59, 59, 999))
 
   const result = await FixedCost.find({
-    date: { $gte: startOfDay, $lte: endOfDay },
+    date: { $gte: startOfMonth, $lte: endOfMonth },
   })
   let data
   if (result.length > 0) {
     // If records are found, map the results to the desired format
     data = result.map(item => ({
       ...item.toObject(),
-      date: format(item.date, 'dd-MM-yyyy'), // Format date as 'DD-MM-YYYY'
+      date: format(startOfDay, 'dd-MM-yyyy'), // Format date as 'DD-MM-YYYY'
     }))
   } else {
     // If no records are found, set default data structure
