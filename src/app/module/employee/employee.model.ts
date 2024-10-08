@@ -32,9 +32,7 @@ const employeeSchema = new Schema<TEmployee>(
     },
     status: {
       type: String,
-      enum: ['in-progress', 'blocked'],
-      required: true,
-      default: 'in-progress',
+      enum: ['A', 'P'],
     },
 
     overTime: { type: Number, required: true },

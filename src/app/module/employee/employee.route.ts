@@ -1,7 +1,6 @@
 import express from 'express'
 import auth from '../../middlewares/auth'
 import validateRequest from '../../middlewares/validateRequest'
-// import { upload } from '../../utils/sendImageToCloudinary'
 import { USER_ROLE } from '../user/user.constant'
 import { employeeController } from './employee.controller'
 import {
@@ -32,6 +31,17 @@ router.get(
     USER_ROLE.managingDirector,
   ),
   employeeController.getAllEmployee,
+)
+router.get(
+  '/today',
+  auth(
+    USER_ROLE.admin,
+    USER_ROLE.coordinator,
+    USER_ROLE.executiveDirector,
+    USER_ROLE.generalDirector,
+    USER_ROLE.managingDirector,
+  ),
+  employeeController.getToday,
 )
 router.get(
   '/:id',

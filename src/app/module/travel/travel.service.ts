@@ -86,13 +86,34 @@ const getTodayTravellingAllowance = async () => {
   const result = await Travel.find({
     date: { $gte: startOfDay, $lte: endOfDay },
   })
+
   let data
   if (result.length > 0) {
     // If records are found, map the results to the desired format
-    data = result.map(item => ({
-      ...item.toObject(),
-      date: format(item.date, 'dd-MM-yyyy'), // Format date as 'DD-MM-YYYY'
-    }))
+    // data = result.map(item => ({
+    //   ...item.toObject(),
+    //   date: format(item.date, 'dd-MM-yyyy'), // Format date as 'DD-MM-YYYY'
+    // }))
+
+    const totalPrice = result.reduce((sum, travel) => sum + travel.totalPrice, 0)
+    const unitPrice = result.reduce((sum, travel) => sum + travel.unitPrice, 0)
+    const unit = result.reduce((sum, travel) => sum + travel.unit, 0)
+    return data = {
+      slNo: 1,
+      date: format(startOfDay, 'dd-MM-yyyy'),
+      particulars: '',
+      description: '',
+      remark: '',
+      buyerId: 1,
+      orderNo: 1,
+      memoNo: 1,
+      payTo: '',
+      paymentType: 'Once',
+      unit: unit,
+      unitPrice: unitPrice,
+      totalPrice: totalPrice,
+    }
+
   } else {
     // If no records are found, set default data structure
     data = [

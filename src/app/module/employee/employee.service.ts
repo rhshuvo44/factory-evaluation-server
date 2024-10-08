@@ -1,3 +1,4 @@
+import { format } from 'date-fns'
 import httpStatus from 'http-status'
 import QueryBuilder from '../../builder/QueryBuilder'
 import AppError from '../../errors/AppError'
@@ -40,6 +41,51 @@ const getEmployee = async (query: Record<string, unknown>) => {
     totalPrice,
   }
 }
+
+
+const getToday = async () => {
+  const now = new Date()
+
+  // Set the start of the current day
+  const startOfDay = new Date(now.setHours(0, 0, 0, 0))
+
+
+  const result = await Employee.find(
+    {
+      status: "P"
+    }
+  )
+  let data
+
+
+
+
+  if (result.length > 0) {
+    // If records are found, map the results to the desired format
+    data = result.map(item => ({
+      ...item.toObject(),
+      date: format(startOfDay, 'dd-MM-yyyy'), // Format date as 'DD-MM-YYYY'
+    }))
+  } else {
+    // If no records are found, set default data structure
+    data = [
+      {
+        slNo: 1,
+        date: format(startOfDay, 'dd-MM-yyyy'),
+        name: "",
+        designation: "",
+        workingDays: 0,
+        status: '',
+        salary: 0,
+        perDaySalary: 0,
+        overTime: 0,
+        overTImeRate: 0,
+        grossPerDaySalary: 0,
+      },
+    ]
+  }
+  return data
+}
 const getSingleEmployee = async (id: string) => {
   const data = await Employee.findById(id)
 
@@ -74,5 +120,5 @@ export const employeeService = {
   getEmployee,
   updateEmployee,
   deletedEmployee,
-  getSingleEmployee,
+  getSingleEmployee, getToday
 }

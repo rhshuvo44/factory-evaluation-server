@@ -24,7 +24,7 @@ export const employeeValidation = z.object({
       'Cut. Helper',
       'Cutting',
     ]),
-    status: z.enum(['in-progress', 'blocked']).default('in-progress'),
+    status: z.enum(['A', 'P']),
     overTime: z.number().positive(),
     overTimeRate: z.number().positive(),
     perDaySalary: z.number().positive(),
@@ -57,7 +57,7 @@ export const employeeUpdateValidation = z.object({
         'Cutting',
       ])
       .optional(),
-    status: z.enum(['in-progress', 'blocked']).optional(),
+    status: z.enum(['A', 'P']).optional(),
     overTime: z.number().positive().optional(),
     overTimeRate: z.number().positive().optional(),
     perDaySalary: z.number().positive().optional(),

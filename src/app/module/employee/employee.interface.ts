@@ -21,7 +21,7 @@ export type TEmployee = {
   | 'Cut. Helper'
   | 'Cutting'
   workingDays: number
-  status: 'in-progress' | 'blocked'
+  status: 'A' | 'P'
   salary: number
   perDaySalary: number
   overTime: number
@@ -51,7 +51,7 @@ export type TEmployeeUpdate = {
   | 'Cut. Helper'
   | 'Cutting'
   workingDays?: number
-  status?: 'in-progress' | 'blocked'
+  status?: 'A' | 'P'
   salary?: number
   perDaySalary?: number
   overTime?: number
