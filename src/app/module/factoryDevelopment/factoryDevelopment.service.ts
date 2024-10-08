@@ -106,7 +106,7 @@ const getToday = async () => {
     }
   } else {
     // If no records are found, set default data structure
-    data = [
+    data = 
       {
         slNo: 1,
         date: format(startOfDay, 'dd-MM-yyyy'),
@@ -120,8 +120,7 @@ const getToday = async () => {
         unit: 0,
         unitPrice: 0,
         totalPrice: 0,
-      },
-    ]
+      }
   }
   return data
 }
