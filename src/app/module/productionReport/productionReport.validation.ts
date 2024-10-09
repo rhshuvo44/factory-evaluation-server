@@ -60,9 +60,9 @@ export const productionReportUpdateValidation = z.object({
     color: z.string().optional(),
     orderQuantity: z.number().nonnegative().optional(),
     readyQuantity: z.number().nonnegative().optional(),
-    cuttingSection: TSectionSchema.optional(),
-    sellingSection: TSectionSchema.optional(),
-    finishing: TSectionSchema.optional(),
+    cuttingSection: z.array(TSectionSchema).optional(),
+    sellingSection: z.array(TSectionSchema).optional(),
+    finishing: z.array(TSectionSchema).optional(),
     remark: z.string().optional(),
   }),
 })
