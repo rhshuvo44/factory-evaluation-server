@@ -87,40 +87,39 @@ const getToday = async () => {
     // If records are found, map the results to the desired format
     const totalPrice = result.reduce((sum, data) => sum + data.totalPrice, 0)
     const unitPrice = result.reduce((sum, data) => sum + data.unitPrice, 0)
-    const unit = result.reduce((sum, data) => sum + data.unit, 0)
-    return data = {
+
+    return (data = {
       slNo: 1,
       date: format(startOfDay, 'dd-MM-yyyy'),
       particulars: '',
       description: '',
-      remark: '',
+      remark: '-',
       quantity: 1,
       buyerId: 1,
       orderedBy: '',
       memoNo: 1,
-      payTo: '',
+      payTo: '-',
       paymentType: 'Once',
-      unit: unit,
+      unit: 'Day',
       unitPrice: unitPrice,
       totalPrice: totalPrice,
-    }
+    })
   } else {
     // If no records are found, set default data structure
-    data = 
-      {
-        slNo: 1,
-        date: format(startOfDay, 'dd-MM-yyyy'),
-        particulars: '',
-        description: '',
-        quantity: 0,
-        orderedBy: '',
-        memoNo: 0,
-        payTo: '',
-        paymentType: '',
-        unit: 0,
-        unitPrice: 0,
-        totalPrice: 0,
-      }
+    data = {
+      slNo: 1,
+      date: format(startOfDay, 'dd-MM-yyyy'),
+      particulars: '',
+      description: '',
+      quantity: 0,
+      orderedBy: '',
+      memoNo: 0,
+      payTo: '-',
+      paymentType: 'Once',
+      unit: 'Day',
+      unitPrice: 0,
+      totalPrice: 0,
+    }
   }
   return data
 }

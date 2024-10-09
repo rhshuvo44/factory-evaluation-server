@@ -42,23 +42,16 @@ const getEmployee = async (query: Record<string, unknown>) => {
   }
 }
 
-
 const getToday = async () => {
   const now = new Date()
 
   // Set the start of the current day
   const startOfDay = new Date(now.setHours(0, 0, 0, 0))
 
-
-  const result = await Employee.find(
-    {
-      status: "P"
-    }
-  )
+  const result = await Employee.find({
+    status: 'P',
+  })
   let data
-
-
-
 
   if (result.length > 0) {
     // If records are found, map the results to the desired format
@@ -66,23 +59,36 @@ const getToday = async () => {
       ...item.toObject(),
       date: format(startOfDay, 'dd-MM-yyyy'), // Format date as 'DD-MM-YYYY'
     }))
+    const unitPrice = result.reduce(
+      (sum, data) => sum + data.grossPerDaySalary,
+      0,
+    )
+    return (data = {
+      slNo: 1,
+      date: format(startOfDay, 'dd-MM-yyyy'),
+      name: '',
+      designation: '',
+      paymentType: 'Once',
+      status: '',
+      salary: 0,
+      unit: 'Day',
+      unitPrice: unitPrice,
+      totalPrice: unitPrice * 26,
+    })
   } else {
     // If no records are found, set default data structure
-    data = [
-      {
-        slNo: 1,
-        date: format(startOfDay, 'dd-MM-yyyy'),
-        name: "",
-        designation: "",
-        workingDays: 0,
-        status: '',
-        salary: 0,
-        perDaySalary: 0,
-        overTime: 0,
-        overTImeRate: 0,
-        grossPerDaySalary: 0,
-      },
-    ]
+    data = {
+      slNo: 1,
+      date: format(startOfDay, 'dd-MM-yyyy'),
+      name: '',
+      designation: '',
+      paymentType: 'Once',
+      status: '',
+      salary: 0,
+      unit: 'Day',
+      unitPrice: 0,
+      totalPrice: 0,
+    }
   }
   return data
 }
@@ -120,5 +126,6 @@ export const employeeService = {
   getEmployee,
   updateEmployee,
   deletedEmployee,
-  getSingleEmployee, getToday
+  getSingleEmployee,
+  getToday,
 }

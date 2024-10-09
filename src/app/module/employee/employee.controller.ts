@@ -73,5 +73,5 @@ export const employeeController = {
   updateEmployee,
   deleteEmployee,
   getSingleEmployee,
-  getToday
+  getToday,
 }

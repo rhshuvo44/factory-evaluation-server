@@ -95,10 +95,12 @@ const getTodayTravellingAllowance = async () => {
     //   date: format(item.date, 'dd-MM-yyyy'), // Format date as 'DD-MM-YYYY'
     // }))
 
-    const totalPrice = result.reduce((sum, travel) => sum + travel.totalPrice, 0)
+    const totalPrice = result.reduce(
+      (sum, travel) => sum + travel.totalPrice,
+      0,
+    )
     const unitPrice = result.reduce((sum, travel) => sum + travel.unitPrice, 0)
-    const unit = result.reduce((sum, travel) => sum + travel.unit, 0)
-    return data = {
+    return (data = {
       slNo: 1,
       date: format(startOfDay, 'dd-MM-yyyy'),
       particulars: '',
@@ -109,11 +111,10 @@ const getTodayTravellingAllowance = async () => {
       memoNo: 1,
       payTo: '',
       paymentType: 'Once',
-      unit: unit,
+      unit: 'Day',
       unitPrice: unitPrice,
       totalPrice: totalPrice,
-    }
-
+    })
   } else {
     // If no records are found, set default data structure
     data = {
@@ -127,11 +128,10 @@ const getTodayTravellingAllowance = async () => {
       memoNo: 0,
       payTo: '',
       paymentType: 'Once',
-      unit: 0,
+      unit: 'Day',
       unitPrice: 0,
       totalPrice: 0,
     }
-
   }
   return data
 }
