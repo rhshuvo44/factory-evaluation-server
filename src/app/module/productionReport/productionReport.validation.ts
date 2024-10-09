@@ -9,8 +9,8 @@ export const productionReportValidation = z.object({
     date: z.string(),
     lineNo: z.enum([
       'line 1 / 3rd floor',
-      'line 2 / 4rd floor',
-      'line 3 / 4rd floor',
+      'line 2 / 4th floor',
+      'line 3 / 4th floor',
     ]),
     buyer: z.string(),
     orderNo: z.number().positive(), // Order number should be positive
@@ -26,13 +26,12 @@ export const productionReportValidation = z.object({
       'Romper/Keeper',
       'Long Sleeve T-shirt',
     ]),
-    item: z.string(),
     color: z.string(),
     orderQuantity: z.number().nonnegative(),
     readyQuantity: z.number().nonnegative(),
-    cuttingSection: TSectionSchema,
-    sellingSection: TSectionSchema,
-    finishing: TSectionSchema,
+    cuttingSection: z.array(TSectionSchema),
+    sellingSection: z.array(TSectionSchema),
+    finishing: z.array(TSectionSchema),
     remark: z.string().optional(),
   }),
 })
@@ -40,7 +39,7 @@ export const productionReportUpdateValidation = z.object({
   body: z.object({
     date: z.string().optional(),
     lineNo: z
-      .enum(['line 1 / 3rd floor', 'line 2 / 4rd floor', 'line 3 / 4rd floor'])
+      .enum(['line 1 / 3rd floor', 'line 2 / 4th floor', 'line 3 / 4th floor'])
       .optional(),
     buyer: z.string().optional(),
     orderNo: z.number().positive().optional(), // Order number should be positive
@@ -58,7 +57,6 @@ export const productionReportUpdateValidation = z.object({
         'Long Sleeve T-shirt',
       ])
       .optional(),
-    item: z.string().optional(),
     color: z.string().optional(),
     orderQuantity: z.number().nonnegative().optional(),
     readyQuantity: z.number().nonnegative().optional(),
