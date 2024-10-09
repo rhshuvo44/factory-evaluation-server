@@ -71,16 +71,16 @@ const getToday = async () => {
   // Set the end of the current day
   // const endOfDay = new Date(now.setHours(23, 59, 59, 999))
 
-  const result = await Utility.find({
+  const result = await Utility.findOne({
     date: { $gte: startOfMonth, $lte: endOfMonth },
-  })
+  }).sort({ updatedAt: -1 })
   let data
-  if (result.length > 0) {
+  if (result) {
     // If records are found, map the results to the desired format
-    data = result.map(item => ({
-      ...item.toObject(),
+    data = [{
+      ...result.toObject(),
       date: format(startOfDay, 'dd-MM-yyyy'), // Format date as 'DD-MM-YYYY'
-    }))
+    }]
   } else {
     // If no records are found, set default data structure
 
@@ -88,22 +88,22 @@ const getToday = async () => {
       {
         slNo: 1,
         date: format(startOfDay, 'dd-MM-yyyy'),
-        internet: {
+        internet: [{
           unitPrice: 0,
           totalPrice: 0,
-        },
-        water: {
+        }],
+        water: [{
           unitPrice: 0,
           totalPrice: 0,
-        },
-        electricity: {
+        }],
+        electricity: [{
           unitPrice: 0,
           totalPrice: 0,
-        },
-        others: {
+        }],
+        others: [{
           unitPrice: 0,
           totalPrice: 0,
-        },
+        }],
       },
     ]
   }
