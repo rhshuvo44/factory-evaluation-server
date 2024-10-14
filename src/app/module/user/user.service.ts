@@ -47,6 +47,15 @@ const getMe = async (userId: string) => {
   return result
 }
 
+const getSingleUser = async (id: string) => {
+  const user = await User.findById(id)
+  //! user check
+  if (!user) {
+    throw new AppError(400, 'User not found')
+  }
+  const userUpdate = await User.findById(id).select('-password')
+  return userUpdate
+}
 const updateUser = async (userData: TUserUpdate, id: string) => {
   const user = await User.findById(id)
   //! user check
@@ -73,4 +82,5 @@ export const userService = {
   updateUser,
   deleteUser,
   getMe,
+  getSingleUser,
 }

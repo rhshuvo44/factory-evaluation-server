@@ -16,6 +16,7 @@ router.post(
   userController.signup,
 )
 router.get('/', auth(USER_ROLE.admin), userController.allUser)
+router.get('/:id', auth(USER_ROLE.admin), userController.getSingleUser)
 router.patch(
   '/:id',
   auth(USER_ROLE.admin),
