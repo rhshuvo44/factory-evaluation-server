@@ -77,10 +77,12 @@ const getToday = async () => {
   let data
   if (result) {
     // If records are found, map the results to the desired format
-    data = [{
-      ...result.toObject(),
-      date: format(startOfDay, 'dd-MM-yyyy'), // Format date as 'DD-MM-YYYY'
-    }]
+    data = [
+      {
+        ...result.toObject(),
+        date: format(startOfDay, 'dd-MM-yyyy'), // Format date as 'DD-MM-YYYY'
+      },
+    ]
   } else {
     // If no records are found, set default data structure
 
@@ -88,22 +90,30 @@ const getToday = async () => {
       {
         slNo: 1,
         date: format(startOfDay, 'dd-MM-yyyy'),
-        internet: [{
-          unitPrice: 0,
-          totalPrice: 0,
-        }],
-        water: [{
-          unitPrice: 0,
-          totalPrice: 0,
-        }],
-        electricity: [{
-          unitPrice: 0,
-          totalPrice: 0,
-        }],
-        others: [{
-          unitPrice: 0,
-          totalPrice: 0,
-        }],
+        internet: [
+          {
+            unitPrice: 0,
+            totalPrice: 0,
+          },
+        ],
+        water: [
+          {
+            unitPrice: 0,
+            totalPrice: 0,
+          },
+        ],
+        electricity: [
+          {
+            unitPrice: 0,
+            totalPrice: 0,
+          },
+        ],
+        others: [
+          {
+            unitPrice: 0,
+            totalPrice: 0,
+          },
+        ],
       },
     ]
   }

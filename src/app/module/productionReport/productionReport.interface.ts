@@ -1,4 +1,3 @@
-
 export type TSection = {
   target: number
   wip: number
@@ -11,16 +10,16 @@ export type TProductionReport = {
   buyer: string
   orderNo: number
   styleNo:
-  | 'hoody/jacket'
-  | 'Leggins'
-  | 'Polo Shirt'
-  | 'T-Shirt'
-  | 'Tank Top'
-  | 'Sweat Shirt'
-  | 'Trouser'
-  | 'Shorts'
-  | 'Romper/Keeper'
-  | 'Long Sleeve T-shirt'
+    | 'hoody/jacket'
+    | 'Leggins'
+    | 'Polo Shirt'
+    | 'T-Shirt'
+    | 'Tank Top'
+    | 'Sweat Shirt'
+    | 'Trouser'
+    | 'Shorts'
+    | 'Romper/Keeper'
+    | 'Long Sleeve T-shirt'
   color: string
   orderQuantity: number
   readyQuantity: number
@@ -35,16 +34,16 @@ export type TProductionReportUpdate = {
   buyer?: string
   orderNo?: number
   styleNo?:
-  | 'hoody/jacket'
-  | 'Leggins'
-  | 'Polo Shirt'
-  | 'T-Shirt'
-  | 'Tank Top'
-  | 'Sweat Shirt'
-  | 'Trouser'
-  | 'Shorts'
-  | 'Romper/Keeper'
-  | 'Long Sleeve T-shirt'
+    | 'hoody/jacket'
+    | 'Leggins'
+    | 'Polo Shirt'
+    | 'T-Shirt'
+    | 'Tank Top'
+    | 'Sweat Shirt'
+    | 'Trouser'
+    | 'Shorts'
+    | 'Romper/Keeper'
+    | 'Long Sleeve T-shirt'
   item?: string
   color?: string
   orderQuantity?: number

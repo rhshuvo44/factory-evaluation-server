@@ -78,28 +78,36 @@ const getToday = async () => {
   let data
   if (result) {
     // If records are found, map the results to the desired format
-    data = [{
-      ...result.toObject(),
-      date: format(startOfDay, 'dd-MM-yyyy'), // Format date as 'DD-MM-YYYY'
-    }]
+    data = [
+      {
+        ...result.toObject(),
+        date: format(startOfDay, 'dd-MM-yyyy'), // Format date as 'DD-MM-YYYY'
+      },
+    ]
   } else {
     // If no records are found, set default data structure
     data = [
       {
         slNo: 1,
         date: format(startOfDay, 'dd-MM-yyyy'),
-        factoryRent: [{
-          unitPrice: 0,
-          totalPrice: 0,
-        }],
-        honorary: [{
-          unitPrice: 0,
-          totalPrice: 0,
-        }],
-        factoryRevenue: [{
-          unitPrice: 0,
-          totalPrice: 0,
-        }],
+        factoryRent: [
+          {
+            unitPrice: 0,
+            totalPrice: 0,
+          },
+        ],
+        honorary: [
+          {
+            unitPrice: 0,
+            totalPrice: 0,
+          },
+        ],
+        factoryRevenue: [
+          {
+            unitPrice: 0,
+            totalPrice: 0,
+          },
+        ],
       },
     ]
   }

@@ -6,16 +6,17 @@ import { TTravel, TTravelUpdate } from './travel.interface'
 import { Travel } from './travel.model'
 
 const createTravelAllowance = async (payload: TTravel) => {
-  /*
- //! TODO: must be imput everyday 
- input date and compare database input date if not insert previously date must be input previous date
- if insert previous date can insert currrent date 
-  */
+  //   /*
+  //  //! TODO: must be imput everyday
+  //  input date and compare database input date if not insert previously date must be input previous date
+  //  if insert previous date can insert currrent date
+  //   */
   const now = new Date()
   const date = new Date(payload.date)
 
   const startOfRange = new Date(now)
   startOfRange.setDate(now.getDate() - 45)
+
   if (startOfRange <= date && date <= now) {
     const result = await Travel.create({ ...payload, date })
     return result
@@ -95,25 +96,25 @@ const getTodayTravellingAllowance = async () => {
     //   date: format(item.date, 'dd-MM-yyyy'), // Format date as 'DD-MM-YYYY'
     // }))
 
-    const totalPrice = result.reduce(
-      (sum, travel) => sum + travel.totalPrice,
-      0,
-    )
+    // const totalPrice = result.reduce(
+    //   (sum, travel) => sum + travel.totalPrice,
+    //   0,
+    // )
     const unitPrice = result.reduce((sum, travel) => sum + travel.unitPrice, 0)
     return (data = {
       slNo: 1,
       date: format(startOfDay, 'dd-MM-yyyy'),
       particulars: '',
-      description: '',
-      remark: '',
-      buyerId: 1,
-      orderNo: 1,
-      memoNo: 1,
-      payTo: '',
+      description: '-',
+      remark: '-',
+      buyerId: '-',
+      orderNo: '-',
+      memoNo: '-',
+      payTo: '-',
       paymentType: 'Once',
       unit: 'Day',
       unitPrice: unitPrice,
-      totalPrice: totalPrice,
+      totalPrice: '-',
     })
   } else {
     // If no records are found, set default data structure
@@ -121,16 +122,16 @@ const getTodayTravellingAllowance = async () => {
       slNo: 1,
       date: format(startOfDay, 'dd-MM-yyyy'),
       particulars: '',
-      description: '',
-      remark: '',
-      buyerId: 0,
-      orderNo: 0,
-      memoNo: 0,
-      payTo: '',
+      description: '-',
+      remark: '-',
+      buyerId: '-',
+      orderNo: '-',
+      memoNo: '-',
+      payTo: '-',
       paymentType: 'Once',
       unit: 'Day',
       unitPrice: 0,
-      totalPrice: 0,
+      totalPrice: '-',
     }
   }
   return data

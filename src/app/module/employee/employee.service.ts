@@ -69,11 +69,10 @@ const getToday = async () => {
       name: '',
       designation: '',
       paymentType: 'Once',
-      status: '',
-      salary: 0,
+      remark: '-',
       unit: 'Day',
       unitPrice: unitPrice,
-      totalPrice: unitPrice * 26,
+      totalPrice: '-',
     })
   } else {
     // If no records are found, set default data structure
@@ -83,11 +82,10 @@ const getToday = async () => {
       name: '',
       designation: '',
       paymentType: 'Once',
-      status: '',
-      salary: 0,
+      remark: '-',
       unit: 'Day',
       unitPrice: 0,
-      totalPrice: 0,
+      totalPrice: '-',
     }
   }
   return data

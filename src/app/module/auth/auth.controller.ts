@@ -39,7 +39,6 @@ const changePassword = catchAsync(async (req, res) => {
 const refreshToken = catchAsync(async (req, res) => {
   const { refreshToken } = req.cookies
   const data = await AuthServices.refreshToken(refreshToken)
-
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
@@ -53,7 +52,7 @@ const forgetPassword = catchAsync(async (req, res) => {
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'Reset link is generated succesfully!',
+    message: 'Reset link is generated successfully!',
     data,
   })
 })
