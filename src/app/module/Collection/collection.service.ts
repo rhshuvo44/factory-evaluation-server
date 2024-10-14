@@ -80,26 +80,25 @@ const getToday = async () => {
   let data
   if (result.length > 0) {
     // If records are found, map the results to the desired format
-    data = result.map(item => ({
-      ...item.toObject(),
-      date: format(item.date, 'dd-MM-yyyy'), // Format date as 'DD-MM-YYYY'
-    }))
+    // data = result.map(item => ({
+    //   ...item.toObject(),
+    //   date: format(item.date, 'dd-MM-yyyy'), // Format date as 'DD-MM-YYYY'
+    // }))
+    const amount = result.reduce((sum, data) => sum + data.amount, 0)
+
+    return (data = {
+      slNo: 1,
+      date: format(startOfDay, 'dd-MM-yyyy'),
+      amount: amount,
+    })
   } else {
     // If no records are found, set default data structure
-    data = [
-      {
-        slNo: 1,
-        date: format(startOfDay, 'dd-MM-yyyy'),
-        time: '',
-        style: '',
-        workOrderNo: 0,
-        lineNo: '',
-        challanNo: 0,
-        total: 0,
-        ratePer: 0,
-        amount: 0,
-      },
-    ]
+    data = {
+      slNo: 1,
+      date: format(startOfDay, 'dd-MM-yyyy'),
+
+      amount: 0,
+    }
   }
   return data
 }

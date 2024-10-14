@@ -24,6 +24,7 @@ const allUser: RequestHandler = catchAsync(async (req, res) => {
     data,
   })
 })
+
 const getMe = catchAsync(async (req, res) => {
   const { userId } = req.user
   const data = await userService.getMe(userId)

@@ -1,3 +1,4 @@
+import httpStatus from 'http-status'
 import QueryBuilder from '../../builder/QueryBuilder'
 import AppError from '../../errors/AppError'
 import { TUser, TUserUpdate } from './user.interface'
@@ -40,9 +41,12 @@ const allUsers = async (query: Record<string, unknown>) => {
 }
 const getMe = async (userId: string) => {
   const result = await User.findOne({ _id: userId }).select('-password')
-
+  if (!result) {
+    throw new AppError(httpStatus.NOT_FOUND, 'User not found')
+  }
   return result
 }
+
 const updateUser = async (userData: TUserUpdate, id: string) => {
   const user = await User.findById(id)
   //! user check
