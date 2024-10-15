@@ -40,21 +40,20 @@ const allUsers = async (query: Record<string, unknown>) => {
   }
 }
 const getMe = async (userId: string) => {
-  const result = await User.findOne({ _id: userId }).select('-password')
-  if (!result) {
+  const user = await User.findById(userId).select('-password')
+  if (!user) {
     throw new AppError(httpStatus.NOT_FOUND, 'User not found')
   }
-  return result
+  return user
 }
 
 const getSingleUser = async (id: string) => {
-  const user = await User.findById(id)
+  const user = await User.findById(id).select('-password')
   //! user check
   if (!user) {
     throw new AppError(400, 'User not found')
   }
-  const userUpdate = await User.findById(id).select('-password')
-  return userUpdate
+  return user
 }
 const updateUser = async (userData: TUserUpdate, id: string) => {
   const user = await User.findById(id)

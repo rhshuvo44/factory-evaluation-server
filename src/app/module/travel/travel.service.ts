@@ -6,17 +6,54 @@ import { TTravel, TTravelUpdate } from './travel.interface'
 import { Travel } from './travel.model'
 
 const createTravelAllowance = async (payload: TTravel) => {
-  //   /*
-  //  //! TODO: must be input everyday
-  //  input date and compare database input date if not insert previously date must be input previous date
-  //  if insert previous date can insert current date
-  //   */
+  // //   /*
+  // //  //! TODO: must be input everyday
+  // //  input date and compare database input date if not insert previously date must be input previous date
+  // //  if insert previous date can insert current date
+  // //   */
+  // const now = new Date()
+  // const date = new Date(payload.date)
+
+  // const startOfRange = new Date(now)
+  // startOfRange.setDate(now.getDate() - 45)
+
+  // if (startOfRange <= date && date <= now) {
+  //   const result = await Travel.create({ ...payload, date })
+  //   return result
+  // } else {
+  //   throw new AppError(
+  //     httpStatus.FORBIDDEN,
+  //     'Travel allowance creation is only allowed for the last 45 days',
+  //   )
+  // }
+
   const now = new Date()
   const date = new Date(payload.date)
 
+  // Set the start of the allowable date range (last 45 days)
   const startOfRange = new Date(now)
   startOfRange.setDate(now.getDate() - 45)
 
+  // Get the previous day
+  const previousDay = new Date(now)
+  previousDay.setDate(now.getDate() - 1)
+
+  // Check if today's entry is being added
+  if (date.getTime() === now.setHours(0, 0, 0, 0)) {
+    // Check if the previous day has an entry in the database
+    const previousEntryExists = await Travel.findOne({
+      date: previousDay.setHours(0, 0, 0, 0),
+    })
+
+    if (!previousEntryExists) {
+      throw new AppError(
+        httpStatus.FORBIDDEN,
+        'You must input the previous day’s travel allowance before entering today’s.',
+      )
+    }
+  }
+
+  // Ensure the date is within the allowed range of the last 45 days
   if (startOfRange <= date && date <= now) {
     const result = await Travel.create({ ...payload, date })
     return result

@@ -8,7 +8,6 @@ import {
   userUpdateValidationSchema,
 } from './user.validation'
 const router = express.Router()
-
 router.post(
   '/create-user',
   auth(USER_ROLE.admin),
@@ -16,7 +15,6 @@ router.post(
   userController.signup,
 )
 router.get('/', auth(USER_ROLE.admin), userController.allUser)
-router.get('/:id', auth(USER_ROLE.admin), userController.getSingleUser)
 router.patch(
   '/:id',
   auth(USER_ROLE.admin),
@@ -36,5 +34,6 @@ router.get(
   ),
   userController.getMe,
 )
+router.get('/:id', auth(USER_ROLE.admin), userController.getSingleUser)
 
 export const userRouter = router
