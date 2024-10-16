@@ -6,7 +6,7 @@ import { sendImageToCloudinary } from '../../utils/sendImageToCloudinary'
 import { TEmployee, TEmployeeUpdate } from './employee.interface'
 import { Employee } from './employee.model'
 
-const createEmployee = async (file: any, payload: TEmployee) => {
+const createEmployee = async (file: Express.Multer.File | undefined, payload: TEmployee) => {
   if (file) {
     const imageName = payload?.name
     const path = file?.path

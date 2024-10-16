@@ -64,6 +64,7 @@ const globalErrorHandler: ErrorRequestHandler = (err, req, res, next) => {
     err,
     stack: config.node_env === 'development' ? err?.stack : null,
   })
+  next()
 }
 
 export default globalErrorHandler
