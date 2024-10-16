@@ -6,23 +6,37 @@ import { TLoan, TLoanUpdate } from './loan.interface'
 import { Loan } from './loan.model'
 
 const createLoan = async (payload: TLoan) => {
-  /*
-  //! TODO: must be input everyday 
-  input date and compare database input date if not insert previously date must be input previous date
-  if insert previous date can insert current date 
-   */
   const now = new Date()
   const date = new Date(payload.date)
 
+  // Set the start of the allowable date range (last 45 days)
   const startOfRange = new Date(now)
   startOfRange.setDate(now.getDate() - 45)
+
+  // Get the previous day
+  const previousDay = new Date(date)
+  previousDay.setDate(date.getDate() - 1)
+
+  // Check if the previous day has an entry in the database
+  const previousEntryExists = await Loan.findOne({
+    date: previousDay.setHours(0, 0, 0, 0),
+  })
+
+  if (!previousEntryExists) {
+    throw new AppError(
+      httpStatus.FORBIDDEN,
+      'You must input the previous day’s Loan return before entering today’s.',
+    )
+  }
+
+  // Ensure the date is within the allowed range of the last 45 days
   if (startOfRange <= date && date <= now) {
     const result = await Loan.create({ ...payload, date })
     return result
   } else {
     throw new AppError(
       httpStatus.FORBIDDEN,
-      'Data creation is only allowed for the last 45 days',
+      'Loan return creation is only allowed for the last 45 days',
     )
   }
 }

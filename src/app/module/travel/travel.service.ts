@@ -35,22 +35,19 @@ const createTravelAllowance = async (payload: TTravel) => {
   startOfRange.setDate(now.getDate() - 45)
 
   // Get the previous day
-  const previousDay = new Date(now)
-  previousDay.setDate(now.getDate() - 1)
+  const previousDay = new Date(date)
+  previousDay.setDate(date.getDate() - 1)
 
-  // Check if today's entry is being added
-  if (date.getTime() === now.setHours(0, 0, 0, 0)) {
-    // Check if the previous day has an entry in the database
-    const previousEntryExists = await Travel.findOne({
-      date: previousDay.setHours(0, 0, 0, 0),
-    })
+  // Check if the previous day has an entry in the database
+  const previousEntryExists = await Travel.findOne({
+    date: previousDay.setHours(0, 0, 0, 0),
+  })
 
-    if (!previousEntryExists) {
-      throw new AppError(
-        httpStatus.FORBIDDEN,
-        'You must input the previous day’s travel allowance before entering today’s.',
-      )
-    }
+  if (!previousEntryExists) {
+    throw new AppError(
+      httpStatus.FORBIDDEN,
+      'You must input the previous day’s travel allowance before entering today’s.',
+    )
   }
 
   // Ensure the date is within the allowed range of the last 45 days
