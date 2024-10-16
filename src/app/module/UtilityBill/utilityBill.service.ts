@@ -41,10 +41,14 @@ const getUtility = async (query: Record<string, unknown>) => {
 
   const result = data.map(item => ({
     ...item.toObject(),
+    electricity: item.electricity ?? [], // Ensure electricity is always an array
+    internet: item.internet ?? [],       // Ensure internet is always an array
+    water: item.water ?? [],             // Ensure water is always an array
+    others: item.others ?? [],   
     date: format(item.date, 'dd-MM-yyyy'), // Format date as 'YYYY-MM-DD'
   }))
 
-  const { electricity, internet, water, others } = calculateTotalPrices(data)
+  const { electricity, internet, water, others } = calculateTotalPrices(result)
   const totalPrice = electricity + internet + water + others
   return {
     meta,

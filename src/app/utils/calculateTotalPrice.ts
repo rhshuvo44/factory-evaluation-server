@@ -3,7 +3,7 @@ interface UtilityItem {
   totalPrice: number
 }
 
-interface UtilityRecord {
+ export interface UtilityRecord {
   electricity: UtilityItem[]
   internet: UtilityItem[]
   water: UtilityItem[]
@@ -17,7 +17,7 @@ interface TotalPrices {
   others: number
 }
 
-export const calculateTotalPrices = (result: any): TotalPrices => {
+export const calculateTotalPrices = (result: UtilityRecord[]): TotalPrices => {
   return result.reduce(
     (acc: TotalPrices, record: UtilityRecord) => {
       const electricityTotal = record.electricity.reduce(
