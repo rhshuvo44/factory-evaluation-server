@@ -41,11 +41,14 @@ const getFixedCost = async (query: Record<string, unknown>) => {
 
   const result = data.map(item => ({
     ...item.toObject(),
+    factoryRent: item.factoryRent ?? [],
+    honorary: item.honorary ?? [],
+    factoryRevenue: item.factoryRevenue ?? [],
     date: format(item.date, 'dd-MM-yyyy'), // Format date as 'YYYY-MM-DD'
   }))
 
   const { factoryRent, honorary, factoryRevenue } =
-    calculateFixedTotalPrices(data)
+    calculateFixedTotalPrices(result)
   const totalPrice = factoryRent + honorary + factoryRevenue
   return {
     meta,

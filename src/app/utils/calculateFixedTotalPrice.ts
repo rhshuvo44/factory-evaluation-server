@@ -15,7 +15,9 @@ interface TotalPrices {
   factoryRevenue: number
 }
 
-export const calculateFixedTotalPrices = (result: any): TotalPrices => {
+export const calculateFixedTotalPrices = (
+  result: UtilityRecord[],
+): TotalPrices => {
   return result.reduce(
     (acc: TotalPrices, record: UtilityRecord) => {
       const factoryRentTotal = record.factoryRent.reduce(

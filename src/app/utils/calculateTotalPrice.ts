@@ -3,7 +3,7 @@ interface UtilityItem {
   totalPrice: number
 }
 
- export interface UtilityRecord {
+export interface UtilityRecord {
   electricity: UtilityItem[]
   internet: UtilityItem[]
   water: UtilityItem[]
