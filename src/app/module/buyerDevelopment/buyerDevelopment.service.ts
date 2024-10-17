@@ -81,7 +81,7 @@ const getBuyerDevelopment = async (query: Record<string, unknown>) => {
     .sort()
     .paginate()
     .fields()
-  await BuyerDevelopment.deleteMany({ date: { $lt: startOfRange } })
+  await BuyerDevelopment.deleteOne({ date: { $lt: startOfRange } })
 
   const meta = await dataQuery.countTotal()
   const data = await dataQuery.modelQuery

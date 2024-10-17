@@ -66,7 +66,7 @@ const getFactoryDevelopment = async (query: Record<string, unknown>) => {
     .sort()
     .paginate()
     .fields()
-  await FactoryDevelopment.deleteMany({ date: { $lt: startOfRange } })
+  await FactoryDevelopment.deleteOne({ date: { $lt: startOfRange } })
 
   const meta = await dataQuery.countTotal()
   const data = await dataQuery.modelQuery

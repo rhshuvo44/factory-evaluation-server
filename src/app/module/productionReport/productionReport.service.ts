@@ -65,7 +65,7 @@ const getProductionReport = async (query: Record<string, unknown>) => {
     .sort()
     .paginate()
     .fields()
-  await ProductionReport.deleteMany({ date: { $lt: startOfRange } })
+  await ProductionReport.deleteOne({ date: { $lt: startOfRange } })
 
   const meta = await dataQuery.countTotal()
   const data = await dataQuery.modelQuery

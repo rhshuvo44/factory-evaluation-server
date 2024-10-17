@@ -21,7 +21,8 @@ const allUser: RequestHandler = catchAsync(async (req, res) => {
     statusCode: httpStatus.OK,
     success: true,
     message: 'All Users fetch successfully',
-    data,
+    data: data.result,
+    meta: data.meta,
   })
 })
 

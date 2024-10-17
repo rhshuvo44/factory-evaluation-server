@@ -61,7 +61,7 @@ const getCollection = async (query: Record<string, unknown>) => {
     .sort()
     .paginate()
     .fields()
-  await Collection.deleteMany({ date: { $lt: startOfRange } })
+  await Collection.deleteOne({ date: { $lt: startOfRange } })
 
   const meta = await dataQuery.countTotal()
   const data = await dataQuery.modelQuery

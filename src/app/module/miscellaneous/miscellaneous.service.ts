@@ -63,7 +63,7 @@ const getMiscellaneous = async (query: Record<string, unknown>) => {
     .sort()
     .paginate()
     .fields()
-  await Miscellaneous.deleteMany({ date: { $lt: startOfRange } })
+  await Miscellaneous.deleteOne({ date: { $lt: startOfRange } })
 
   const meta = await dataQuery.countTotal()
   const miscellaneous = await dataQuery.modelQuery

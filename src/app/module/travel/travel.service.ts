@@ -91,7 +91,7 @@ const getTravelAllowance = async (query: Record<string, unknown>) => {
     .sort()
     .paginate()
     .fields()
-  await Travel.deleteMany({ date: { $lt: startOfRange } })
+  await Travel.deleteOne({ date: { $lt: startOfRange } })
   const meta = await travelQuery.countTotal()
   const travel = await travelQuery.modelQuery
 

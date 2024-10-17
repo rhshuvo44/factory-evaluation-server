@@ -63,7 +63,7 @@ const getLoan = async (query: Record<string, unknown>) => {
     .sort()
     .paginate()
     .fields()
-  await Loan.deleteMany({ date: { $lt: startOfRange } })
+  await Loan.deleteOne({ date: { $lt: startOfRange } })
 
   const meta = await dataQuery.countTotal()
   const data = await dataQuery.modelQuery

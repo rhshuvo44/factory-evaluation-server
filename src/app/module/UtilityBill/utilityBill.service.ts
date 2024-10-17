@@ -34,7 +34,7 @@ const getUtility = async (query: Record<string, unknown>) => {
     .sort()
     .paginate()
     .fields()
-  await Utility.deleteMany({ date: { $lt: startOfRange } })
+  await Utility.deleteOne({ date: { $lt: startOfRange } })
 
   const meta = await dataQuery.countTotal()
   const data = await dataQuery.modelQuery
