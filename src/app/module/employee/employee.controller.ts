@@ -21,7 +21,9 @@ const getAllEmployee: RequestHandler = catchAsync(async (req, res) => {
     statusCode: httpStatus.OK,
     success: true,
     message: 'Get All Data fetch successfully',
-    data,
+    meta: data.meta,
+    totalPrice: data.totalPrice,
+    data: data.result,
   })
 })
 const getToday = catchAsync(async (req, res) => {

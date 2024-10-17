@@ -15,13 +15,15 @@ const createBuyerDevelopment = catchAsync(async (req, res) => {
 })
 
 const getAllBuyerDevelopment: RequestHandler = catchAsync(async (req, res) => {
-  const result = await buyerDevelopmentService.getBuyerDevelopment(req?.query)
+  const data = await buyerDevelopmentService.getBuyerDevelopment(req?.query)
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
     message: 'Get All Data fetch successfully',
-    data: result,
+    meta: data.meta,
+    totalPrice: data.totalPrice,
+    data: data.result,
   })
 })
 const getToday = catchAsync(async (req, res) => {

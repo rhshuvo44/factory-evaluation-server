@@ -14,13 +14,15 @@ const createLoan = catchAsync(async (req, res) => {
   })
 })
 const getAllLoan: RequestHandler = catchAsync(async (req, res) => {
-  const result = await loanService.getLoan(req?.query)
+  const data = await loanService.getLoan(req?.query)
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
     message: 'Get All Data fetch successfully',
-    data: result,
+    meta: data.meta,
+    totalPrice: data.totalPrice,
+    data: data.result,
   })
 })
 const getToday: RequestHandler = catchAsync(async (req, res) => {

@@ -18,7 +18,7 @@ const createFactoryDevelopment = catchAsync(async (req, res) => {
 
 const getAllFactoryDevelopment: RequestHandler = catchAsync(
   async (req, res) => {
-    const result = await factoryDevelopmentService.getFactoryDevelopment(
+    const data = await factoryDevelopmentService.getFactoryDevelopment(
       req?.query,
     )
 
@@ -26,7 +26,9 @@ const getAllFactoryDevelopment: RequestHandler = catchAsync(
       statusCode: httpStatus.OK,
       success: true,
       message: 'Get All Data fetch successfully',
-      data: result,
+      meta: data.meta,
+      totalPrice: data.totalPrice,
+      data: data.result,
     })
   },
 )

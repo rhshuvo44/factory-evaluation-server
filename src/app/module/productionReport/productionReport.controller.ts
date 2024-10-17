@@ -16,15 +16,14 @@ const createProductionReport = catchAsync(async (req, res) => {
   })
 })
 const getAllProductionReport: RequestHandler = catchAsync(async (req, res) => {
-  const ProductionReport = await productionReportService.getProductionReport(
-    req?.query,
-  )
+  const data = await productionReportService.getProductionReport(req?.query)
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
     message: 'Get All Production Report successfully',
-    data: ProductionReport,
+    meta: data.meta,
+    data: data.result,
   })
 })
 const getToday: RequestHandler = catchAsync(async (req, res) => {

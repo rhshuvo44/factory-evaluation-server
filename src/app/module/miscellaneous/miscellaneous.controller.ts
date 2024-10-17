@@ -16,13 +16,15 @@ const createMiscellaneous = catchAsync(async (req, res) => {
   })
 })
 const getAllMiscellaneous: RequestHandler = catchAsync(async (req, res) => {
-  const miscellaneous = await miscellaneousService.getMiscellaneous(req?.query)
+  const data = await miscellaneousService.getMiscellaneous(req?.query)
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
     message: 'Get All Miscellaneous successfully',
-    data: miscellaneous,
+    meta: data.meta,
+    totalPrice: data.totalPrice,
+    data: data.result,
   })
 })
 const getToday: RequestHandler = catchAsync(async (req, res) => {

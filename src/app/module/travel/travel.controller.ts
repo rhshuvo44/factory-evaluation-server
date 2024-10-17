@@ -21,7 +21,9 @@ const getAllTravellingAllowance: RequestHandler = catchAsync(
       statusCode: httpStatus.OK,
       success: true,
       message: 'Get All Travelling Allowance successfully',
-      data,
+      meta: data.meta,
+      totalPrice: data.totalPrice,
+      data: data.result,
     })
   },
 )
