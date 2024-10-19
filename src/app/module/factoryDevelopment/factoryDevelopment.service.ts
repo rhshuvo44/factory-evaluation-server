@@ -15,7 +15,21 @@ const createFactoryDevelopment = async (payload: TFactoryDevelopment) => {
   // Set the start of the allowable date range (last 45 days)
   const startOfRange = new Date(now)
   startOfRange.setDate(now.getDate() - 45)
+  // Check if there is any data in the database
+  const anyEntryExists = await FactoryDevelopment.findOne({})
 
+  if (!anyEntryExists) {
+    // If no data at all, create the entry
+    if (startOfRange <= date && date <= now) {
+      const result = await FactoryDevelopment.create({ ...payload, date })
+      return result
+    } else {
+      throw new AppError(
+        httpStatus.FORBIDDEN,
+        'Factory Development creation is only allowed for the last 45 days',
+      )
+    }
+  }
   // Get the previous day
   const previousDay = new Date(date)
   previousDay.setDate(date.getDate() - 1)

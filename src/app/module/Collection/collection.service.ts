@@ -16,7 +16,21 @@ const createCollection = async (payload: TCollection) => {
   // Get the previous day
   const previousDay = new Date(date)
   previousDay.setDate(date.getDate() - 1)
+  // Check if there is any data in the database
+  const anyEntryExists = await Collection.findOne({})
 
+  if (!anyEntryExists) {
+    // If no data at all, create the entry
+    if (startOfRange <= date && date <= now) {
+      const result = await Collection.create({ ...payload, date })
+      return result
+    } else {
+      throw new AppError(
+        httpStatus.FORBIDDEN,
+        'Collection creation is only allowed for the last 45 days',
+      )
+    }
+  }
   // Check if the previous day has an entry in the database
   const previousEntryExists = await Collection.findOne({
     date: previousDay.setHours(0, 0, 0, 0),

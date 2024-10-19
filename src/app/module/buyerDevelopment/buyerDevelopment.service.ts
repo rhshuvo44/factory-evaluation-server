@@ -34,7 +34,21 @@ const createBuyerDevelopment = async (payload: TBuyerDevelopment) => {
 
   const startOfRange = new Date(now)
   startOfRange.setDate(now.getDate() - 45)
+  // Check if there is any data in the database
+  const anyEntryExists = await BuyerDevelopment.findOne({})
 
+  if (!anyEntryExists) {
+    // If no data at all, create the entry
+    if (startOfRange <= date && date <= now) {
+      const result = await BuyerDevelopment.create({ ...payload, date })
+      return result
+    } else {
+      throw new AppError(
+        httpStatus.FORBIDDEN,
+        'Buyer Development creation is only allowed for the last 45 days',
+      )
+    }
+  }
   const previousDay = new Date(date)
   previousDay.setDate(date.getDate() - 1)
 

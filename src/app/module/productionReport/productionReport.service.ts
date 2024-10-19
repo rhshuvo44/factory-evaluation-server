@@ -15,7 +15,21 @@ const createProductionReport = async (payload: TProductionReport) => {
   // Set the start of the allowable date range (last 45 days)
   const startOfRange = new Date(now)
   startOfRange.setDate(now.getDate() - 45)
+  // Check if there is any data in the database
+  const anyEntryExists = await ProductionReport.findOne({})
 
+  if (!anyEntryExists) {
+    // If no data at all, create the entry
+    if (startOfRange <= date && date <= now) {
+      const result = await ProductionReport.create({ ...payload, date })
+      return result
+    } else {
+      throw new AppError(
+        httpStatus.FORBIDDEN,
+        'Production Report creation is only allowed for the last 45 days',
+      )
+    }
+  }
   // Get the previous day
   const previousDay = new Date(date)
   previousDay.setDate(date.getDate() - 1)

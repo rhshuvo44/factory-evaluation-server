@@ -34,7 +34,7 @@ const getFixedCost = async (query: Record<string, unknown>) => {
     .sort()
     .paginate()
     .fields()
-  await FixedCost.deleteMany({ date: { $lt: startOfRange } })
+  await FixedCost.deleteOne({ date: { $lt: startOfRange } })
 
   const meta = await dataQuery.countTotal()
   const data = await dataQuery.modelQuery

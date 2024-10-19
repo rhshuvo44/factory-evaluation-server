@@ -6,34 +6,27 @@ import { TTravel, TTravelUpdate } from './travel.interface'
 import { Travel } from './travel.model'
 
 const createTravelAllowance = async (payload: TTravel) => {
-  // //   /*
-  // //  //! TODO: must be input everyday
-  // //  input date and compare database input date if not insert previously date must be input previous date
-  // //  if insert previous date can insert current date
-  // //   */
-  // const now = new Date()
-  // const date = new Date(payload.date)
-
-  // const startOfRange = new Date(now)
-  // startOfRange.setDate(now.getDate() - 45)
-
-  // if (startOfRange <= date && date <= now) {
-  //   const result = await Travel.create({ ...payload, date })
-  //   return result
-  // } else {
-  //   throw new AppError(
-  //     httpStatus.FORBIDDEN,
-  //     'Travel allowance creation is only allowed for the last 45 days',
-  //   )
-  // }
-
   const now = new Date()
   const date = new Date(payload.date)
 
   // Set the start of the allowable date range (last 45 days)
   const startOfRange = new Date(now)
   startOfRange.setDate(now.getDate() - 45)
+  // Check if there is any data in the database
+  const anyEntryExists = await Travel.findOne({})
 
+  if (!anyEntryExists) {
+    // If no data at all, create the entry
+    if (startOfRange <= date && date <= now) {
+      const result = await Travel.create({ ...payload, date })
+      return result
+    } else {
+      throw new AppError(
+        httpStatus.FORBIDDEN,
+        'Travelling allowance creation is only allowed for the last 45 days',
+      )
+    }
+  }
   // Get the previous day
   const previousDay = new Date(date)
   previousDay.setDate(date.getDate() - 1)
@@ -64,16 +57,7 @@ const createTravelAllowance = async (payload: TTravel) => {
 const getTravelAllowance = async (query: Record<string, unknown>) => {
   // Get the current date
   const now = new Date()
-  // Calculate the first and last day of the current month
-  // const startOfMonth = format(
-  //   new Date(now.getFullYear(), now.getMonth(), 1),
-  //   'dd-MM-yyyy',
-  // )
 
-  // const endOfMonth = format(
-  //   new Date(now.getFullYear(), now.getMonth() + 1, 0, 23, 59, 59, 999),
-  //   'dd-MM-yyyy',
-  // )
   // Calculate the date 45 days ago
   const startOfRange = new Date(now)
   startOfRange.setDate(now.getDate() - 45)
@@ -124,16 +108,6 @@ const getTodayTravellingAllowance = async () => {
 
   let data
   if (result.length > 0) {
-    // If records are found, map the results to the desired format
-    // data = result.map(item => ({
-    //   ...item.toObject(),
-    //   date: format(item.date, 'dd-MM-yyyy'), // Format date as 'DD-MM-YYYY'
-    // }))
-
-    // const totalPrice = result.reduce(
-    //   (sum, travel) => sum + travel.totalPrice,
-    //   0,
-    // )
     const unitPrice = result.reduce((sum, travel) => sum + travel.unitPrice, 0)
     return (data = {
       slNo: 1,
