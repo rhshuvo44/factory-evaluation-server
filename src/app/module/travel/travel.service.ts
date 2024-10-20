@@ -12,6 +12,10 @@ const createTravelAllowance = async (payload: TTravel) => {
   // Set the start of the allowable date range (last 45 days)
   const startOfRange = new Date(now)
   startOfRange.setDate(now.getDate() - 45)
+
+  // Get the previous day
+  const previousDay = new Date(date)
+  previousDay.setDate(date.getDate() - 1)
   // Check if there is any data in the database
   const anyEntryExists = await Travel.findOne({})
 
@@ -27,9 +31,7 @@ const createTravelAllowance = async (payload: TTravel) => {
       )
     }
   }
-  // Get the previous day
-  const previousDay = new Date(date)
-  previousDay.setDate(date.getDate() - 1)
+
 
   // Check if the previous day has an entry in the database
   const previousEntryExists = await Travel.findOne({

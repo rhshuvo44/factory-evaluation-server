@@ -1,4 +1,5 @@
-import express from 'express'
+import express, { NextFunction, Request, Response } from 'express'
+import { upload } from '../../config/multer.config'
 import auth from '../../middlewares/auth'
 import validateRequest from '../../middlewares/validateRequest'
 import { USER_ROLE } from '../user/user.constant'
@@ -13,11 +14,11 @@ const router = express.Router()
 router.post(
   '/',
   auth(USER_ROLE.admin, USER_ROLE.executiveDirector),
-  // upload.single('file'),
-  // (req: Request, res: Response, next: NextFunction) => {
-  //   req.body = JSON.parse(req.body.data)
-  //   next()
-  // },
+  upload.single('file'),
+  (req: Request, res: Response, next: NextFunction) => {
+    req.body = JSON.parse(req.body.data)
+    next()
+  },
   validateRequest(employeeValidation),
   employeeController.createEmployee,
 )
