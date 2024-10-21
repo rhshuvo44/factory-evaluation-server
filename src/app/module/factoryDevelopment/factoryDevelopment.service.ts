@@ -15,34 +15,50 @@ const createFactoryDevelopment = async (payload: TFactoryDevelopment) => {
   // Set the start of the allowable date range (last 45 days)
   const startOfRange = new Date(now)
   startOfRange.setDate(now.getDate() - 45)
-  // Check if there is any data in the database
-  const anyEntryExists = await FactoryDevelopment.findOne({})
+  // const startOfRange = new Date(now.getFullYear(), now.getMonth(), 1);
+  // Get the previous day
+  const previousDay = new Date(date)
+  previousDay.setDate(date.getDate() - 1)
 
-  if (!anyEntryExists) {
-    // If no data at all, create the entry
+  // Get the most recent entry from the database
+  const lastEntry = await FactoryDevelopment.findOne().sort({ date: -1 })
+
+  if (!lastEntry) {
+    // If no data at all, create the entry if within range
     if (startOfRange <= date && date <= now) {
       const result = await FactoryDevelopment.create({ ...payload, date })
       return result
     } else {
       throw new AppError(
         httpStatus.FORBIDDEN,
-        'Factory Development creation is only allowed for the last 45 days',
+        'Factory Development Report creation is only allowed for the last 45 days',
       )
     }
   }
-  // Get the previous day
-  const previousDay = new Date(date)
-  previousDay.setDate(date.getDate() - 1)
 
-  // Check if the previous day has an entry in the database
-  const previousEntryExists = await FactoryDevelopment.findOne({
-    date: previousDay.setHours(0, 0, 0, 0),
-  })
+  // Check for missing entries between last date and the input date
+  const lastDate = new Date(lastEntry.date)
+  const currentDate = new Date(lastDate)
+  currentDate.setDate(lastDate.getDate() + 1)
 
-  if (!previousEntryExists) {
+  const missingDates = []
+
+  while (currentDate < date) {
+    const entryExists = await FactoryDevelopment.findOne({
+      date: currentDate.setHours(0, 0, 0, 0),
+    })
+
+    if (!entryExists) {
+      missingDates.push(new Date(currentDate).toISOString().split('T')[0]) // Collect missing dates
+    }
+
+    currentDate.setDate(currentDate.getDate() + 1) // Move to next day
+  }
+
+  if (missingDates.length > 0) {
     throw new AppError(
       httpStatus.FORBIDDEN,
-      'You must input the previous day’s Factory Development before entering today’s.',
+      `Missing Factory Development report entries for the following date(s): ${missingDates.join(', ')}.`,
     )
   }
 

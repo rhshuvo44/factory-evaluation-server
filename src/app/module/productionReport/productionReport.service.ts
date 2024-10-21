@@ -15,7 +15,7 @@ const createProductionReport = async (payload: TProductionReport) => {
   // Set the start of the allowable date range (last 45 days)
   const startOfRange = new Date(now)
   startOfRange.setDate(now.getDate() - 45)
-
+  // const startOfRange = new Date(now.getFullYear(), now.getMonth(), 1);
   // Get the previous day
   const previousDay = new Date(date)
   previousDay.setDate(date.getDate() - 1)

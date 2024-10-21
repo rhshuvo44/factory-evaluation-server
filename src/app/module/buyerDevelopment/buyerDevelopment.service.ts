@@ -32,33 +32,53 @@ const createBuyerDevelopment = async (payload: TBuyerDevelopment) => {
   const now = new Date()
   const date = new Date(payload.date)
 
+  // Set the start of the allowable date range (last 45 days)
   const startOfRange = new Date(now)
   startOfRange.setDate(now.getDate() - 45)
-  // Check if there is any data in the database
-  const anyEntryExists = await BuyerDevelopment.findOne({})
+  // const startOfRange = new Date(now.getFullYear(), now.getMonth(), 1);
+  // Get the previous day
+  const previousDay = new Date(date)
+  previousDay.setDate(date.getDate() - 1)
 
-  if (!anyEntryExists) {
-    // If no data at all, create the entry
+  // Get the most recent entry from the database
+  const lastEntry = await BuyerDevelopment.findOne().sort({ date: -1 })
+
+  if (!lastEntry) {
+    // If no data at all, create the entry if within range
     if (startOfRange <= date && date <= now) {
       const result = await BuyerDevelopment.create({ ...payload, date })
       return result
     } else {
       throw new AppError(
         httpStatus.FORBIDDEN,
-        'Buyer Development creation is only allowed for the last 45 days',
+        'Buyer Development Report creation is only allowed for the last 45 days',
       )
     }
   }
-  const previousDay = new Date(date)
-  previousDay.setDate(date.getDate() - 1)
 
-  const previousEntryExists = await BuyerDevelopment.findOne({
-    date: previousDay.setHours(0, 0, 0, 0),
-  })
-  if (!previousEntryExists) {
+  // Check for missing entries between last date and the input date
+  const lastDate = new Date(lastEntry.date)
+  const currentDate = new Date(lastDate)
+  currentDate.setDate(lastDate.getDate() + 1)
+
+  const missingDates = []
+
+  while (currentDate < date) {
+    const entryExists = await BuyerDevelopment.findOne({
+      date: currentDate.setHours(0, 0, 0, 0),
+    })
+
+    if (!entryExists) {
+      missingDates.push(new Date(currentDate).toISOString().split('T')[0]) // Collect missing dates
+    }
+
+    currentDate.setDate(currentDate.getDate() + 1) // Move to next day
+  }
+
+  if (missingDates.length > 0) {
     throw new AppError(
       httpStatus.FORBIDDEN,
-      'You must input the previous day’s Buyer Development before entering today’s.',
+      `Missing Buyer Development report entries for the following date(s): ${missingDates.join(', ')}.`,
     )
   }
 
