@@ -1,9 +1,5 @@
 import { z } from 'zod'
-const TSectionSchema = z.object({
-  target: z.number().nonnegative(),
-  wip: z.number().nonnegative(), // Work In Progress
-  output: z.number().nonnegative(),
-})
+
 export const productionReportValidation = z.object({
   body: z.object({
     date: z.string(),
@@ -29,9 +25,6 @@ export const productionReportValidation = z.object({
     color: z.string(),
     orderQuantity: z.number().nonnegative(),
     readyQuantity: z.number().nonnegative(),
-    cuttingSection: z.array(TSectionSchema),
-    sewingSection: z.array(TSectionSchema),
-    finishing: z.array(TSectionSchema),
     remark: z.string().optional(),
   }),
 })
@@ -60,9 +53,6 @@ export const productionReportUpdateValidation = z.object({
     color: z.string().optional(),
     orderQuantity: z.number().nonnegative().optional(),
     readyQuantity: z.number().nonnegative().optional(),
-    cuttingSection: z.array(TSectionSchema).optional(),
-    sewingSection: z.array(TSectionSchema).optional(),
-    finishing: z.array(TSectionSchema).optional(),
     remark: z.string().optional(),
   }),
 })

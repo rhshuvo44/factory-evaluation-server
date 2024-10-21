@@ -1,13 +1,6 @@
 import { model, Schema } from 'mongoose'
-import { TProductionReport, TSection } from './productionReport.interface'
-const TSectionSchema = new Schema<TSection>(
-  {
-    target: { type: Number, required: true },
-    wip: { type: Number, required: true },
-    output: { type: Number, required: true },
-  },
-  { _id: false },
-)
+import { TProductionReport } from './productionReport.interface'
+
 const productionReportSchema = new Schema<TProductionReport>(
   {
     slNo: { type: Number, unique: true },
@@ -38,9 +31,6 @@ const productionReportSchema = new Schema<TProductionReport>(
     color: { type: String, required: true },
     orderQuantity: { type: Number, required: true },
     readyQuantity: { type: Number, required: true },
-    cuttingSection: [TSectionSchema],
-    sewingSection: [TSectionSchema],
-    finishing: [TSectionSchema],
     remark: { type: String, optional: true },
   },
   {

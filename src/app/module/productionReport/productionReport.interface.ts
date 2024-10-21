@@ -1,8 +1,3 @@
-export type TSection = {
-  target: number
-  wip: number
-  output: number
-}
 export type TProductionReport = {
   slNo: number
   date: Date
@@ -23,9 +18,6 @@ export type TProductionReport = {
   color: string
   orderQuantity: number
   readyQuantity: number
-  cuttingSection: TSection[]
-  sewingSection: TSection[]
-  finishing: TSection[]
   remark?: string
 }
 export type TProductionReportUpdate = {
@@ -47,8 +39,5 @@ export type TProductionReportUpdate = {
   color?: string
   orderQuantity?: number
   readyQuantity?: number
-  cuttingSection?: TSection[]
-  sewingSection?: TSection[]
-  finishing?: TSection[]
   remark?: string
 }
