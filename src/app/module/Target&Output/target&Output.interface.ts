@@ -3,10 +3,9 @@ export type TSection = {
   wip: number
   output: number
 }
-export type TProductionReport = {
+export type TTargetOutput = {
   slNo: number
   date: Date
-  lineNo: 'line 1 / 3rd floor' | 'line 2 / 4th floor' | 'line 3 / 4th floor'
   buyer: string
   orderNo: number
   styleNo:
@@ -22,15 +21,13 @@ export type TProductionReport = {
     | 'Long Sleeve T-shirt'
   color: string
   orderQuantity: number
-  readyQuantity: number
   cuttingSection: TSection[]
   sewingSection: TSection[]
   finishing: TSection[]
   remark?: string
 }
-export type TProductionReportUpdate = {
+export type TTargetOutputUpdate = {
   date?: Date
-  lineNo?: 'line 1 / 3rd floor' | 'line 2 / 4th floor' | 'line 3 / 4th floor'
   buyer?: string
   orderNo?: number
   styleNo?:
@@ -46,7 +43,6 @@ export type TProductionReportUpdate = {
     | 'Long Sleeve T-shirt'
   color?: string
   orderQuantity?: number
-  readyQuantity?: number
   cuttingSection?: TSection[]
   sewingSection?: TSection[]
   finishing?: TSection[]
