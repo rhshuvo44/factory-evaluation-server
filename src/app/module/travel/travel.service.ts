@@ -17,10 +17,37 @@ const createTravelAllowance = async (payload: TTravel) => {
   const previousDay = new Date(date)
   previousDay.setDate(date.getDate() - 1)
   // Check if there is any data in the database
-  const anyEntryExists = await Travel.findOne({})
+  // const anyEntryExists = await Travel.findOne({})
 
-  if (!anyEntryExists) {
-    // If no data at all, create the entry
+  // if (!anyEntryExists) {
+  //   // If no data at all, create the entry
+  //   if (startOfRange <= date && date <= now) {
+  //     const result = await Travel.create({ ...payload, date })
+  //     return result
+  //   } else {
+  //     throw new AppError(
+  //       httpStatus.FORBIDDEN,
+  //       'Travelling allowance creation is only allowed for the last 45 days',
+  //     )
+  //   }
+  // }
+
+  // // Check if the previous day has an entry in the database
+  // const previousEntryExists = await Travel.findOne({
+  //   date: previousDay.setHours(0, 0, 0, 0),
+  // })
+
+  // if (!previousEntryExists) {
+  //   throw new AppError(
+  //     httpStatus.FORBIDDEN,
+  //     'You must input the previous day’s travel allowance before entering today’s.',
+  //   )
+  // }
+  // Get the most recent entry from the database
+  const lastEntry = await Travel.findOne().sort({ date: -1 })
+
+  if (!lastEntry) {
+    // If no data at all, create the entry if within range
     if (startOfRange <= date && date <= now) {
       const result = await Travel.create({ ...payload, date })
       return result
@@ -32,16 +59,29 @@ const createTravelAllowance = async (payload: TTravel) => {
     }
   }
 
+  // Check for missing entries between last date and the input date
+  const lastDate = new Date(lastEntry.date)
+  const currentDate = new Date(lastDate)
+  currentDate.setDate(lastDate.getDate() + 1)
 
-  // Check if the previous day has an entry in the database
-  const previousEntryExists = await Travel.findOne({
-    date: previousDay.setHours(0, 0, 0, 0),
-  })
+  const missingDates = []
 
-  if (!previousEntryExists) {
+  while (currentDate < date) {
+    const entryExists = await Travel.findOne({
+      date: currentDate.setHours(0, 0, 0, 0),
+    })
+
+    if (!entryExists) {
+      missingDates.push(new Date(currentDate).toISOString().split('T')[0]) // Collect missing dates
+    }
+
+    currentDate.setDate(currentDate.getDate() + 1) // Move to next day
+  }
+
+  if (missingDates.length > 0) {
     throw new AppError(
       httpStatus.FORBIDDEN,
-      'You must input the previous day’s travel allowance before entering today’s.',
+      `Missing travel allowance entries for the following date(s): ${missingDates.join(', ')}.`,
     )
   }
 

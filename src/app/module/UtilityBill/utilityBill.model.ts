@@ -35,6 +35,7 @@ const utilitySchema = new Schema<TUtility>(
 // Pre-save hook to generate slNo
 utilitySchema.pre<TUtility>('save', async function (next) {
   if (this.date) {
+    // Generate slNo
     const lastEntry = await Utility.findOne().sort({ slNo: -1 })
     this.slNo = lastEntry ? lastEntry.slNo + 1 : 1
   }

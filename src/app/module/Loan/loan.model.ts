@@ -5,8 +5,12 @@ const loanSchema = new Schema<TLoan>(
   {
     slNo: { type: Number, unique: true },
     date: { type: Date, required: true },
-    particulars: { type: String, required: true },
-    description: { type: String, required: true },
+    particulars: { type: String, enum: ['Loan Return'], required: true },
+    description: {
+      type: String,
+      enum: ['Emergency Loan Return', 'EMI Return'],
+      required: true,
+    },
     quantity: { type: Number },
     memoNo: { type: Number },
     orderedBy: {

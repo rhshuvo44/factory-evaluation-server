@@ -16,12 +16,11 @@ const FactoryDevelopmentSchema = new Schema<TFactoryDevelopment>(
     },
     payTo: {
       type: String,
-      enum: ['M.D', 'Chairman', 'Sarkar Alliance OPC'],
       required: true,
     },
     paymentType: {
       type: String,
-      enum: ['Bank', 'Cash'],
+      enum: ['Monthly', 'Daily', 'Once'],
       required: true,
     },
     unit: { type: Number, required: true },

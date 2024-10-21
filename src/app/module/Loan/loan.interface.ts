@@ -1,8 +1,8 @@
 export type TLoan = {
   slNo: number
   date: Date
-  particulars: string
-  description: string
+  particulars: 'Loan Return'
+  description: 'Emergency Loan Return' | 'EMI Return'
   quantity: number
   memoNo: number
   orderedBy: 'M.D' | 'Chairman'
@@ -15,8 +15,8 @@ export type TLoan = {
 export type TLoanUpdate = {
   slNo?: number
   date?: Date
-  particulars?: string
-  description?: string
+  particulars?: 'Loan Return'
+  description?: 'Emergency Loan Return' | 'EMI Return'
   quantity?: number
   memoNo?: number
   orderedBy?: 'M.D' | 'Chairman'

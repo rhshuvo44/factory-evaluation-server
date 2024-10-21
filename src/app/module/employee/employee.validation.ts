@@ -25,7 +25,7 @@ export const employeeValidation = z.object({
       'Cutting',
     ]),
     status: z.enum(['A', 'P']),
-    overTime: z.number().positive(),
+    overTime: z.number().min(0),
     overTimeRate: z.number().positive(),
     perDaySalary: z.number().positive(),
     grossPerDaySalary: z.number().positive(),

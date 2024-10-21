@@ -24,7 +24,7 @@ export type TProductionReport = {
   orderQuantity: number
   readyQuantity: number
   cuttingSection: TSection[]
-  sellingSection: TSection[]
+  sewingSection: TSection[]
   finishing: TSection[]
   remark?: string
 }
@@ -49,7 +49,7 @@ export type TProductionReportUpdate = {
   orderQuantity?: number
   readyQuantity?: number
   cuttingSection?: TSection[]
-  sellingSection?: TSection[]
+  sewingSection?: TSection[]
   finishing?: TSection[]
   remark?: string
 }

@@ -8,8 +8,27 @@ import { Utility } from './utilityBill.model'
 
 const createUtility = async (payload: TUtility) => {
   const date = new Date(payload.date)
-  const result = await Utility.create({ ...payload, date })
-  return result
+
+  // Check for existing submission in the current month
+  const currentMonth = date.getMonth()
+  const currentYear = date.getFullYear()
+
+  const existingSubmission = await Utility.findOne({
+    date: {
+      $gte: new Date(currentYear, currentMonth, 1),
+      $lt: new Date(currentYear, currentMonth + 1, 1),
+    },
+  })
+
+  if (existingSubmission) {
+    throw new AppError(
+      httpStatus.FORBIDDEN,
+      'You can only submit one utility entry per month.',
+    )
+  } else {
+    const result = await Utility.create({ ...payload, date })
+    return result
+  }
 }
 const getUtility = async (query: Record<string, unknown>) => {
   // Get the current date

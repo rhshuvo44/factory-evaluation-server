@@ -8,8 +8,26 @@ import { FixedCost } from './fixedCost.model'
 
 const createFixedCost = async (payload: TFixedCost) => {
   const date = new Date(payload.date)
-  const result = await FixedCost.create({ ...payload, date })
-  return result
+  // Check for existing submission in the current month
+  const currentMonth = date.getMonth()
+  const currentYear = date.getFullYear()
+
+  const existingSubmission = await FixedCost.findOne({
+    date: {
+      $gte: new Date(currentYear, currentMonth, 1),
+      $lt: new Date(currentYear, currentMonth + 1, 1),
+    },
+  })
+
+  if (existingSubmission) {
+    throw new AppError(
+      httpStatus.FORBIDDEN,
+      'You can only submit one fixed cost entry per month.',
+    )
+  } else {
+    const result = await FixedCost.create({ ...payload, date })
+    return result
+  }
 }
 const getFixedCost = async (query: Record<string, unknown>) => {
   // Get the current date

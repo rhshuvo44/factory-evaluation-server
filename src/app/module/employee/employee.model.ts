@@ -7,7 +7,7 @@ const employeeSchema = new Schema<TEmployee>(
     id: { type: String, unique: true },
     name: { type: String, required: true },
     photo: { type: String },
-    salary: { type: Number },
+    salary: { type: Number, required: true },
     designation: {
       type: String,
       enum: [

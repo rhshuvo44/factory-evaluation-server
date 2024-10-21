@@ -39,7 +39,7 @@ const productionReportSchema = new Schema<TProductionReport>(
     orderQuantity: { type: Number, required: true },
     readyQuantity: { type: Number, required: true },
     cuttingSection: [TSectionSchema],
-    sellingSection: [TSectionSchema],
+    sewingSection: [TSectionSchema],
     finishing: [TSectionSchema],
     remark: { type: String, optional: true },
   },
