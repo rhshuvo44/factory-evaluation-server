@@ -60,7 +60,7 @@ const moduleRoutes = [
     route: employeeRouter,
   },
   {
-    path: '/production-report/targets-output',
+    path: '/targets-output',
     route: targetOutputRouter,
   },
   {

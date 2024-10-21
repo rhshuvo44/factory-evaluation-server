@@ -15,11 +15,16 @@ const createProductionReport = async (payload: TProductionReport) => {
   // Set the start of the allowable date range (last 45 days)
   const startOfRange = new Date(now)
   startOfRange.setDate(now.getDate() - 45)
-  // Check if there is any data in the database
-  const anyEntryExists = await ProductionReport.findOne({})
 
-  if (!anyEntryExists) {
-    // If no data at all, create the entry
+  // Get the previous day
+  const previousDay = new Date(date)
+  previousDay.setDate(date.getDate() - 1)
+
+  // Get the most recent entry from the database
+  const lastEntry = await ProductionReport.findOne().sort({ date: -1 })
+
+  if (!lastEntry) {
+    // If no data at all, create the entry if within range
     if (startOfRange <= date && date <= now) {
       const result = await ProductionReport.create({ ...payload, date })
       return result
@@ -30,19 +35,30 @@ const createProductionReport = async (payload: TProductionReport) => {
       )
     }
   }
-  // Get the previous day
-  const previousDay = new Date(date)
-  previousDay.setDate(date.getDate() - 1)
 
-  // Check if the previous day has an entry in the database
-  const previousEntryExists = await ProductionReport.findOne({
-    date: previousDay.setHours(0, 0, 0, 0),
-  })
+  // Check for missing entries between last date and the input date
+  const lastDate = new Date(lastEntry.date)
+  const currentDate = new Date(lastDate)
+  currentDate.setDate(lastDate.getDate() + 1)
 
-  if (!previousEntryExists) {
+  const missingDates = []
+
+  while (currentDate < date) {
+    const entryExists = await ProductionReport.findOne({
+      date: currentDate.setHours(0, 0, 0, 0),
+    })
+
+    if (!entryExists) {
+      missingDates.push(new Date(currentDate).toISOString().split('T')[0]) // Collect missing dates
+    }
+
+    currentDate.setDate(currentDate.getDate() + 1) // Move to next day
+  }
+
+  if (missingDates.length > 0) {
     throw new AppError(
       httpStatus.FORBIDDEN,
-      'You must input the previous day’s product report before entering today’s.',
+      `Missing Production report entries for the following date(s): ${missingDates.join(', ')}.`,
     )
   }
 
@@ -53,7 +69,7 @@ const createProductionReport = async (payload: TProductionReport) => {
   } else {
     throw new AppError(
       httpStatus.FORBIDDEN,
-      'Product report creation is only allowed for the last 45 days',
+      'Production report creation is only allowed for the last 45 days',
     )
   }
 }
@@ -108,29 +124,20 @@ const getToday = async () => {
   let data
   if (result.length > 0) {
     // If records are found, map the results to the desired format
-    data = result.map(item => ({
-      ...item.toObject(),
-      date: format(item.date, 'dd-MM-yyyy'), // Format date as 'DD-MM-YYYY'
-    }))
+    const readyQuantity = result.reduce(
+      (sum, data) => sum + data.readyQuantity,
+      0,
+    )
+    return (data = {
+      date: format(startOfDay, 'dd-MM-yyyy'),
+      readyQuantity,
+    })
   } else {
     // If no records are found, set default data structure
-    data = [
-      {
-        slNo: 1,
-        date: format(startOfDay, 'dd-MM-yyyy'),
-        particulars: '',
-        description: '',
-        remark: '',
-        buyerId: 0,
-        orderNo: 0,
-        memoNo: 0,
-        payTo: '',
-        paymentType: 'Once',
-        unit: 0,
-        unitPrice: 0,
-        totalPrice: 0,
-      },
-    ]
+    data = {
+      date: format(startOfDay, 'dd-MM-yyyy'),
+      readyQuantity: 0,
+    }
   }
   return data
 }
