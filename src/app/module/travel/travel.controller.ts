@@ -3,7 +3,6 @@ import httpStatus from 'http-status'
 import catchAsync from '../../utils/catchAsync'
 import sendResponse from '../../utils/sendResponse'
 import { TravelService } from './travel.service'
-
 const createTravellingAllowance = catchAsync(async (req, res) => {
   const data = await TravelService.createTravelAllowance(req?.body)
   sendResponse(res, {
@@ -29,8 +28,7 @@ const getAllTravellingAllowance: RequestHandler = catchAsync(
 )
 const getTodayTravellingAllowance: RequestHandler = catchAsync(
   async (req, res) => {
-    const data = await TravelService.getTodayTravellingAllowance()
-
+    const data = await TravelService.getTodayTravellingAllowance(req?.query?.date)
     sendResponse(res, {
       statusCode: httpStatus.OK,
       success: true,

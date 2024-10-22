@@ -32,7 +32,7 @@ const deleteReport = catchAsync(async (req, res) => {
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'Deleted  Report successfully',
+    message: 'Deleted Report successfully',
     data: null,
   })
 })

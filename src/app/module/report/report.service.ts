@@ -119,7 +119,6 @@ const getReport = async (query: Record<string, unknown>) => {
 }
 const deletedReport = async (id: string) => {
   const data = await Report.findById(id)
-
   if (!data) {
     throw new AppError(httpStatus.NOT_FOUND, 'data not found')
   }
