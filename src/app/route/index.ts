@@ -8,6 +8,7 @@ import { fixedCostRouter } from '../module/fixedCost/fixedCost.route'
 import { loanRouter } from '../module/Loan/loan.route'
 import { miscellaneousRouter } from '../module/miscellaneous/miscellaneous.route'
 import { productionReportRouter } from '../module/productionReport/productionReport.route'
+import { reportRouter } from '../module/report/report.route'
 import { targetOutputRouter } from '../module/Target&Output/target&Output.route'
 import { travelRouter } from '../module/travel/travel.route'
 import { userRouter } from '../module/user/user.route'
@@ -66,6 +67,10 @@ const moduleRoutes = [
   {
     path: '/production-report',
     route: productionReportRouter,
+  },
+  {
+    path: '/report',
+    route: reportRouter,
   },
 ]
 
