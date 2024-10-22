@@ -10,9 +10,9 @@ const createTargetOutput = async (payload: TTargetOutput) => {
   const date = new Date(payload.date)
 
   // Set the start of the allowable date range (last 45 days)
-  const startOfRange = new Date(now)
-  startOfRange.setDate(now.getDate() - 45)
-
+  // const startOfRange = new Date(now)
+  // startOfRange.setDate(now.getDate() - 45)
+  const startOfRange = new Date(now.getFullYear(), now.getMonth(), 1)
   // Get the previous day
   const previousDay = new Date(date)
   previousDay.setDate(date.getDate() - 1)
@@ -27,7 +27,7 @@ const createTargetOutput = async (payload: TTargetOutput) => {
     } else {
       throw new AppError(
         httpStatus.FORBIDDEN,
-        'Target output creation is only allowed for the last 45 days',
+        'Target output creation is only allowed for the current month',
       )
     }
   }
@@ -65,33 +65,33 @@ const createTargetOutput = async (payload: TTargetOutput) => {
   } else {
     throw new AppError(
       httpStatus.FORBIDDEN,
-      'Target output creation is only allowed for the last 45 days',
+      'Target output creation is only allowed for the current month',
     )
   }
 }
 const getTargetOutput = async (query: Record<string, unknown>) => {
   // Get the current date
   const now = new Date()
-  // const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1)
-  // const endOfMonth = new Date(
-  //   now.getFullYear(),
-  //   now.getMonth() + 1,
-  //   0,
-  //   23,
-  //   59,
-  //   59,
-  //   999,
-  // )
+  const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1)
+  const endOfMonth = new Date(
+    now.getFullYear(),
+    now.getMonth() + 1,
+    0,
+    23,
+    59,
+    59,
+    999,
+  )
 
   const startOfRange = new Date(now)
   startOfRange.setDate(now.getDate() - 45)
 
   // End date is the current date
-  const endOfRange = new Date(now)
+  // const endOfRange = new Date(now)
 
   const dataQuery = new QueryBuilder(
     TargetOutput.find({
-      date: { $gte: startOfRange, $lte: endOfRange },
+      date: { $gte: startOfMonth, $lte: endOfMonth },
     }).sort({
       slNo: -1,
     }),

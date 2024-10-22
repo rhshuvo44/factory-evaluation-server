@@ -103,12 +103,21 @@ const getTravelAllowance = async (query: Record<string, unknown>) => {
   // Calculate the date 45 days ago
   const startOfRange = new Date(now)
   startOfRange.setDate(now.getDate() - 45)
-
+  const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1)
+  const endOfMonth = new Date(
+    now.getFullYear(),
+    now.getMonth() + 1,
+    0,
+    23,
+    59,
+    59,
+    999,
+  )
   // End date is the current date
-  const endOfRange = new Date(now)
+  // const endOfRange = new Date(now)
 
   const travelQuery = new QueryBuilder(
-    Travel.find({ date: { $gte: startOfRange, $lte: endOfRange } }).sort({
+    Travel.find({ date: { $gte: startOfMonth, $lte: endOfMonth } }).sort({
       slNo: -1,
     }),
     query,

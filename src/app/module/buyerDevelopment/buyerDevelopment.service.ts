@@ -100,12 +100,22 @@ const getBuyerDevelopment = async (query: Record<string, unknown>) => {
   const startOfRange = new Date(now)
   startOfRange.setDate(now.getDate() - 45)
 
-  // End date is the current date
-  const endOfRange = new Date(now)
+  // // End date is the current date
+  // const endOfRange = new Date(now)
+  const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1)
+  const endOfMonth = new Date(
+    now.getFullYear(),
+    now.getMonth() + 1,
+    0,
+    23,
+    59,
+    59,
+    999,
+  )
 
   const dataQuery = new QueryBuilder(
     BuyerDevelopment.find({
-      date: { $gte: startOfRange, $lte: endOfRange },
+      date: { $gte: startOfMonth, $lte: endOfMonth },
     }).sort({
       slNo: -1,
     }),
