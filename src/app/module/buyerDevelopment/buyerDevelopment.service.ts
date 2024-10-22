@@ -33,9 +33,9 @@ const createBuyerDevelopment = async (payload: TBuyerDevelopment) => {
   const date = new Date(payload.date)
 
   // Set the start of the allowable date range (last 45 days)
-  const startOfRange = new Date(now)
-  startOfRange.setDate(now.getDate() - 45)
-  // const startOfRange = new Date(now.getFullYear(), now.getMonth(), 1);
+  // const startOfRange = new Date(now)
+  // startOfRange.setDate(now.getDate() - 45)
+  const startOfRange = new Date(now.getFullYear(), now.getMonth(), 1)
   // Get the previous day
   const previousDay = new Date(date)
   previousDay.setDate(date.getDate() - 1)
@@ -51,7 +51,7 @@ const createBuyerDevelopment = async (payload: TBuyerDevelopment) => {
     } else {
       throw new AppError(
         httpStatus.FORBIDDEN,
-        'Buyer Development Report creation is only allowed for the last 45 days',
+        `Buyer Development Report creation is only allowed for the current month`,
       )
     }
   }
@@ -88,7 +88,7 @@ const createBuyerDevelopment = async (payload: TBuyerDevelopment) => {
   } else {
     throw new AppError(
       httpStatus.FORBIDDEN,
-      'Data creation is only allowed for the last 45 days',
+      'Data creation is only allowed for the current month',
     )
   }
 }

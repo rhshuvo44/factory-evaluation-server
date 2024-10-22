@@ -10,9 +10,9 @@ const createLoan = async (payload: TLoan) => {
   const date = new Date(payload.date)
 
   // Set the start of the allowable date range (last 45 days)
-  const startOfRange = new Date(now)
-  startOfRange.setDate(now.getDate() - 45)
-  // const startOfRange = new Date(now.getFullYear(), now.getMonth(), 1);
+  // const startOfRange = new Date(now)
+  // startOfRange.setDate(now.getDate() - 45)
+  const startOfRange = new Date(now.getFullYear(), now.getMonth(), 1)
   // Get the previous day
   const previousDay = new Date(date)
   previousDay.setDate(date.getDate() - 1)
@@ -28,7 +28,7 @@ const createLoan = async (payload: TLoan) => {
     } else {
       throw new AppError(
         httpStatus.FORBIDDEN,
-        'Loan Report creation is only allowed for the last 45 days',
+        'Loan Report creation is only allowed for the current month',
       )
     }
   }
@@ -58,14 +58,14 @@ const createLoan = async (payload: TLoan) => {
       `Missing Loan report entries for the following date(s): ${missingDates.join(', ')}.`,
     )
   }
-  // Ensure the date is within the allowed range of the last 45 days
+  // Ensure the date is within the allowed range of the current month
   if (startOfRange <= date && date <= now) {
     const result = await Loan.create({ ...payload, date })
     return result
   } else {
     throw new AppError(
       httpStatus.FORBIDDEN,
-      'Loan return creation is only allowed for the last 45 days',
+      'Loan return creation is only allowed for the current month',
     )
   }
 }

@@ -13,9 +13,9 @@ const createProductionReport = async (payload: TProductionReport) => {
   const date = new Date(payload.date)
 
   // Set the start of the allowable date range (last 45 days)
-  const startOfRange = new Date(now)
-  startOfRange.setDate(now.getDate() - 45)
-  // const startOfRange = new Date(now.getFullYear(), now.getMonth(), 1);
+  // const startOfRange = new Date(now)
+  // startOfRange.setDate(now.getDate() - 45)
+  const startOfRange = new Date(now.getFullYear(), now.getMonth(), 1)
   // Get the previous day
   const previousDay = new Date(date)
   previousDay.setDate(date.getDate() - 1)
@@ -31,7 +31,7 @@ const createProductionReport = async (payload: TProductionReport) => {
     } else {
       throw new AppError(
         httpStatus.FORBIDDEN,
-        'Production Report creation is only allowed for the last 45 days',
+        'Production Report creation is only allowed for the current month',
       )
     }
   }
@@ -62,14 +62,14 @@ const createProductionReport = async (payload: TProductionReport) => {
     )
   }
 
-  // Ensure the date is within the allowed range of the last 45 days
+  // Ensure the date is within the allowed range of the current month
   if (startOfRange <= date && date <= now) {
     const result = await ProductionReport.create({ ...payload, date })
     return result
   } else {
     throw new AppError(
       httpStatus.FORBIDDEN,
-      'Production report creation is only allowed for the last 45 days',
+      'Production report creation is only allowed for the current month',
     )
   }
 }

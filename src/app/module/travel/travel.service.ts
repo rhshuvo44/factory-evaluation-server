@@ -10,9 +10,9 @@ const createTravelAllowance = async (payload: TTravel) => {
   const date = new Date(payload.date)
 
   // Set the start of the allowable date range (last 45 days)
-  const startOfRange = new Date(now)
-  startOfRange.setDate(now.getDate() - 45)
-
+  // const startOfRange = new Date(now)
+  // startOfRange.setDate(now.getDate() - 45)
+  const startOfRange = new Date(now.getFullYear(), now.getMonth(), 1)
   // Get the previous day
   const previousDay = new Date(date)
   previousDay.setDate(date.getDate() - 1)
@@ -54,7 +54,7 @@ const createTravelAllowance = async (payload: TTravel) => {
     } else {
       throw new AppError(
         httpStatus.FORBIDDEN,
-        'Travelling allowance creation is only allowed for the last 45 days',
+        'Travelling allowance creation is only allowed for the current month',
       )
     }
   }
@@ -92,7 +92,7 @@ const createTravelAllowance = async (payload: TTravel) => {
   } else {
     throw new AppError(
       httpStatus.FORBIDDEN,
-      'Travel allowance creation is only allowed for the last 45 days',
+      'Travel allowance creation is only allowed for the current month',
     )
   }
 }
