@@ -23,5 +23,5 @@ router.get(
   ),
   reportController.getReport,
 )
-
+router.delete('/:id', auth(USER_ROLE.admin), reportController.deleteReport)
 export const reportRouter = router

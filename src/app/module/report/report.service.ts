@@ -117,8 +117,16 @@ const getReport = async (query: Record<string, unknown>) => {
     totalPrice,
   }
 }
+const deletedReport = async (id: string) => {
+  const data = await Report.findById(id)
 
+  if (!data) {
+    throw new AppError(httpStatus.NOT_FOUND, 'data not found')
+  }
+  await Report.deleteOne({ _id: id })
+}
 export const reportService = {
   createReport,
   getReport,
+  deletedReport,
 }

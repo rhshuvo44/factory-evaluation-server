@@ -20,11 +20,24 @@ const getReport: RequestHandler = catchAsync(async (req, res) => {
     statusCode: httpStatus.OK,
     success: true,
     message: 'Get All Data fetch successfully',
-    data,
+    meta: data.meta,
+    data: data.result,
+    totalPrice: data.totalPrice,
   })
 })
+const deleteReport = catchAsync(async (req, res) => {
+  const id = req?.params.id
+  await reportService.deletedReport(id)
 
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Deleted  Report successfully',
+    data: null,
+  })
+})
 export const reportController = {
   createReport,
   getReport,
+  deleteReport,
 }
