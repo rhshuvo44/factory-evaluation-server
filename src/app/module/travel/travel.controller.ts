@@ -28,7 +28,8 @@ const getAllTravellingAllowance: RequestHandler = catchAsync(
 )
 const getTodayTravellingAllowance: RequestHandler = catchAsync(
   async (req, res) => {
-    const data = await TravelService.getTodayTravellingAllowance(req?.query?.date)
+    const date: string = req?.query?.date?.toString() ?? '';
+    const data = await TravelService.getTodayTravellingAllowance(date)
     sendResponse(res, {
       statusCode: httpStatus.OK,
       success: true,

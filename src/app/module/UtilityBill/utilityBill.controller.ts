@@ -24,7 +24,8 @@ const getUtility: RequestHandler = catchAsync(async (req, res) => {
   })
 })
 const getToday: RequestHandler = catchAsync(async (req, res) => {
-  const data = await utilityService.getToday()
+  const date: string = req?.query?.date?.toString() ?? '';
+  const data = await utilityService.getToday(date)
 
   sendResponse(res, {
     statusCode: httpStatus.OK,

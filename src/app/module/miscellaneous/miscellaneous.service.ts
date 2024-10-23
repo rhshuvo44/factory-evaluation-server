@@ -122,8 +122,8 @@ const getMiscellaneous = async (query: Record<string, unknown>) => {
     totalPrice,
   }
 }
-const getToday = async () => {
-  const now = new Date()
+const getToday = async (payload: string) => {
+  const now = payload ? new Date(payload) : new Date();
 
   // Set the start of the current day
   const startOfDay = new Date(now.setHours(0, 0, 0, 0))

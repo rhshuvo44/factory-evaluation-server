@@ -24,7 +24,8 @@ const getFixedCost: RequestHandler = catchAsync(async (req, res) => {
   })
 })
 const getToday: RequestHandler = catchAsync(async (req, res) => {
-  const data = await fixedCostService.getToday()
+  const date: string = req?.query?.date?.toString() ?? '';
+  const data = await fixedCostService.getToday(date)
 
   sendResponse(res, {
     statusCode: httpStatus.OK,

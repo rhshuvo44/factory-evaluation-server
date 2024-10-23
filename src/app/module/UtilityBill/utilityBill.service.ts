@@ -85,8 +85,8 @@ const getUtility = async (query: Record<string, unknown>) => {
     totalPrice,
   }
 }
-const getToday = async () => {
-  const now = new Date()
+const getToday = async (payload: string) => {
+  const now = payload ? new Date(payload) : new Date();
   const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1)
   const endOfMonth = new Date(
     now.getFullYear(),

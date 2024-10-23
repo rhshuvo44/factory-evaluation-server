@@ -27,7 +27,8 @@ const getAllCollection: RequestHandler = catchAsync(async (req, res) => {
   })
 })
 const getToday: RequestHandler = catchAsync(async (req, res) => {
-  const data = await collectionService.getToday()
+  const date: string = req?.query?.date?.toString() ?? '';
+  const data = await collectionService.getToday(date)
 
   sendResponse(res, {
     statusCode: httpStatus.OK,

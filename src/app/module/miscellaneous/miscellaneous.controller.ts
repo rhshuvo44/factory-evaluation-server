@@ -28,7 +28,8 @@ const getAllMiscellaneous: RequestHandler = catchAsync(async (req, res) => {
   })
 })
 const getToday: RequestHandler = catchAsync(async (req, res) => {
-  const data = await miscellaneousService.getToday()
+  const date: string = req?.query?.date?.toString() ?? '';
+  const data = await miscellaneousService.getToday(date)
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
