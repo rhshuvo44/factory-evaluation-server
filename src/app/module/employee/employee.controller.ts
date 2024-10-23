@@ -27,7 +27,7 @@ const getAllEmployee: RequestHandler = catchAsync(async (req, res) => {
   })
 })
 const getToday = catchAsync(async (req, res) => {
-  const date: string = req?.query?.date?.toString() ?? '';
+  const date: string = req?.query?.date?.toString() ?? ''
   const data = await employeeService.getToday(date)
 
   sendResponse(res, {

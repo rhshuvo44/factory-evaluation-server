@@ -27,7 +27,7 @@ const getAllCollection: RequestHandler = catchAsync(async (req, res) => {
   })
 })
 const getToday: RequestHandler = catchAsync(async (req, res) => {
-  const date: string = req?.query?.date?.toString() ?? '';
+  const date: string = req?.query?.date?.toString() ?? ''
   const data = await collectionService.getToday(date)
 
   sendResponse(res, {

@@ -33,7 +33,7 @@ const getAllFactoryDevelopment: RequestHandler = catchAsync(
   },
 )
 const getToday: RequestHandler = catchAsync(async (req, res) => {
-  const date: string = req?.query?.date?.toString() ?? '';
+  const date: string = req?.query?.date?.toString() ?? ''
   const data = await factoryDevelopmentService.getToday(date)
 
   sendResponse(res, {

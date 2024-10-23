@@ -58,6 +58,18 @@ const createReport = async (payload: TReport) => {
 
   // Ensure the date is within the allowed range of the last 45 days
   if (startOfRange <= date && date <= now) {
+    // Check if there's already an entry for the given date (only one entry per day)
+    const existingEntry = await Report.findOne({
+      date: date.setHours(0, 0, 0, 0), // Zero out the time for date-only comparison
+    })
+
+    if (existingEntry) {
+      throw new AppError(
+        httpStatus.FORBIDDEN,
+        'A report entry already exists for the given date',
+      )
+    }
+
     const result = await Report.create({ ...payload, date })
     return result
   } else {

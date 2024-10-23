@@ -24,7 +24,7 @@ const getFixedCost: RequestHandler = catchAsync(async (req, res) => {
   })
 })
 const getToday: RequestHandler = catchAsync(async (req, res) => {
-  const date: string = req?.query?.date?.toString() ?? '';
+  const date: string = req?.query?.date?.toString() ?? ''
   const data = await fixedCostService.getToday(date)
 
   sendResponse(res, {

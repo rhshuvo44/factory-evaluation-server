@@ -27,7 +27,7 @@ const getAllBuyerDevelopment: RequestHandler = catchAsync(async (req, res) => {
   })
 })
 const getToday = catchAsync(async (req, res) => {
-  const date: string = req?.query?.date?.toString() ?? '';
+  const date: string = req?.query?.date?.toString() ?? ''
   const data = await buyerDevelopmentService.getToday(date)
 
   sendResponse(res, {

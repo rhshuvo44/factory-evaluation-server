@@ -144,8 +144,7 @@ const getBuyerDevelopment = async (query: Record<string, unknown>) => {
   }
 }
 const getToday = async (payload: string) => {
-
-  const now = payload ? new Date(payload) : new Date();
+  const now = payload ? new Date(payload) : new Date()
 
   // Set the start of the current day
   const startOfDay = new Date(now.setHours(0, 0, 0, 0))
@@ -167,10 +166,10 @@ const getToday = async (payload: string) => {
       particulars: '',
       description: '-',
       remark: '-',
-      quantity: "-",
-      buyerId: "-",
-      orderNo: "-",
-      memoNo: "-",
+      quantity: '-',
+      buyerId: '-',
+      orderNo: '-',
+      memoNo: '-',
       payTo: '-',
       paymentType: 'Once',
       unit: 'Day',

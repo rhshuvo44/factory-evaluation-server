@@ -144,12 +144,11 @@ const getTravelAllowance = async (query: Record<string, unknown>) => {
     totalPrice,
   }
 }
-const getTodayTravellingAllowance = async (payload: string
-) => {
+const getTodayTravellingAllowance = async (payload: string) => {
   // const now = new Date()
   // const date = new Date(payload.date)
-  
-  const now = payload ? new Date(payload) : new Date();
+
+  const now = payload ? new Date(payload) : new Date()
 
   // Set the start of the current day
   const startOfDay = new Date(now.setHours(0, 0, 0, 0))

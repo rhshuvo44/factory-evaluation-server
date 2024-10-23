@@ -126,7 +126,7 @@ const getFactoryDevelopment = async (query: Record<string, unknown>) => {
 }
 const getToday = async (payload: string) => {
   // const now = new Date()
-  const now = payload ? new Date(payload) : new Date();
+  const now = payload ? new Date(payload) : new Date()
 
   // Set the start of the current day
   const startOfDay = new Date(now.setHours(0, 0, 0, 0))
