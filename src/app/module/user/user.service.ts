@@ -5,12 +5,6 @@ import { TUser, TUserUpdate } from './user.interface'
 import { User } from './user.model'
 
 const createUser = async (userData: TUser) => {
-  const user = await User.findOne({ email: userData?.email })
-  //! user check
-  if (user) {
-    throw new AppError(400, 'User already exists')
-  }
-
   // Create a new user
   await User.create(userData)
 
