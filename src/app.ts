@@ -26,8 +26,10 @@ app.use('/api', router)
 app.get('/', (req: Request, res: Response) => {
   res.send('Factory Evaluation Server')
 })
+
 //Not Found
 app.use(notFound)
 
 app.use(globalErrorHandler)
+
 export default app

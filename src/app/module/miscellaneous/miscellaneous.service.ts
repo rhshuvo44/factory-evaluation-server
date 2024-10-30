@@ -120,6 +120,7 @@ const getMiscellaneous = async (query: Record<string, unknown>) => {
     meta,
     result,
     totalPrice,
+    
   }
 }
 const getToday = async (payload: string) => {
