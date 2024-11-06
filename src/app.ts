@@ -13,7 +13,12 @@ app.use(cookieParser())
 
 app.use(
   cors({
-    origin: ['http://localhost:5173', 'https://factory-evaluation.vercel.app'],
+    origin: [
+      'http://localhost:5173',
+      'https://factory-evaluation.vercel.app',
+      'https://sta.sarkargroupofcompanies.com',
+    ],
+    // origin: "https://sta.sarkargroupofcompanies.com",
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
     credentials: true,
   }),
