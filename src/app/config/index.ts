@@ -7,6 +7,7 @@ dotenv.config({
 export default {
   port: process.env.PORT,
   dbURL: process.env.DB_URL,
+  super_admin_password: process.env.super_admin_password,
   node_env: process.env.NODE_ENV,
   jwt_access_secret: process.env.JWT_ACCESS_SECRET,
   jwt_access_expires_in: process.env.JWT_ACCESS_EXPIRES_IN,

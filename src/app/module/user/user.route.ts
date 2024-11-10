@@ -10,23 +10,23 @@ import {
 const router = express.Router()
 router.post(
   '/create-user',
-  auth(USER_ROLE.admin),
+  auth(USER_ROLE.superAdmin, USER_ROLE.admin),
   validateRequest(userCreateValidationSchema),
   userController.signup,
 )
-router.get('/', auth(USER_ROLE.admin), userController.allUser)
+router.get('/', auth(USER_ROLE.superAdmin, USER_ROLE.admin), userController.allUser)
 router.patch(
   '/:id',
-  auth(USER_ROLE.admin),
+  auth(USER_ROLE.superAdmin, USER_ROLE.admin),
   validateRequest(userUpdateValidationSchema),
   userController.userUpdate,
 )
-router.delete('/:id', auth(USER_ROLE.admin), userController.userDelete)
+router.delete('/:id', auth(USER_ROLE.superAdmin, USER_ROLE.admin), userController.userDelete)
 router.post('/logout', userController.logout)
 router.get(
   '/me',
   auth(
-    USER_ROLE.admin,
+    USER_ROLE.superAdmin, USER_ROLE.admin,
     USER_ROLE.coordinator,
     USER_ROLE.executiveDirector,
     USER_ROLE.generalDirector,
@@ -34,6 +34,6 @@ router.get(
   ),
   userController.getMe,
 )
-router.get('/:id', auth(USER_ROLE.admin), userController.getSingleUser)
+router.get('/:id', auth(USER_ROLE.superAdmin, USER_ROLE.admin), userController.getSingleUser)
 
 export const userRouter = router

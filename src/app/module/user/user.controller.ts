@@ -15,14 +15,13 @@ const signup = catchAsync(async (req, res) => {
   })
 })
 const allUser: RequestHandler = catchAsync(async (req, res) => {
-  const data = await userService.allUsers(req?.query)
+  const data = await userService.allUsers()
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
     message: 'All Users fetch successfully',
     data: data.result,
-    meta: data.meta,
   })
 })
 

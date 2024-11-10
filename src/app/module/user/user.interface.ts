@@ -7,11 +7,12 @@ export interface TUser {
   username: string
   email: string
   role:
-    | 'admin'
-    | 'executiveDirector'
-    | 'managingDirector'
-    | 'generalDirector'
-    | 'coordinator'
+  | 'superAdmin'
+  | 'admin'
+  | 'executiveDirector'
+  | 'managingDirector'
+  | 'generalDirector'
+  | 'coordinator'
   password: string
   passwordChangedAt: Date
   phone: string
@@ -24,11 +25,12 @@ export type TUserUpdate = {
   username?: string
   email?: string
   role?:
-    | 'admin'
-    | 'executiveDirector'
-    | 'managingDirector'
-    | 'generalDirector'
-    | 'coordinator'
+  | 'superAdmin'
+  | 'admin'
+  | 'executiveDirector'
+  | 'managingDirector'
+  | 'generalDirector'
+  | 'coordinator'
   password?: string
   phone?: string
   address?: string

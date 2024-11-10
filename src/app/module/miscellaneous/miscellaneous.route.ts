@@ -11,14 +11,14 @@ const router = express.Router()
 
 router.post(
   '/',
-  auth(USER_ROLE.admin, USER_ROLE.executiveDirector),
+  auth(USER_ROLE.superAdmin, USER_ROLE.admin, USER_ROLE.executiveDirector),
   validateRequest(miscellaneousValidation),
   miscellaneousController.createMiscellaneous,
 )
 router.get(
   '/',
   auth(
-    USER_ROLE.admin,
+    USER_ROLE.superAdmin, USER_ROLE.admin,
     USER_ROLE.coordinator,
     USER_ROLE.executiveDirector,
     USER_ROLE.generalDirector,
@@ -29,7 +29,7 @@ router.get(
 router.get(
   '/today',
   auth(
-    USER_ROLE.admin,
+    USER_ROLE.superAdmin, USER_ROLE.admin,
     USER_ROLE.coordinator,
     USER_ROLE.executiveDirector,
     USER_ROLE.generalDirector,
@@ -40,19 +40,19 @@ router.get(
 
 router.get(
   '/:id',
-  auth(USER_ROLE.admin, USER_ROLE.executiveDirector),
+  auth(USER_ROLE.superAdmin, USER_ROLE.admin, USER_ROLE.executiveDirector),
 
   miscellaneousController.getSingleMiscellaneous,
 )
 router.patch(
   '/:id',
-  auth(USER_ROLE.admin, USER_ROLE.executiveDirector),
+  auth(USER_ROLE.superAdmin, USER_ROLE.admin, USER_ROLE.executiveDirector),
   validateRequest(miscellaneousUpdateValidation),
   miscellaneousController.updateMiscellaneous,
 )
 router.delete(
   '/:id',
-  auth(USER_ROLE.admin),
+  auth(USER_ROLE.superAdmin, USER_ROLE.admin),
   miscellaneousController.deleteMiscellaneous,
 )
 export const miscellaneousRouter = router

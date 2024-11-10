@@ -50,7 +50,7 @@ const getSingleEmployee = catchAsync(async (req, res) => {
 })
 const updateEmployee = catchAsync(async (req, res) => {
   const id = req?.params.id
-  const data = await employeeService.updateEmployee(req?.body, id)
+  const data = await employeeService.updateEmployee(req?.file, req?.body, id)
 
   sendResponse(res, {
     statusCode: httpStatus.OK,

@@ -13,7 +13,7 @@ const router = express.Router()
 
 router.post(
   '/',
-  auth(USER_ROLE.admin, USER_ROLE.executiveDirector),
+  auth(USER_ROLE.superAdmin, USER_ROLE.admin, USER_ROLE.executiveDirector),
   upload.single('file'),
   (req: Request, res: Response, next: NextFunction) => {
     req.body = JSON.parse(req.body.data)
@@ -25,7 +25,7 @@ router.post(
 router.get(
   '/',
   auth(
-    USER_ROLE.admin,
+    USER_ROLE.superAdmin, USER_ROLE.admin,
     USER_ROLE.coordinator,
     USER_ROLE.executiveDirector,
     USER_ROLE.generalDirector,
@@ -36,7 +36,7 @@ router.get(
 router.get(
   '/today',
   auth(
-    USER_ROLE.admin,
+    USER_ROLE.superAdmin, USER_ROLE.admin,
     USER_ROLE.coordinator,
     USER_ROLE.executiveDirector,
     USER_ROLE.generalDirector,
@@ -46,15 +46,20 @@ router.get(
 )
 router.get(
   '/:id',
-  auth(USER_ROLE.admin, USER_ROLE.executiveDirector),
+  auth(USER_ROLE.superAdmin, USER_ROLE.admin, USER_ROLE.executiveDirector),
 
   employeeController.getSingleEmployee,
 )
 router.patch(
   '/:id',
-  auth(USER_ROLE.admin, USER_ROLE.executiveDirector),
+  auth(USER_ROLE.superAdmin, USER_ROLE.admin, USER_ROLE.executiveDirector),
+  upload.single('file'),
+  (req: Request, res: Response, next: NextFunction) => {
+    req.body = JSON.parse(req.body.data)
+    next()
+  },
   validateRequest(employeeUpdateValidation),
   employeeController.updateEmployee,
 )
-router.delete('/:id', auth(USER_ROLE.admin), employeeController.deleteEmployee)
+router.delete('/:id', auth(USER_ROLE.superAdmin, USER_ROLE.admin), employeeController.deleteEmployee)
 export const employeeRouter = router

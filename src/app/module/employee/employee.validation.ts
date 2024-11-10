@@ -4,8 +4,8 @@ export const employeeValidation = z.object({
   body: z.object({
     name: z.string(),
     photo: z.string().optional(),
-    salary: z.number().positive(),
-    workingDays: z.number().positive(),
+    salary: z.number().min(0),
+    workingDays: z.number().min(0),
     designation: z.enum([
       'Supervisor',
       'G.M',
@@ -26,17 +26,17 @@ export const employeeValidation = z.object({
     ]),
     status: z.enum(['A', 'P']),
     overTime: z.number().min(0),
-    overTimeRate: z.number().positive(),
-    perDaySalary: z.number().positive(),
-    grossPerDaySalary: z.number().positive(),
+    overTimeRate: z.number().min(0),
+    perDaySalary: z.number().min(0),
+    grossPerDaySalary: z.number().min(0),
   }),
 })
 export const employeeUpdateValidation = z.object({
   body: z.object({
     name: z.string().optional(),
     photo: z.string().optional(),
-    salary: z.number().positive().optional(),
-    workingDays: z.number().positive().optional(),
+    salary: z.number().min(0).optional(),
+    workingDays: z.number().min(0).optional(),
     designation: z
       .enum([
         'Supervisor',
@@ -58,9 +58,9 @@ export const employeeUpdateValidation = z.object({
       ])
       .optional(),
     status: z.enum(['A', 'P']).optional(),
-    overTime: z.number().positive().optional(),
-    overTimeRate: z.number().positive().optional(),
-    perDaySalary: z.number().positive().optional(),
-    grossPerDaySalary: z.number().positive().optional(),
+    overTime: z.number().min(0).optional(),
+    overTimeRate: z.number().min(0).optional(),
+    perDaySalary: z.number().min(0).optional(),
+    grossPerDaySalary: z.number().min(0).optional(),
   }),
 })

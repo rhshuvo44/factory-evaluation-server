@@ -2,6 +2,7 @@ import { Server } from 'http'
 import mongoose from 'mongoose'
 import app from './app'
 import config from './app/config'
+import seedSuperAdmin from './app/DB'
 let server: Server
 async function main() {
   // await mongoose.connect(`${config.dbURL as string}`)
@@ -14,6 +15,7 @@ async function main() {
       error,
     )
   }
+  seedSuperAdmin()
   server = app.listen(config.port, () => {
     console.log(`Example app listening on port ${config.port}`)
   })

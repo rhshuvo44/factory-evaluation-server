@@ -12,14 +12,14 @@ const router = express.Router()
 
 router.post(
   '/',
-  auth(USER_ROLE.admin, USER_ROLE.executiveDirector),
+  auth(USER_ROLE.superAdmin, USER_ROLE.admin, USER_ROLE.executiveDirector),
   validateRequest(buyerDevelopmentValidation),
   buyerDevelopmentController.createBuyerDevelopment,
 )
 router.get(
   '/',
   auth(
-    USER_ROLE.admin,
+    USER_ROLE.superAdmin, USER_ROLE.admin,
     USER_ROLE.coordinator,
     USER_ROLE.executiveDirector,
     USER_ROLE.generalDirector,
@@ -30,7 +30,7 @@ router.get(
 router.get(
   '/today',
   auth(
-    USER_ROLE.admin,
+    USER_ROLE.superAdmin, USER_ROLE.admin,
     USER_ROLE.coordinator,
     USER_ROLE.executiveDirector,
     USER_ROLE.generalDirector,
@@ -40,18 +40,18 @@ router.get(
 )
 router.get(
   '/:id',
-  auth(USER_ROLE.admin, USER_ROLE.executiveDirector),
+  auth(USER_ROLE.superAdmin, USER_ROLE.admin, USER_ROLE.executiveDirector),
   buyerDevelopmentController.getSingleBuyerDevelopment,
 )
 router.patch(
   '/:id',
-  auth(USER_ROLE.admin, USER_ROLE.executiveDirector),
+  auth(USER_ROLE.superAdmin, USER_ROLE.admin, USER_ROLE.executiveDirector),
   validateRequest(buyerDevelopmentUpdateValidation),
   buyerDevelopmentController.updateBuyerDevelopment,
 )
 router.delete(
   '/:id',
-  auth(USER_ROLE.admin),
+  auth(USER_ROLE.superAdmin, USER_ROLE.admin),
   buyerDevelopmentController.deleteBuyerDevelopment,
 )
 export const buyerDevelopmentRouter = router

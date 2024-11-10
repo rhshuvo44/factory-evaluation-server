@@ -8,14 +8,14 @@ const router = express.Router()
 
 router.post(
   '/',
-  auth(USER_ROLE.admin, USER_ROLE.executiveDirector),
+  auth(USER_ROLE.superAdmin, USER_ROLE.admin, USER_ROLE.executiveDirector),
   validateRequest(loanValidation),
   loanController.createLoan,
 )
 router.get(
   '/',
   auth(
-    USER_ROLE.admin,
+    USER_ROLE.superAdmin, USER_ROLE.admin,
     USER_ROLE.coordinator,
     USER_ROLE.executiveDirector,
     USER_ROLE.generalDirector,
@@ -26,7 +26,7 @@ router.get(
 router.get(
   '/today',
   auth(
-    USER_ROLE.admin,
+    USER_ROLE.superAdmin, USER_ROLE.admin,
     USER_ROLE.coordinator,
     USER_ROLE.executiveDirector,
     USER_ROLE.generalDirector,
@@ -36,15 +36,15 @@ router.get(
 )
 router.get(
   '/:id',
-  auth(USER_ROLE.admin, USER_ROLE.executiveDirector),
+  auth(USER_ROLE.superAdmin, USER_ROLE.admin, USER_ROLE.executiveDirector),
   loanController.getSingleLoan,
 )
 router.patch(
   '/:id',
-  auth(USER_ROLE.admin, USER_ROLE.executiveDirector),
+  auth(USER_ROLE.superAdmin, USER_ROLE.admin, USER_ROLE.executiveDirector),
   validateRequest(loanUpdateValidation),
   loanController.updateLoan,
 )
-router.delete('/:id', auth(USER_ROLE.admin), loanController.deleteLoan)
+router.delete('/:id', auth(USER_ROLE.superAdmin, USER_ROLE.admin), loanController.deleteLoan)
 
 export const loanRouter = router

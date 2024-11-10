@@ -6,6 +6,7 @@ export const userCreateValidationSchema = z.object({
     username: z.string().min(1, 'UserName is required'),
     email: z.string().email('Invalid email address'),
     role: z.enum([
+      'superAdmin',
       'admin',
       'executiveDirector',
       'managingDirector',
@@ -24,6 +25,7 @@ export const userUpdateValidationSchema = z.object({
     email: z.string().optional(),
     role: z
       .enum([
+        'superAdmin',
         'admin',
         'executiveDirector',
         'managingDirector',

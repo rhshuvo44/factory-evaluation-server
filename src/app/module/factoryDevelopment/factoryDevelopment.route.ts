@@ -11,14 +11,14 @@ const router = express.Router()
 
 router.post(
   '/',
-  auth(USER_ROLE.admin, USER_ROLE.executiveDirector),
+  auth(USER_ROLE.superAdmin, USER_ROLE.admin, USER_ROLE.executiveDirector),
   validateRequest(factoryDevelopmentValidation),
   factoryDevelopmentController.createFactoryDevelopment,
 )
 router.get(
   '/',
   auth(
-    USER_ROLE.admin,
+    USER_ROLE.superAdmin, USER_ROLE.admin,
     USER_ROLE.coordinator,
     USER_ROLE.executiveDirector,
     USER_ROLE.generalDirector,
@@ -29,7 +29,7 @@ router.get(
 router.get(
   '/today',
   auth(
-    USER_ROLE.admin,
+    USER_ROLE.superAdmin, USER_ROLE.admin,
     USER_ROLE.coordinator,
     USER_ROLE.executiveDirector,
     USER_ROLE.generalDirector,
@@ -39,18 +39,18 @@ router.get(
 )
 router.get(
   '/:id',
-  auth(USER_ROLE.admin, USER_ROLE.executiveDirector),
+  auth(USER_ROLE.superAdmin, USER_ROLE.admin, USER_ROLE.executiveDirector),
   factoryDevelopmentController.getSingleFactoryDevelopment,
 )
 router.patch(
   '/:id',
-  auth(USER_ROLE.admin, USER_ROLE.executiveDirector),
+  auth(USER_ROLE.superAdmin, USER_ROLE.admin, USER_ROLE.executiveDirector),
   validateRequest(factoryDevelopmentUpdateValidation),
   factoryDevelopmentController.updateFactoryDevelopment,
 )
 router.delete(
   '/:id',
-  auth(USER_ROLE.admin),
+  auth(USER_ROLE.superAdmin, USER_ROLE.admin),
   factoryDevelopmentController.deleteFactoryDevelopment,
 )
 export const factoryDevelopmentRouter = router

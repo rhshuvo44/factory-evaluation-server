@@ -8,14 +8,14 @@ const router = express.Router()
 
 router.post(
   '/',
-  auth(USER_ROLE.admin, USER_ROLE.executiveDirector),
+  auth(USER_ROLE.superAdmin,USER_ROLE.admin, USER_ROLE.executiveDirector),
   validateRequest(travelValidation),
   travelController.createTravellingAllowance,
 )
 router.get(
   '/',
   auth(
-    USER_ROLE.admin,
+    USER_ROLE.superAdmin,USER_ROLE.admin,
     USER_ROLE.executiveDirector,
     USER_ROLE.coordinator,
     USER_ROLE.generalDirector,
@@ -26,7 +26,7 @@ router.get(
 router.get(
   '/today',
   auth(
-    USER_ROLE.admin,
+    USER_ROLE.superAdmin,USER_ROLE.admin,
     USER_ROLE.executiveDirector,
     USER_ROLE.coordinator,
     USER_ROLE.generalDirector,
@@ -36,18 +36,18 @@ router.get(
 )
 router.get(
   '/:id',
-  auth(USER_ROLE.admin, USER_ROLE.executiveDirector),
+  auth(USER_ROLE.superAdmin,USER_ROLE.admin, USER_ROLE.executiveDirector),
   travelController.getSingleTravellingAllowance,
 )
 router.patch(
   '/:id',
-  auth(USER_ROLE.admin, USER_ROLE.executiveDirector),
+  auth(USER_ROLE.superAdmin,USER_ROLE.admin, USER_ROLE.executiveDirector),
   validateRequest(travelUpdateValidation),
   travelController.updateTravellingAllowance,
 )
 router.delete(
   '/:id',
-  auth(USER_ROLE.admin),
+  auth(USER_ROLE.superAdmin,USER_ROLE.admin),
   travelController.deleteTravellingAllowance,
 )
 

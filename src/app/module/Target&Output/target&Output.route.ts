@@ -2,24 +2,24 @@ import express from 'express'
 import auth from '../../middlewares/auth'
 import validateRequest from '../../middlewares/validateRequest'
 import { USER_ROLE } from '../user/user.constant'
+import { targetOutputController } from './target&Output.controller'
 import {
   targetOutputUpdateValidation,
   targetOutputValidation,
 } from './target&Output.validation'
-import { targetOutputController } from './target&Output.controller'
 
 const router = express.Router()
 
 router.post(
   '/',
-  auth(USER_ROLE.admin, USER_ROLE.coordinator),
+  auth(USER_ROLE.superAdmin, USER_ROLE.admin, USER_ROLE.coordinator),
   validateRequest(targetOutputValidation),
   targetOutputController.createTargetOutput,
 )
 router.get(
   '/',
   auth(
-    USER_ROLE.admin,
+    USER_ROLE.superAdmin, USER_ROLE.admin,
     USER_ROLE.coordinator,
     USER_ROLE.executiveDirector,
     USER_ROLE.generalDirector,
@@ -30,7 +30,7 @@ router.get(
 router.get(
   '/today',
   auth(
-    USER_ROLE.admin,
+    USER_ROLE.superAdmin, USER_ROLE.admin,
     USER_ROLE.coordinator,
     USER_ROLE.executiveDirector,
     USER_ROLE.generalDirector,
@@ -41,18 +41,18 @@ router.get(
 
 router.get(
   '/:id',
-  auth(USER_ROLE.admin, USER_ROLE.coordinator),
+  auth(USER_ROLE.superAdmin, USER_ROLE.admin, USER_ROLE.coordinator),
   targetOutputController.getSingleTargetOutput,
 )
 router.patch(
   '/:id',
-  auth(USER_ROLE.admin, USER_ROLE.coordinator),
+  auth(USER_ROLE.superAdmin, USER_ROLE.admin, USER_ROLE.coordinator),
   validateRequest(targetOutputUpdateValidation),
   targetOutputController.updateTargetOutput,
 )
 router.delete(
   '/:id',
-  auth(USER_ROLE.admin),
+  auth(USER_ROLE.superAdmin, USER_ROLE.admin),
   targetOutputController.deleteTargetOutput,
 )
 export const targetOutputRouter = router

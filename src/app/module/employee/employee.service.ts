@@ -103,7 +103,16 @@ const getSingleEmployee = async (id: string) => {
 
   return data
 }
-const updateEmployee = async (payload: TEmployeeUpdate, id: string) => {
+const updateEmployee = async (file: Express.Multer.File | undefined, payload: TEmployeeUpdate, id: string) => {
+  if (file) {
+    const imageName = payload?.name
+    const path = file?.path
+
+    //send image to cloudinary
+    const { secure_url } = await sendImageToCloudinary(imageName!, path)
+
+    payload.photo = secure_url as string
+  }
   const data = await Employee.findById(id)
 
   if (!data) {

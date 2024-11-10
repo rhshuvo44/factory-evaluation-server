@@ -12,14 +12,14 @@ const router = express.Router()
 
 router.post(
   '/',
-  auth(USER_ROLE.admin, USER_ROLE.coordinator),
+  auth(USER_ROLE.superAdmin, USER_ROLE.admin, USER_ROLE.coordinator),
   validateRequest(productionReportValidation),
   productionReportController.createProductionReport,
 )
 router.get(
   '/',
   auth(
-    USER_ROLE.admin,
+    USER_ROLE.superAdmin, USER_ROLE.admin,
     USER_ROLE.coordinator,
     USER_ROLE.executiveDirector,
     USER_ROLE.generalDirector,
@@ -30,7 +30,7 @@ router.get(
 router.get(
   '/today',
   auth(
-    USER_ROLE.admin,
+    USER_ROLE.superAdmin, USER_ROLE.admin,
     USER_ROLE.coordinator,
     USER_ROLE.executiveDirector,
     USER_ROLE.generalDirector,
@@ -41,18 +41,18 @@ router.get(
 
 router.get(
   '/:id',
-  auth(USER_ROLE.admin, USER_ROLE.coordinator),
+  auth(USER_ROLE.superAdmin, USER_ROLE.admin, USER_ROLE.coordinator),
   productionReportController.getSingleProductionReport,
 )
 router.patch(
   '/:id',
-  auth(USER_ROLE.admin, USER_ROLE.coordinator),
+  auth(USER_ROLE.superAdmin, USER_ROLE.admin, USER_ROLE.coordinator),
   validateRequest(productionReportUpdateValidation),
   productionReportController.updateProductionReport,
 )
 router.delete(
   '/:id',
-  auth(USER_ROLE.admin),
+  auth(USER_ROLE.superAdmin, USER_ROLE.admin),
   productionReportController.deleteProductionReport,
 )
 export const productionReportRouter = router

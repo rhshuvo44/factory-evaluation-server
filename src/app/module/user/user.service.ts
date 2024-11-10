@@ -1,8 +1,8 @@
 import httpStatus from 'http-status'
-import QueryBuilder from '../../builder/QueryBuilder'
 import AppError from '../../errors/AppError'
 import { TUser, TUserUpdate } from './user.interface'
 import { User } from './user.model'
+import { USER_ROLE } from './user.constant'
 
 const createUser = async (userData: TUser) => {
   // Create a new user
@@ -13,15 +13,9 @@ const createUser = async (userData: TUser) => {
   )
   return newUser
 }
-const allUsers = async (query: Record<string, unknown>) => {
-  const dataQuery = new QueryBuilder(User.find().select('-password'), query)
-    .filter()
-    .sort()
-    .paginate()
-    .fields()
-
-  const meta = await dataQuery.countTotal()
-  const result = await dataQuery.modelQuery
+const allUsers = async () => {
+  // const result = await User.find().select('-password')
+  const result = await User.find({ role: { $ne: USER_ROLE.superAdmin } }).select('-password');
 
   //! user check
   if (!result) {
@@ -29,7 +23,6 @@ const allUsers = async (query: Record<string, unknown>) => {
   }
 
   return {
-    meta,
     result,
   }
 }
