@@ -103,7 +103,11 @@ const getSingleEmployee = async (id: string) => {
 
   return data
 }
-const updateEmployee = async (file: Express.Multer.File | undefined, payload: TEmployeeUpdate, id: string) => {
+const updateEmployee = async (
+  file: Express.Multer.File | undefined,
+  payload: TEmployeeUpdate,
+  id: string,
+) => {
   if (file) {
     const imageName = payload?.name
     const path = file?.path

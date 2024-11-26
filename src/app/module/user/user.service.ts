@@ -15,7 +15,9 @@ const createUser = async (userData: TUser) => {
 }
 const allUsers = async () => {
   // const result = await User.find().select('-password')
-  const result = await User.find({ role: { $ne: USER_ROLE.superAdmin } }).select('-password');
+  const result = await User.find({
+    role: { $ne: USER_ROLE.superAdmin },
+  }).select('-password')
 
   //! user check
   if (!result) {

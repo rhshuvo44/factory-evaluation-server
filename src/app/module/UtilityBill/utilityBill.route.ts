@@ -15,7 +15,8 @@ router.post(
 router.get(
   '/',
   auth(
-    USER_ROLE.superAdmin, USER_ROLE.admin,
+    USER_ROLE.superAdmin,
+    USER_ROLE.admin,
     USER_ROLE.coordinator,
     USER_ROLE.executiveDirector,
     USER_ROLE.generalDirector,
@@ -26,7 +27,8 @@ router.get(
 router.get(
   '/today',
   auth(
-    USER_ROLE.superAdmin, USER_ROLE.admin,
+    USER_ROLE.superAdmin,
+    USER_ROLE.admin,
     USER_ROLE.coordinator,
     USER_ROLE.executiveDirector,
     USER_ROLE.generalDirector,
@@ -34,13 +36,21 @@ router.get(
   ),
   utilityController.getToday,
 )
-router.get('/:id', auth(USER_ROLE.superAdmin, USER_ROLE.admin), utilityController.getSingleUtility)
+router.get(
+  '/:id',
+  auth(USER_ROLE.superAdmin, USER_ROLE.admin),
+  utilityController.getSingleUtility,
+)
 router.patch(
   '/:id',
   auth(USER_ROLE.superAdmin, USER_ROLE.admin),
   validateRequest(utilityUpdateSchema),
   utilityController.updateUtility,
 )
-router.delete('/:id', auth(USER_ROLE.superAdmin, USER_ROLE.admin), utilityController.deletedUtility)
+router.delete(
+  '/:id',
+  auth(USER_ROLE.superAdmin, USER_ROLE.admin),
+  utilityController.deletedUtility,
+)
 
 export const utilityRouter = router

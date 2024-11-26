@@ -15,7 +15,8 @@ router.post(
 router.get(
   '/',
   auth(
-    USER_ROLE.superAdmin, USER_ROLE.admin,
+    USER_ROLE.superAdmin,
+    USER_ROLE.admin,
     USER_ROLE.coordinator,
     USER_ROLE.executiveDirector,
     USER_ROLE.generalDirector,
@@ -23,5 +24,9 @@ router.get(
   ),
   reportController.getReport,
 )
-router.delete('/:id', auth(USER_ROLE.superAdmin, USER_ROLE.admin), reportController.deleteReport)
+router.delete(
+  '/:id',
+  auth(USER_ROLE.superAdmin, USER_ROLE.admin),
+  reportController.deleteReport,
+)
 export const reportRouter = router

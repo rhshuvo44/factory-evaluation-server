@@ -15,7 +15,8 @@ router.post(
 router.get(
   '/',
   auth(
-    USER_ROLE.superAdmin, USER_ROLE.admin,
+    USER_ROLE.superAdmin,
+    USER_ROLE.admin,
     USER_ROLE.coordinator,
     USER_ROLE.executiveDirector,
     USER_ROLE.generalDirector,
@@ -26,7 +27,8 @@ router.get(
 router.get(
   '/today',
   auth(
-    USER_ROLE.superAdmin, USER_ROLE.admin,
+    USER_ROLE.superAdmin,
+    USER_ROLE.admin,
     USER_ROLE.coordinator,
     USER_ROLE.executiveDirector,
     USER_ROLE.generalDirector,
@@ -45,6 +47,10 @@ router.patch(
   validateRequest(loanUpdateValidation),
   loanController.updateLoan,
 )
-router.delete('/:id', auth(USER_ROLE.superAdmin, USER_ROLE.admin), loanController.deleteLoan)
+router.delete(
+  '/:id',
+  auth(USER_ROLE.superAdmin, USER_ROLE.admin),
+  loanController.deleteLoan,
+)
 
 export const loanRouter = router

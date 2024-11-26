@@ -19,7 +19,8 @@ router.post(
 router.get(
   '/',
   auth(
-    USER_ROLE.superAdmin, USER_ROLE.admin,
+    USER_ROLE.superAdmin,
+    USER_ROLE.admin,
     USER_ROLE.coordinator,
     USER_ROLE.executiveDirector,
     USER_ROLE.generalDirector,
@@ -30,7 +31,8 @@ router.get(
 router.get(
   '/today',
   auth(
-    USER_ROLE.superAdmin, USER_ROLE.admin,
+    USER_ROLE.superAdmin,
+    USER_ROLE.admin,
     USER_ROLE.coordinator,
     USER_ROLE.executiveDirector,
     USER_ROLE.generalDirector,

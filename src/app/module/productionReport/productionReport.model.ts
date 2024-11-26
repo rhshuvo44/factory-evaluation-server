@@ -3,48 +3,40 @@ import { TProductionReport } from './productionReport.interface'
 
 const productionReportSchema = new Schema<TProductionReport>(
   {
-    slNo: { type: Number, unique: true },
-    date: { type: Date, required: true },
-    lineNo: {
-      type: String,
-      enum: ['line 1 / 3rd floor', 'line 2 / 4th floor', 'line 3 / 4th floor'],
-      required: true,
-    },
+    orderNo: { type: String, required: true, unique: true },
     buyer: { type: String, required: true },
-    orderNo: { type: Number, required: true },
-    styleNo: {
-      type: String,
-      enum: [
-        'hoody/jacket',
-        'Leggins',
-        'Polo Shirt',
-        'T-Shirt',
-        'Tank Top',
-        'Sweat Shirt',
-        'Trouser',
-        'Shorts',
-        'Romper/Keeper',
-        'Long Sleeve T-shirt',
-      ],
-      required: true,
-    },
-    color: { type: String, required: true },
-    orderQuantity: { type: Number, required: true },
-    readyQuantity: { type: Number, required: true },
-    remark: { type: String, optional: true },
+    styleNo: { type: String, required: true },
+    description: { type: String, required: true },
+    quantity: { type: Number, required: true },
+    date: { type: Date, required: true },
+    shipmentDate: { type: Date, required: true },
+    leadTime: { type: String, required: true },
+    fabricConsumption: { type: Number, required: true },
+    totalFabric: { type: Number, required: true },
+    fabricInHouse: { type: Number, required: true },
+    requiredFabric: { type: Number, required: true },
+    cuttingCompleted: { type: Number, required: true },
+    cuttingRequired: { type: Number, required: true },
+    deliveryToPrint: { type: Number, required: true },
+    deliveryToPrintRemaining: { type: Number, required: true },
+    printCompleted: { type: Number, required: true },
+    printReceivable: { type: Number, required: true },
+    sewingInput: { type: Number, required: true },
+    sewingInputRemaining: { type: Number, required: true },
+    sewingOutput: { type: Number, required: true },
+    sewingOutputRemaining: { type: Number, required: true },
+    finishingOutput: { type: Number, required: true },
+    finishingOutputRemaining: { type: Number, required: true },
+    packingCompleted: { type: Number, required: true },
+    packingRemaining: { type: Number, required: true },
+    remark: { type: String },
   },
   {
     timestamps: true,
   },
 )
 // Pre-save hook to generate slNo
-productionReportSchema.pre<TProductionReport>('save', async function (next) {
-  if (this.date) {
-    const lastEntry = await ProductionReport.findOne().sort({ slNo: -1 })
-    this.slNo = lastEntry ? lastEntry.slNo + 1 : 1
-  }
-  next()
-})
+
 export const ProductionReport = model<TProductionReport>(
   'ProductionReport',
   productionReportSchema,

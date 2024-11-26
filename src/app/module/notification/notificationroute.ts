@@ -8,14 +8,20 @@ const router = express.Router()
 
 router.post(
   '/',
-  auth(USER_ROLE.superAdmin, USER_ROLE.admin, USER_ROLE.executiveDirector, USER_ROLE.coordinator),
+  auth(
+    USER_ROLE.superAdmin,
+    USER_ROLE.admin,
+    USER_ROLE.executiveDirector,
+    USER_ROLE.coordinator,
+  ),
   validateRequest(notificationValidation),
   notificationController.createNotification,
 )
 router.get(
   '/',
   auth(
-    USER_ROLE.superAdmin, USER_ROLE.admin,
+    USER_ROLE.superAdmin,
+    USER_ROLE.admin,
     USER_ROLE.coordinator,
     USER_ROLE.executiveDirector,
     USER_ROLE.generalDirector,

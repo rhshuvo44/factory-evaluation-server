@@ -14,6 +14,7 @@ import { targetOutputRouter } from '../module/Target&Output/target&Output.route'
 import { travelRouter } from '../module/travel/travel.route'
 import { userRouter } from '../module/user/user.route'
 import { utilityRouter } from '../module/UtilityBill/utilityBill.route'
+import { orderRouter } from '../module/order/order.route'
 
 const router = Router()
 const moduleRoutes = [
@@ -44,6 +45,10 @@ const moduleRoutes = [
   {
     path: '/buyer-development',
     route: buyerDevelopmentRouter,
+  },
+  {
+    path: '/order',
+    route: orderRouter,
   },
   {
     path: '/utility',

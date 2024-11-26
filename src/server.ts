@@ -4,7 +4,7 @@ import cron from 'node-cron'
 import app from './app'
 import config from './app/config'
 import seedSuperAdmin from './app/DB'
-import { backupDatabase, backupMongoDB } from './app/utils/backupDatabase'
+import { backupDatabase } from './app/utils/backupDatabase'
 let server: Server
 async function main() {
   // await mongoose.connect(`${config.dbURL as string}`)
@@ -19,10 +19,9 @@ async function main() {
   }
   seedSuperAdmin()
   // Schedule both tasks
-  cron.schedule('0 0 */30 * *', backupDatabase); // Backup every 45 days
+  cron.schedule('0 0 */30 * *', backupDatabase) // Backup every 45 days
   // cron.schedule('*/1 * * * *', backupDatabase); // Backup every 45 days
   // cron.schedule('*/1 * * * *', backupMongoDB); // Backup every 45 days
-
 
   // backupDatabase() // Backup every 45 days
   server = app.listen(config.port, () => {
