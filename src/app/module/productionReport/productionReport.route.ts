@@ -46,6 +46,11 @@ router.get(
   auth(USER_ROLE.superAdmin, USER_ROLE.admin, USER_ROLE.coordinator),
   productionReportController.getSingleProductionReport,
 )
+router.get(
+  '/orderNo/:orderNo',
+  auth(USER_ROLE.superAdmin, USER_ROLE.admin, USER_ROLE.coordinator),
+  productionReportController.getOrderNoProductionReport,
+)
 router.patch(
   '/:id',
   auth(USER_ROLE.superAdmin, USER_ROLE.admin, USER_ROLE.coordinator),

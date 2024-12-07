@@ -1,3 +1,14 @@
+export type TToDayReport = {
+  orderNo: string
+  styleNo: string
+  quantity: number
+  date: Date
+  cuttingCompleted: number
+  printCompleted: number
+  sewingOutput: number
+  finishingOutput: number
+  packingCompleted: number
+}
 export type TProductionReport = {
   orderNo: string
   buyer: string
@@ -5,6 +16,7 @@ export type TProductionReport = {
   description: string
   quantity: number
   date: Date
+  orderDate: Date
   shipmentDate: Date
   leadTime: string
   fabricConsumption: number
@@ -34,6 +46,7 @@ export type TProductionReportUpdate = {
   description?: string
   quantity?: number
   date?: Date
+  orderDate?: Date
   shipmentDate?: Date
   leadTime?: string
   fabricConsumption?: number

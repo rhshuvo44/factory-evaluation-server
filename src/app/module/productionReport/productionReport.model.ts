@@ -3,12 +3,13 @@ import { TProductionReport } from './productionReport.interface'
 
 const productionReportSchema = new Schema<TProductionReport>(
   {
-    orderNo: { type: String, required: true, unique: true },
+    orderNo: { type: String, required: true },
     buyer: { type: String, required: true },
     styleNo: { type: String, required: true },
     description: { type: String, required: true },
     quantity: { type: Number, required: true },
     date: { type: Date, required: true },
+    orderDate: { type: Date, required: true },
     shipmentDate: { type: Date, required: true },
     leadTime: { type: String, required: true },
     fabricConsumption: { type: Number, required: true },

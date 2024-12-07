@@ -8,6 +8,7 @@ export const productionReportValidation = z.object({
     description: z.string().nonempty('Description is required'),
     quantity: z.number().int().positive('Quantity must be a positive integer'),
     date: z.string(),
+    orderDate: z.string(),
     shipmentDate: z.string(),
     leadTime: z.string().nonempty('Lead time is required'),
     fabricConsumption: z
@@ -73,6 +74,7 @@ export const productionReportUpdateValidation = z.object({
       .positive('Quantity must be a positive integer')
       .optional(),
     date: z.string().optional(),
+    orderDate: z.string().optional(),
     shipmentDate: z.string().optional(),
     leadTime: z.string().nonempty('Lead time is required').optional(),
     fabricConsumption: z

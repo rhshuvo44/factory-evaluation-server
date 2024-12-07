@@ -12,8 +12,8 @@ export const travelValidation = z.object({
     payTo: z.string(),
     paymentType: z.enum(['Monthly', 'Daily', 'Once']),
     unit: z.number(),
-    unitPrice: z.number().positive(),
-    totalPrice: z.number().positive(),
+    unitPrice: z.number().min(0),
+    totalPrice: z.number().min(0),
   }),
 })
 export const travelUpdateValidation = z.object({
@@ -28,7 +28,7 @@ export const travelUpdateValidation = z.object({
     payTo: z.string().optional(),
     paymentType: z.enum(['Monthly', 'Daily', 'Once']).optional(),
     unit: z.number().optional(),
-    unitPrice: z.number().positive().optional(),
-    totalPrice: z.number().positive().optional(),
+    unitPrice: z.number().min(0).optional(),
+    totalPrice: z.number().min(0).optional(),
   }),
 })
