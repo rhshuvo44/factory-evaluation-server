@@ -25,6 +25,18 @@ router.get(
   ),
   outputController.getAllOutput,
 )
+router.get(
+  '/production-reports/download',
+  auth(
+    USER_ROLE.superAdmin,
+    USER_ROLE.admin,
+    USER_ROLE.coordinator,
+    USER_ROLE.executiveDirector,
+    USER_ROLE.generalDirector,
+    USER_ROLE.managingDirector,
+  ),
+  outputController.getAllOutputDownload,
+)
 
 router.delete(
   '/:id',

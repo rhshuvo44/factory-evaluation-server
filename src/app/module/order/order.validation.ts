@@ -7,7 +7,7 @@ export const orderValidation = z.object({
     styleNo: z.string(),
     description: z.string(),
     quantity: z.number().int().positive('Quantity must be a positive integer'),
-    date: z.string(),
+    orderDate: z.string(),
     shipmentDate: z.string(),
     leadTime: z.string(),
     fabricConsumption: z.number().positive(),
@@ -25,7 +25,7 @@ export const orderUpdateValidation = z.object({
       .int()
       .positive('Quantity must be a positive integer')
       .optional(),
-    date: z.string().optional(),
+    orderDate: z.string().optional(),
     shipmentDate: z.string().optional(),
     leadTime: z.string().optional(),
     fabricConsumption: z.number().positive().optional(),

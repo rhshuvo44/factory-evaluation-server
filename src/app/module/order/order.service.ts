@@ -1,14 +1,17 @@
+import { format } from 'date-fns'
 import httpStatus from 'http-status'
 import moment from 'moment'
 import AppError from '../../errors/AppError'
+import { TProductionReport } from '../productionReport/productionReport.interface'
+import { ProductionReport } from '../productionReport/productionReport.model'
 import { TOrder, TOrderUpdate } from './order.interface'
 import { Order } from './order.model'
 
 const createOrder = async (payload: TOrder) => {
-  const date = new Date(payload.date)
+  const orderDate = new Date(payload.orderDate)
   const shipmentDate = new Date(payload.shipmentDate)
 
-  const result = await Order.create({ ...payload, date, shipmentDate })
+  const result = await Order.create({ ...payload, orderDate, shipmentDate })
   return result
 }
 const getOrder = async () => {
@@ -31,8 +34,8 @@ const getOrder = async () => {
       return {
         ...Order.toObject(),
         leadTime: updatedLeadTime,
-        date: moment(Order.date).format('YYYY-MM-DD'), // Format date
-        shipmentDate: moment(Order.shipmentDate).format('YYYY-MM-DD'), // Format shipment date
+        orderDate: format(Order?.orderDate, 'dd-MM-yyyy'),
+        shipmentDate: format(Order?.shipmentDate, 'dd-MM-yyyy'),
       }
     }),
   )
@@ -101,18 +104,78 @@ const getSingleOrder = async (orderNo: string) => {
   return data
 }
 const getOrderNumber = async () => {
-  const data = await Order.find()
-  if (!data) {
-    throw new AppError(httpStatus.NOT_FOUND, 'Data not found')
+  // const data = await Order.find()
+  // if (!data) {
+  //   throw new AppError(httpStatus.NOT_FOUND, 'Data not found')
+  // }
+  // // Filter out orders where quantity equals packingComplete
+  // // Extract the orderNo values into a flat array
+  // const orderNo = data.map(Order => Order.orderNo)
+
+  // // return orderNo
+
+  // // / Fetch all relevant production reports in one query
+  // const productionReports = await ProductionReport.find({ orderNo: { $in: orderNo } });
+
+  // // Create a mapping of orderNo to production reports for quick lookup
+  // // Create a mapping of orderNo to production reports for quick lookup
+  // // Create a mapping of orderNo to production reports for quick lookup
+  // const productionReportMap: { [key: string]: typeof ProductionReport } = productionReports.reduce((map, report) => {
+  //   if (report.orderNo) {
+  //     map[report.orderNo] = report;
+  //   }
+  //   return map;
+  // }, {});
+
+  // // Filter orders based on quantity and packingComplete conditions
+  // const filteredOrders = data.filter(order => {
+  //   const productionReport = productionReportMap[order.orderNo];
+  //   return !productionReport || order.quantity !== productionReport.packingComplete;
+  // }).map(order => order.orderNo);
+
+  // return filteredOrders;
+  const data: TOrder[] = await Order.find()
+  if (!data || data.length === 0) {
+    throw new AppError(404, 'Data not found')
   }
+
   // Extract the orderNo values into a flat array
-  const orderNo = data.map(Order => Order.orderNo)
-  return orderNo
+  const orderNos: string[] = data.map(order => order.orderNo)
+
+  // Fetch all relevant production reports in one query
+  const productionReports: TProductionReport[] = await ProductionReport.find({
+    orderNo: { $in: orderNos },
+  })
+
+  // Create a mapping of orderNo to production reports for quick lookup
+  const productionReportMap: Record<string, TProductionReport> =
+    productionReports.reduce(
+      (map, report) => {
+        if (report.orderNo) {
+          map[report.orderNo] = report
+        }
+        return map
+      },
+      {} as Record<string, TProductionReport>,
+    )
+
+  // Filter orders based on quantity and packingComplete conditions
+  const filteredOrders: string[] = data
+    .filter(order => {
+      const productionReport = productionReportMap[order.orderNo]
+      return (
+        !productionReport ||
+        order.quantity !== productionReport?.packingCompleted
+      )
+    })
+    .map(order => order.orderNo)
+
+  return filteredOrders
 }
 const updateOrder = async (payload: TOrderUpdate, id: string) => {
-  let date
-  if (payload?.date) {
-    date = new Date(payload?.date)
+  let orderDate
+  if (payload?.orderDate) {
+    orderDate = new Date(payload?.orderDate)
   }
   let shipmentDate
   if (payload?.shipmentDate) {
@@ -124,7 +187,7 @@ const updateOrder = async (payload: TOrderUpdate, id: string) => {
   }
   const result = await Order.findByIdAndUpdate(
     id,
-    { ...payload, date, shipmentDate },
+    { ...payload, orderDate, shipmentDate },
     {
       new: true,
       runValidators: true,

@@ -23,10 +23,10 @@ const createProductionReport = async (payload: TProductionReport) => {
   const shipmentDate = new Date(payload.shipmentDate)
   const orderDate = new Date(payload.orderDate)
   // Set the start and end of the day for the given date
-  const startOfDay = new Date(date);
-  startOfDay.setHours(0, 0, 0, 0);
-  const endOfDay = new Date(date);
-  endOfDay.setHours(23, 59, 59, 999);
+  const startOfDay = new Date(date)
+  startOfDay.setHours(0, 0, 0, 0)
+  const endOfDay = new Date(date)
+  endOfDay.setHours(23, 59, 59, 999)
   const previousDay = new Date(date)
   previousDay.setDate(date.getDate() - 1)
   // Check for an existing record with the same `date`, `styleNo`, and `orderNo`
@@ -214,7 +214,7 @@ const getOrderNoProductionReport = async (orderNo: string) => {
     date: -1,
   })
   if (!data) {
-    return null;
+    return null
   }
   return {
     ...data.toObject(), // Convert Mongoose document to a plain object
@@ -265,7 +265,8 @@ const UpdateProductionReport = async (
       printCompleted: payload.printCompleted,
       sewingOutput: payload.sewingOutput,
       finishingOutput: payload.finishingOutput,
-      packingCompleted: payload.packingCompleted, date
+      packingCompleted: payload.packingCompleted,
+      date,
     },
     {
       new: true,

@@ -24,6 +24,18 @@ router.get(
   ),
   reportController.getReport,
 )
+router.get(
+  '/download',
+  auth(
+    USER_ROLE.superAdmin,
+    USER_ROLE.admin,
+    USER_ROLE.coordinator,
+    USER_ROLE.executiveDirector,
+    USER_ROLE.generalDirector,
+    USER_ROLE.managingDirector,
+  ),
+  reportController.getAllReportDownload,
+)
 router.delete(
   '/:id',
   auth(USER_ROLE.superAdmin, USER_ROLE.admin),

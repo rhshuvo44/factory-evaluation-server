@@ -4,7 +4,7 @@ export type TOrder = {
   styleNo: string
   description: string
   quantity: number
-  date: Date
+  orderDate: Date
   shipmentDate: Date
   leadTime: string
   fabricConsumption: number
@@ -16,7 +16,7 @@ export type TOrderUpdate = {
   styleNo?: string
   description?: string
   quantity?: number
-  date?: Date
+  orderDate?: Date
   shipmentDate?: Date
   leadTime?: string
   fabricConsumption?: number

@@ -129,6 +129,35 @@ const getReport = async (query: Record<string, unknown>) => {
     totalPrice,
   }
 }
+const getAllReportDownload = async () => {
+  const now = new Date()
+  const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1)
+  const endOfMonth = new Date(
+    now.getFullYear(),
+    now.getMonth() + 1,
+    0,
+    23,
+    59,
+    59,
+    999,
+  )
+
+  const data = await Report.find({
+    date: { $gte: startOfMonth, $lte: endOfMonth },
+  })
+    .sort({
+      date: -1,
+    })
+    .select('date factoryRunningCost factoryCollection balance -_id')
+
+  const result = data.map(item => ({
+    Date: format(item.date, 'dd-MM-yyyy'), // Format date as 'YYYY-MM-DD'
+    'Factory RunningCost': item.factoryRunningCost,
+    'Factory Collection': item.factoryCollection,
+    Balance: item.balance,
+  }))
+  return result
+}
 const deletedReport = async (id: string) => {
   const data = await Report.findById(id)
   if (!data) {
@@ -140,4 +169,5 @@ export const reportService = {
   createReport,
   getReport,
   deletedReport,
+  getAllReportDownload,
 }

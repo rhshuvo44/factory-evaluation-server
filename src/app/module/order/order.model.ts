@@ -8,7 +8,7 @@ const orderSchema = new Schema<TOrder>(
     styleNo: { type: String, required: true },
     description: { type: String, required: true },
     quantity: { type: Number, required: true },
-    date: { type: Date, required: true },
+    orderDate: { type: Date, required: true },
     shipmentDate: { type: Date, required: true },
     leadTime: { type: String, required: true },
     fabricConsumption: { type: Number, required: true },
