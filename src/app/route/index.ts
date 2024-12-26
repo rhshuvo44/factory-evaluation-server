@@ -10,6 +10,7 @@ import { miscellaneousRouter } from '../module/miscellaneous/miscellaneous.route
 import { notificationRouter } from '../module/notification/notificationroute'
 import { orderRouter } from '../module/order/order.route'
 import { outputRouter } from '../module/output/output.route'
+import { productionCostRouter } from '../module/productionCost/productionCost.route'
 import { productionReportRouter } from '../module/productionReport/productionReport.route'
 import { reportRouter } from '../module/report/report.route'
 import { targetOutputRouter } from '../module/Target&Output/target&Output.route'
@@ -78,6 +79,10 @@ const moduleRoutes = [
   {
     path: '/production-report',
     route: productionReportRouter,
+  },
+  {
+    path: '/production-cost',
+    route: productionCostRouter,
   },
   {
     path: '/report',

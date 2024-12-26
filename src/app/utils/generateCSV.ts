@@ -24,8 +24,6 @@
 // utils/generateExcel.ts
 import * as XLSX from 'xlsx'
 
-
-
 export const generateExcel = (data: any[], filename: string): Buffer => {
   // Convert MongoDB data to a JSON array
   // Create a new workbook and worksheet

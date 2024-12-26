@@ -149,7 +149,6 @@ const getAllReportDownload = async () => {
       date: -1,
     })
     .select('date factoryRunningCost factoryCollection balance -_id')
-
   const result = data.map(item => ({
     Date: format(item.date, 'dd-MM-yyyy'), // Format date as 'YYYY-MM-DD'
     'Factory RunningCost': item.factoryRunningCost,
