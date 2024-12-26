@@ -7,7 +7,7 @@ import { factoryDevelopmentRouter } from '../module/factoryDevelopment/factoryDe
 import { fixedCostRouter } from '../module/fixedCost/fixedCost.route'
 import { loanRouter } from '../module/Loan/loan.route'
 import { miscellaneousRouter } from '../module/miscellaneous/miscellaneous.route'
-import { notificationRouter } from '../module/notification/notificationroute'
+import { notificationRouter } from '../module/notification/notification.route'
 import { orderRouter } from '../module/order/order.route'
 import { outputRouter } from '../module/output/output.route'
 import { productionCostRouter } from '../module/productionCost/productionCost.route'

@@ -193,6 +193,19 @@ const updateOrder = async (payload: TOrderUpdate, id: string) => {
       runValidators: true,
     },
   )
+  await ProductionReport.updateMany(
+    {
+      orderNo: data?.orderNo,
+      styleNo: data.styleNo,
+    },
+    {
+      ...payload, orderDate, shipmentDate
+    },
+    {
+      new: true,
+      runValidators: true,
+    },
+  )
   return result
 }
 const deletedOrder = async (id: string) => {
@@ -202,6 +215,13 @@ const deletedOrder = async (id: string) => {
     throw new AppError(httpStatus.NOT_FOUND, 'Data not found')
   }
   await Order.deleteOne({ _id: id })
+  await ProductionReport.deleteMany(
+    {
+      orderNo: data?.orderNo,
+      styleNo: data.styleNo,
+    },
+
+  )
 }
 export const orderService = {
   createOrder,
