@@ -1,17 +1,6 @@
 import { model, Schema } from 'mongoose'
 import { TCollection } from './collection.interface'
 
-// | ''
-// | ''
-// | ''
-// | ''
-// | ''
-// | ''
-// | ''
-// | ''
-// | ''
-// | ''
-
 const collectionSchema = new Schema<TCollection>(
   {
     slNo: { type: Number, unique: true },
@@ -30,20 +19,19 @@ const collectionSchema = new Schema<TCollection>(
         'Shorts',
         'Romper/Keeper',
         'Long Sleeve T-shirt',
+        'No Collection',
       ],
       required: true,
     },
-    total: { type: Number },
-    workOrderNo: { type: Number },
-    challanNo: { type: Number },
 
-    lineNo: {
-      type: String,
-      enum: ['line 1 / 3rd floor', 'line 2 / 4th floor', 'line 3 / 4th floor'],
-      required: true,
-    },
+    workOrderNo: { type: Number },
+    challanNo: { type: String },
     ratePer: { type: Number, required: true },
     amount: { type: Number, required: true },
+    orderQuantity: { type: Number, required: true },
+    billQuantity: { type: Number, required: true },
+    billNo: { type: String, required: true },
+    moneyReceiptNo: { type: String, required: true },
   },
   {
     timestamps: true,

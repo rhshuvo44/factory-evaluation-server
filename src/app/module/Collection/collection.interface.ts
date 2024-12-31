@@ -13,12 +13,17 @@ export type TCollection = {
     | 'Shorts'
     | 'Romper/Keeper'
     | 'Long Sleeve T-shirt'
-  total: number
+    | 'No Collection'
+
   workOrderNo: number
-  lineNo: 'line 1 / 3rd floor' | 'line 2 / 4th floor' | 'line 3 / 4th floor'
-  challanNo: number
+
+  challanNo: string
   ratePer: number
   amount: number
+  orderQuantity: number
+  billQuantity: number
+  billNo: string
+  moneyReceiptNo: string
 }
 export type TCollectionUpdate = {
   slNo?: number
@@ -35,10 +40,15 @@ export type TCollectionUpdate = {
     | 'Shorts'
     | 'Romper/Keeper'
     | 'Long Sleeve T-shirt'
-  total?: number
+    | 'No Collection'
+
   workOrderNo?: number
-  lineNo?: 'line 1 / 3rd floor' | 'line 2 / 4th floor' | 'line 3 / 4th floor'
-  challanNo?: number
+  challanNo?: string
   ratePer?: number
   amount?: number
+
+  orderQuantity?: number
+  billQuantity?: number
+  billNo?: string
+  moneyReceiptNo: string
 }

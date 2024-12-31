@@ -199,7 +199,9 @@ const updateOrder = async (payload: TOrderUpdate, id: string) => {
       styleNo: data.styleNo,
     },
     {
-      ...payload, orderDate, shipmentDate
+      ...payload,
+      orderDate,
+      shipmentDate,
     },
     {
       new: true,
@@ -215,13 +217,10 @@ const deletedOrder = async (id: string) => {
     throw new AppError(httpStatus.NOT_FOUND, 'Data not found')
   }
   await Order.deleteOne({ _id: id })
-  await ProductionReport.deleteMany(
-    {
-      orderNo: data?.orderNo,
-      styleNo: data.styleNo,
-    },
-
-  )
+  await ProductionReport.deleteMany({
+    orderNo: data?.orderNo,
+    styleNo: data.styleNo,
+  })
 }
 export const orderService = {
   createOrder,
